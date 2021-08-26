@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "storage": {
+      "Counter:@model(appsync)": [
+        "read",
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

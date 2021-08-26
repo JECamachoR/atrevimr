@@ -1,0 +1,67 @@
+type User @model
+@auth(rules: [{allow: owner, ownerField: "id"}])
+@key(name: "byPhone", fields: ["phone"]) {
+  id: String
+  phone: AWSPhone!
+  email: AWSEmail
+  balance: Float
+  frequency: String
+  DOTW: String
+  name: String
+  profileIMG: String
+  goals: [Goal]! @connection(keyName: "byUser", fields: ["id"])
+  funds: [Fund]! @connection(keyName: "byUser", fields: ["id"])
+  transactions: [Transaction]! @connection(keyName: "byUser", fields: ["id"])
+}
+
+type Goal @model
+@auth(rules: [{allow: owner, ownerField: "owner"}])
+@key(name: "byUser", fields: ["owner", "name"]){
+    id: ID!
+    owner: String
+    name: String!
+    ammount: Float!
+    date: AWSDate!
+    unsplashIMG: AWSJSON
+    category: String!
+}
+
+type Fund @model
+@auth(rules: [{allow: owner, ownerField: "owner"}])
+@key(name: "byUser", fields: ["owner"]) {
+    id: ID!
+    owner: String
+    name: String!
+    balance: Float!
+    recurringAmmount: Float
+    category: String
+    unsplashIMG: AWSJSON
+    transactions: [Transaction]! @connection(keyName: "byFund", fields: ["id"])
+}
+
+type Transaction @model
+@auth(rules: [{allow: owner, ownerField: "owner"}])
+@key(name: "byUser", fields: ["owner"])
+@key(name: "byFund", fields: ["fundID"]) {
+    id: ID!
+    fundID: ID!
+    owner: String
+    ammount: Float!
+    concept: String!
+    fund: Fund @connection
+}
+
+type Counter @model
+@auth(rules: [{allow: owner, ownerField: "owner"}])
+@key(name: "byUser", fields: ["owner"]) {
+    id: ID!
+    owner: String
+    count: Int
+}
+
+type Counted @model
+@auth(rules: [{allow: owner, ownerField: "owner"}])
+@key(name: "byUser", fields: ["owner"]) {
+    id: ID!
+    owner: String
+}
