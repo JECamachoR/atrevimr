@@ -1,0 +1,16 @@
+[
+    {
+        "group": "Gadgets",
+        "categories": [
+            {"category": "gadget-smartphone", "name": "Smartphone"},
+            {"category": "gadteg-wearable", "name": "Wearable"}
+        ]
+    },
+    {
+        "group": "Clothes",
+        "categories": [
+            {"category": "clothes-jacket", "name": "Jacket"},
+            {"category": "clothes-shoes", "name": "Shoes"}
+        ]
+    }
+]

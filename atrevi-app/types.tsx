@@ -3,33 +3,36 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
-declare global {
-  namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
-  }
-}
-
-export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
-  Modal: undefined;
-  NotFound: undefined;
-};
-
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
-  RootStackParamList,
-  Screen
->;
-
-export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
-};
-
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<RootTabParamList, Screen>,
-  NativeStackScreenProps<RootStackParamList>
->;
+ export type RootStackParamList = {
+     Main: undefined;
+     Auth: undefined
+     NotFound: undefined;
+     CreateGoal: undefined
+     CreateMoneybox: undefined
+ };
+ 
+ export type HomeStackParamList = {
+     Home: undefined
+     CreateGoal: undefined
+ }
+ 
+ export type SettingsStackParamList = {
+     Settings: undefined
+ }
+ 
+ export type AuthParamList = {
+     SignInScreen: undefined;
+     SignUpScreen: undefined;
+     PhoneVerificationScreen: {
+         phoneNumber?: string, 
+         countryCode?: string, 
+         phoneNumberWithoutCode?: string,
+         pass?: string
+     } | undefined;
+ };
+ 
+ export type NavParamList = RootStackParamList & HomeStackParamList
+ 
+ export type frequencies = "1day" | "7day" | "14day" | "28day"
+ export type daysOfTheWeek = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"
+ export type plan = {rate: number, endDate: Date}
