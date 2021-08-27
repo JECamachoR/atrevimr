@@ -1,13 +1,12 @@
 import React from "react"
-import { Modal, StyleSheet, TouchableOpacity } from "react-native"
+import { Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native"
 import RoundButton from "./RoundButton"
 import i18n from "i18n-js"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { Row } from "../Layout"
-import { Text, View } from "../Themed"
+import { Text, useThemeColor, View } from "../Themed"
 import Bullseye from "../../assets/icons/goals/Bullseye"
 import Piggybank from "../../assets/icons/moneyboxes/Piggybank"
-import { grayscale, secondary, success } from "../../constants/Colors"
+import { darkMode, grayscale, primary, secondary, success } from "../../constants/Colors"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 
@@ -20,6 +19,18 @@ interface Props {
 
 const PlusButtonModal = ({hideModal, goToCreateGoal, goToCreateMoneybox, ...props}: Props): React.ReactElement => {
     const insets = useSafeAreaInsets()
+    const goalBG = useThemeColor({colors: {
+        light: secondary.default,
+        dark: primary.default
+    }})
+    const mbBG = useThemeColor({colors: {
+        light: success.dark,
+        dark: primary.default
+    }})
+    const color = useThemeColor({colors: {
+        light: grayscale.offWhite,
+        dark: darkMode.background
+    }})
     return (
         <Modal
             {...props}
@@ -27,46 +38,46 @@ const PlusButtonModal = ({hideModal, goToCreateGoal, goToCreateMoneybox, ...prop
             transparent={true}
         >
             <TouchableOpacity 
-                style={styles.screenBG} 
+                style={[styles.screenBG, {backgroundColor: color + "80"}]} 
                 onPress={hideModal}
                 activeOpacity={1}
             >
-                <TouchableWithoutFeedback style={{marginVertical: 8}}>
+                <TouchableWithoutFeedback>
                     <Row style={styles.row}>
                         <TouchableOpacity onPress={() => {
                             hideModal()
                             goToCreateGoal()
                         }}>
-                            <View style={[styles.textContainer, {backgroundColor: secondary.default}]}>
-                                <Text style={styles.btnText}>{i18n.t("Create a Goal")}</Text>
+                            <View style={[styles.textContainer, {backgroundColor: goalBG}]}>
+                                <Text style={[styles.btnText, {color}]}>{i18n.t("Create a Goal")}</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             hideModal()
                             goToCreateGoal()
                         }}>
-                            <View style={[styles.iconContainer, {backgroundColor: secondary.default}]}>
-                                <Bullseye />
+                            <View style={[styles.iconContainer, {backgroundColor: goalBG}]}>
+                                <Bullseye color={color} />
                             </View>
                         </TouchableOpacity>
                     </Row>
                 </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback style={{marginVertical: 8}}>
+                <TouchableWithoutFeedback>
                     <Row style={styles.row}>
                         <TouchableOpacity onPress={() => {
                             hideModal()
                             goToCreateMoneybox()
                         }}>
-                            <View style={[styles.textContainer, {backgroundColor: success.dark}]}>
-                                <Text style={styles.btnText}>{i18n.t("Create a Goal")}</Text>
+                            <View style={[styles.textContainer, {backgroundColor: mbBG}]}>
+                                <Text style={[styles.btnText, {color}]}>{i18n.t("Create a Goal")}</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             hideModal()
                             goToCreateMoneybox()
                         }}>
-                            <View style={[styles.iconContainer, {backgroundColor: success.dark}]}>
-                                <Piggybank />
+                            <View style={[styles.iconContainer, {backgroundColor: mbBG}]}>
+                                <Piggybank color={color} />
                             </View>
                         </TouchableOpacity>
                     </Row>
@@ -85,7 +96,6 @@ export default PlusButtonModal
 
 const styles = StyleSheet.create({
     screenBG: {
-        backgroundColor: "#FFFFFF80",
         flex: 1,
         alignItems: "flex-end",
         justifyContent: "flex-end",
@@ -96,7 +106,8 @@ const styles = StyleSheet.create({
     row: {
         backgroundColor: "#FFFFFF00",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        marginTop: 8,
     },
     iconContainer: {
         width: 50,
@@ -117,6 +128,5 @@ const styles = StyleSheet.create({
     btnText: {
         fontFamily: "Poppins_600SemiBold",
         height: 24,
-        color: grayscale.offWhite
     }
 })
