@@ -7,5 +7,18 @@
     "amplify/#current-cloud-backend": true,
     "amplify/backend/amplify-meta.json": true,
     "amplify/backend/awscloudformation": true
-  }
+  },
+  "eslint.workingDirectories": [
+    "atrevi-app",
+    "admin-console"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "json"
+  ],
+  "editor.tabSize": 4,
 }

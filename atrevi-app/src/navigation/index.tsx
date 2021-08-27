@@ -4,7 +4,7 @@ import * as React from "react"
 import { ColorSchemeName } from "react-native"
 import AuthContext, { AuthContextType } from "../auth/AuthContext"
 
-import NotFoundScreen from "../NotFoundScreen"
+import NotFoundScreen from "../screens/NotFoundScreen"
 import { RootStackParamList } from "../../types"
 import AuthStackNavigator from "./AuthStackNavigator"
 import LinkingConfiguration from "./LinkingConfiguration"
@@ -29,7 +29,6 @@ i18n.fallbacks = true
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) : React.ReactElement{
     return (
         <NavigationContainer
-            linking={LinkingConfiguration}
             theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
             <RootStackNavigator />
         </NavigationContainer>

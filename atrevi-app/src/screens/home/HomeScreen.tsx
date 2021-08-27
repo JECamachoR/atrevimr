@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 
             <View style={styles.titleRow} >
                 <View style={styles.logo} >
-                    {colorScheme === "dark" ? <HomeLogoDark height={31} width={130} /> : <HomeLogoLight height={30} width={127} /> }
+                    {colorScheme === "dark" ? <HomeLogoDark /> : <HomeLogoLight height={30} width={127} /> }
                 </View>
                 <View style={styles.rightHalfTitle} >
                     <TouchableOpacity

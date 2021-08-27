@@ -16,14 +16,17 @@ const BottomTabNavigator = (): React.ReactElement => {
     
     return (
         <BottomTab.Navigator
-            tabBarOptions={{
-                style: {
-                    height: 64,
-                    paddingVertical: 8
-                },
-                tabStyle: {
-                    height: 48
-                }
+            // tabBarOptions={{
+            //     style: {
+            //         height: 64,
+            //         paddingVertical: 8
+            //     },
+            //     tabStyle: {
+            //         height: 48
+            //     }
+            // }}
+            screenOptions={{
+                headerShown: false
             }}
         >
             <BottomTab.Screen

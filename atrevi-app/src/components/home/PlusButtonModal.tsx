@@ -5,8 +5,8 @@ import i18n from "i18n-js"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { Row } from "../Layout"
 import { Text, View } from "../Themed"
-import Bullseye from "../../assets/svg/goals/Bullseye.svg"
-import Piggybank from "../../assets/svg/moneyboxes/Piggybank.svg"
+import Bullseye from "../../assets/icons/goals/Bullseye"
+import Piggybank from "../../assets/icons/moneyboxes/Piggybank"
 import { grayscale, secondary, success } from "../../constants/Colors"
 
 
