@@ -4,17 +4,20 @@ import { error, grayscale, primary, secondary, success } from "../constants/Colo
 
 interface ButtonProps {
     title: string;
-    variant?: "primary" | "secondary" | "error" | "success" | "successDark" //| "info" | "default";
+    lightVariant?: "primary" | "secondary" | "error" | "success" | "successDark" //| "info" | "default";
+    darkModeVariant?: ButtonProps["lightVariant"]
     onPress: () => void;
 }
 
-const Button = ({onPress, title, variant} : ButtonProps): React.ReactElement => {
+const Button = ({onPress, title, lightVariant, darkModeVariant} : ButtonProps): React.ReactElement => {
 
     const colorScheme = useColorScheme()
 
     const colorsForVariant = () => {
-        if (variant) {
-            return styles[variant]
+        if (lightVariant && colorScheme === "light") {
+            return styles[lightVariant]
+        } else if (colorScheme === "dark" && darkModeVariant) {
+            return styles[darkModeVariant]
         } else {
             switch (colorScheme) {
                 case "light":

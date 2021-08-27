@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet } from "react-native"
-import { grayscale, success } from "../../constants/Colors"
+import { grayscale, primary, success } from "../../constants/Colors"
 import { Col, Row } from "../Layout"
 import { Text, View, useThemeColor } from "../Themed"
 import DudeWithCheck from "../../assets/icons/moneyboxes/DudeWithCheck"
@@ -13,15 +13,18 @@ type Props = {
 }
 
 const CreateMoneyboxCard = ({goToCreateMoneybox}: Props): React.ReactElement => {
-    const backgroundColor = useThemeColor({}, "background")
-    const borderColor = useThemeColor({}, "line")
+    const backgroundColor = useThemeColor({colorName: "background"})
+    const borderColor = useThemeColor({colorName: "line"})
     return (
-        <View style={styles.card}>
+        <View style={styles.card}
+            darkColor={primary.default}
+            lightColor={success.dark}
+        >
             <Row style={[styles.head, styles.transparent, {flex: 1}]}>
                 <Col style={[styles.transparent, {flex: 1}]}>
                     <Row style={styles.titleContainer}>
-                        <Piggybank height={40} width={40} />
-                        <Text style={styles.title}>{i18n.t("Moneybox")}</Text>
+                        <Piggybank height={40} width={40} color={backgroundColor} />
+                        <Text style={[styles.title, {color: backgroundColor}]}>{i18n.t("Moneybox")}</Text>
                     </Row>
                 </Col>
                 <Col style={styles.img}>
@@ -31,8 +34,14 @@ const CreateMoneyboxCard = ({goToCreateMoneybox}: Props): React.ReactElement => 
 
             <View style={[styles.body, {backgroundColor, borderColor}]}>
                 <View style={styles.textContainer}>
-                    <Text style={styles.text}>
-                        {i18n.t("Save")} <Text style={styles.highlightText}>{i18n.t("without a timeframe")}.</Text>
+                    <Text style={styles.text}
+                        lightColor={grayscale.body}
+                        darkColor={primary.default}
+                    >
+                        {i18n.t("Save")} <Text 
+                            lightColor={success.dark}
+                            darkColor={primary.default}
+                        >{i18n.t("without a timeframe")}.</Text>
                     </Text>
                 </View>
                 <Button
@@ -40,7 +49,8 @@ const CreateMoneyboxCard = ({goToCreateMoneybox}: Props): React.ReactElement => 
                     onPress={() => {
                         goToCreateMoneybox()
                     }}
-                    variant="successDark"
+                    lightVariant="successDark"
+                    darkModeVariant="primary"
                 />
             </View>
         </View>
@@ -52,7 +62,6 @@ export default CreateMoneyboxCard
 const styles = StyleSheet.create({
     card: {
         height: 234,
-        backgroundColor: success.dark,
         marginHorizontal: 24,
         borderRadius: 15,
         overflow: "hidden",
@@ -92,7 +101,6 @@ const styles = StyleSheet.create({
         margin: 16,
         marginBottom: 0,
         borderRadius: 8,
-        backgroundColor: grayscale.background,
         alignItems: "center",
         justifyContent: "center",
     },
@@ -103,8 +111,5 @@ const styles = StyleSheet.create({
     },
     transparent: {
         backgroundColor: "rgba(0, 0, 0, 0)"
-    },
-    highlightText: {
-        color: success.dark
     },
 })
