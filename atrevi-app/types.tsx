@@ -11,10 +11,17 @@
      CreateMoneybox: undefined
  };
  
+ 
+export type BottomTabBarParamList = {
+    HomeStack: undefined
+    SettingsStack: undefined
+    SavingsStack: undefined
+}
+
  export type HomeStackParamList = {
-     Home: undefined
-     CreateGoal: undefined
- }
+    Home: undefined
+    CreateGoal: undefined
+}
  
  export type SettingsStackParamList = {
      Settings: undefined

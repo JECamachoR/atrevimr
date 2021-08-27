@@ -8,6 +8,7 @@ import { Text, View } from "../Themed"
 import Bullseye from "../../assets/icons/goals/Bullseye"
 import Piggybank from "../../assets/icons/moneyboxes/Piggybank"
 import { grayscale, secondary, success } from "../../constants/Colors"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const PlusButtonModal = ({hideModal, goToCreateGoal, goToCreateMoneybox, ...props}: Props): React.ReactElement => {
+    const insets = useSafeAreaInsets()
     return (
         <Modal
             {...props}
@@ -69,7 +71,11 @@ const PlusButtonModal = ({hideModal, goToCreateGoal, goToCreateMoneybox, ...prop
                         </TouchableOpacity>
                     </Row>
                 </TouchableWithoutFeedback>
-                <RoundButton variant="times" onPress={hideModal} style={styles.roundButtonPosition} />
+                <RoundButton variant="times" 
+                onPress={hideModal} style={[
+                    styles.roundButtonPosition, 
+                    {marginBottom: 80 + insets.bottom}
+                ]} />
             </TouchableOpacity>
         </Modal>
     )
@@ -86,7 +92,6 @@ const styles = StyleSheet.create({
     },
     roundButtonPosition: {
         margin: 16,
-        marginBottom: 80,
     },
     row: {
         backgroundColor: "#FFFFFF00",

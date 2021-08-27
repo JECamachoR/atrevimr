@@ -1,4 +1,5 @@
-import React from "react"
+import * as React from "react"
+import { StyleSheet } from "react-native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import HomeStackNavigator from "./HomeStackNavigator"
 import SavingsStackNavigator from "./SavingsStackNavigator"
@@ -9,24 +10,22 @@ import SettingsTabBarIcon from "../components/tabBar/SettingsTabBarIcon"
 import HomeTabBarLabel from "../components/tabBar/HomeTabBarLabel"
 import SavingsTabBarLabel from "../components/tabBar/SavingsTabBarLabel"
 import SettingsTabBarLabel from "../components/tabBar/SettingsTabBarLabel"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 const BottomTab = createBottomTabNavigator()
 
 const BottomTabNavigator = (): React.ReactElement => {
-    
+    const insets = useSafeAreaInsets()
+
     return (
         <BottomTab.Navigator
-            // tabBarOptions={{
-            //     style: {
-            //         height: 64,
-            //         paddingVertical: 8
-            //     },
-            //     tabStyle: {
-            //         height: 48
-            //     }
-            // }}
             screenOptions={{
-                headerShown: false
+                headerShown: false,
+                tabBarStyle: [styles.tabBarStyle, {
+                    paddingBottom: 8 + insets.bottom,
+                    height: 64 + insets.bottom
+                }],
+                tabBarHideOnKeyboard: true,
             }}
         >
             <BottomTab.Screen
@@ -34,23 +33,23 @@ const BottomTabNavigator = (): React.ReactElement => {
                 component={HomeStackNavigator}
                 options={{
                     tabBarIcon: HomeTabBarIcon,
-                    tabBarLabel: HomeTabBarLabel
+                    tabBarLabel: HomeTabBarLabel,
                 }}
-            />
+                />
             <BottomTab.Screen
                 name="SavingsStack"
                 component={SavingsStackNavigator}
                 options={{
                     tabBarIcon: SavingsTabBarIcon,
-                    tabBarLabel: SavingsTabBarLabel
+                    tabBarLabel: SavingsTabBarLabel,
                 }}
-            />
+                />
             <BottomTab.Screen
                 name="SettingsStack"
                 component={SettingsStackNavigator}
                 options={{
                     tabBarIcon: SettingsTabBarIcon,
-                    tabBarLabel:  SettingsTabBarLabel
+                    tabBarLabel:  SettingsTabBarLabel,
                 }}
             />
         </BottomTab.Navigator>
@@ -58,3 +57,11 @@ const BottomTabNavigator = (): React.ReactElement => {
 }
 
 export default BottomTabNavigator
+
+const styles = StyleSheet.create({
+    tabBarStyle: {
+        height: 64,
+        paddingTop: 8,
+        paddingBottom: 8,
+    }
+})
