@@ -26,6 +26,7 @@ const BottomTabNavigator = (): React.ReactElement => {
                     height: 64 + insets.bottom
                 }],
                 tabBarHideOnKeyboard: true,
+                tabBarLabelPosition: "below-icon"
             }}
         >
             <BottomTab.Screen

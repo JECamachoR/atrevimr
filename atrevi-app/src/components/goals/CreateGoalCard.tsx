@@ -52,7 +52,7 @@ const CreateGoalCard = ({goToCreateGoal}: Props): React.ReactElement => {
                     >
                         {i18n.t("Save and")}<Text
                         lightColor={grayscale.body}
-                        darkColor={primary.default}>{i18n.t("reach it on time")}.</Text>
+                        darkColor={primary.default}> {i18n.t("reach it on time")}.</Text>
                     </Text>
                 </View>
                 <Button

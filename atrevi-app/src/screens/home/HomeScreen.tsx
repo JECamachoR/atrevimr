@@ -19,7 +19,7 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
     const [plusButtonModalOpen, setPlusButtonModalOpen] = React.useState(false)
 
     const colorScheme = useColorScheme()
-    const iconColor = useThemeColor({}, "iconColor")
+    const iconColor = useThemeColor({colorName: "iconColor"})
 
     return (
         <Screen>
