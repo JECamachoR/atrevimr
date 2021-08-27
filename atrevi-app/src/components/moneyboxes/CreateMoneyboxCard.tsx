@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet } from "react-native"
-import { grayscale, primary, success } from "../../constants/Colors"
+import { darkMode, grayscale, primary, success } from "../../constants/Colors"
 import { Col, Row } from "../Layout"
 import { Text, View, useThemeColor } from "../Themed"
 import DudeWithCheck from "../../assets/icons/moneyboxes/DudeWithCheck"
@@ -33,7 +33,10 @@ const CreateMoneyboxCard = ({goToCreateMoneybox}: Props): React.ReactElement => 
             </Row>
 
             <View style={[styles.body, {backgroundColor, borderColor}]}>
-                <View style={styles.textContainer}>
+                <View style={styles.textContainer}
+                    lightColor={grayscale.background}
+                    darkColor={darkMode.textBG}
+                >
                     <Text style={styles.text}
                         lightColor={grayscale.body}
                         darkColor={primary.default}
