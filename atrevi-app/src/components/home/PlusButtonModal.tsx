@@ -44,7 +44,7 @@ const PlusButtonModal = ({hideModal, goToCreateGoal, goToCreateMoneybox, ...prop
                             goToCreateGoal()
                         }}>
                             <View style={[styles.iconContainer, {backgroundColor: secondary.default}]}>
-                                <Bullseye width={34} height={34} />
+                                <Bullseye />
                             </View>
                         </TouchableOpacity>
                     </Row>
@@ -64,7 +64,7 @@ const PlusButtonModal = ({hideModal, goToCreateGoal, goToCreateMoneybox, ...prop
                             goToCreateMoneybox()
                         }}>
                             <View style={[styles.iconContainer, {backgroundColor: success.dark}]}>
-                                <Piggybank width={34} height={34} />
+                                <Piggybank />
                             </View>
                         </TouchableOpacity>
                     </Row>

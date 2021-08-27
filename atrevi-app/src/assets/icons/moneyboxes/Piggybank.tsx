@@ -1,7 +1,7 @@
 import * as React from "react";
-import Svg, { Path } from "react-native-svg";
+import Svg, { SvgProps, Path } from "react-native-svg";
 
-function SvgPiggybank(props) {
+function SvgPiggybank(props: SvgProps) {
   return (
     <Svg
       width={40}

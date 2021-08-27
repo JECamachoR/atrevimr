@@ -1,7 +1,7 @@
 import * as React from "react";
-import Svg, { Path } from "react-native-svg";
+import Svg, { SvgProps, Path } from "react-native-svg";
 
-function SvgLightDefaultSavingsIcon(props) {
+function SvgLightDefaultSavingsIcon(props: SvgProps) {
   return (
     <Svg
       width={43}

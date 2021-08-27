@@ -7,7 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "svg": "npx @svgr/cli --native -d ./src/assets/icons --ignore-existing ./src/assets/svg"
+    "svg": "npx @svgr/cli --native --typescript -d ./src/assets/icons --ignore-existing ./src/assets/svg"
   },
   "jest": {
     "preset": "jest-expo"

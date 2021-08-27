@@ -1,7 +1,14 @@
 import * as React from "react";
-import Svg, { Path, Defs, Pattern, Use, Image } from "react-native-svg";
+import Svg, {
+  SvgProps,
+  Path,
+  Defs,
+  Pattern,
+  Use,
+  Image,
+} from "react-native-svg";
 
-function SvgDudeWithCheck(props) {
+function SvgDudeWithCheck(props: SvgProps) {
   return (
     <Svg
       width={78}
