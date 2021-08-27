@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet } from "react-native"
-import { grayscale, secondary } from "../../constants/Colors"
+import { darkMode, grayscale, primary, secondary } from "../../constants/Colors"
 import { Col, Row } from "../Layout"
 import { Text, View, useThemeColor } from "../Themed"
 import MountainClimbingGuy from "../../assets/icons/goals/MountainClimbingGuy"
@@ -13,29 +13,46 @@ type Props = {
 }
 
 const CreateGoalCard = ({goToCreateGoal}: Props): React.ReactElement => {
-    const backgroundColor = useThemeColor({}, "background")
-    const borderColor = useThemeColor({}, "line")
+    const backgroundColor = useThemeColor({colorName: "background"})
+    const borderColor = useThemeColor({colorName: "line"})
     return (
-        <View style={styles.card}>
+        <View style={styles.card} 
+        darkColor={primary.default}
+        lightColor={secondary.default}>
             <Row style={[styles.head, styles.transparent, {flex: 1}]}>
                 <Col style={[styles.transparent, {flex: 1}]}>
                     <Row style={styles.titleContainer}>
-                        <Bullseye width={40} height={40} />
-                        <Text style={styles.title}>{i18n.t("Goals")}</Text>
+                        <Bullseye width={40} height={40} color={backgroundColor} />
+                        <Text style={[styles.title, {color: backgroundColor}]}>{i18n.t("Goals")}</Text>
                     </Row>
                 </Col>
                 <Col style={styles.img}>
-                    <MountainClimbingGuy height={91} width={118} />
+                    <MountainClimbingGuy />
                 </Col>
             </Row>
 
-            <View style={[styles.body, {backgroundColor, borderColor}]}>
-                <View style={styles.textContainer}>
-                    <Text style={styles.text}>
+            <View 
+                style={[styles.body, {borderColor}]}
+                lightColor={grayscale.offWhite}
+                darkColor={darkMode.inputBackground}
+            >
+                <View style={styles.textContainer}
+                    lightColor={grayscale.background}
+                    darkColor={darkMode.textBG}
+                >
+                    <Text style={styles.text}
+                        lightColor={grayscale.body}
+                        darkColor={primary.default}
+                    >
                         {i18n.t("Do you have a target date?")}
                     </Text>
-                    <Text style={styles.text}>
-                        {i18n.t("Save and")}<Text style={styles.highlightText}>{i18n.t("reach it on time")}.</Text>
+                    <Text style={styles.text}
+                        lightColor={grayscale.body}
+                        darkColor={primary.default}
+                    >
+                        {i18n.t("Save and")}<Text
+                        lightColor={grayscale.body}
+                        darkColor={primary.default}>{i18n.t("reach it on time")}.</Text>
                     </Text>
                 </View>
                 <Button
@@ -54,7 +71,6 @@ export default CreateGoalCard
 const styles = StyleSheet.create({
     card: {
         height: 234,
-        backgroundColor: secondary.default,
         marginHorizontal: 24,
         borderRadius: 15,
         overflow: "hidden"
@@ -84,16 +100,18 @@ const styles = StyleSheet.create({
         flex: 1,
         marginRight: 16,
         marginTop: 8,
-        alignItems: "flex-end",
+        alignItems: "flex-start",
         justifyContent: "flex-end",
         backgroundColor: "rgba(0, 0, 0, 0)",
+        transform: [
+            {scaleX: -1}
+        ]
     },
     textContainer: {
         flex: 1,
         margin: 16,
         marginBottom: 0,
         borderRadius: 8,
-        backgroundColor: grayscale.background,
         alignItems: "center",
         justifyContent: "center",
     },
@@ -104,8 +122,5 @@ const styles = StyleSheet.create({
     },
     transparent: {
         backgroundColor: "rgba(0, 0, 0, 0)"
-    },
-    highlightText: {
-        color: secondary.default
     },
 })
