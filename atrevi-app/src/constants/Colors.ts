@@ -26,9 +26,9 @@ export const success = {
     light:      "#E9FCF5",
 }
 export const error = {
-    error:             "#EB3333",
-    errorDark:        "#AD1F1F",
-    errorLight:       "#FDE8E8",
+    default:             "#EB3333",
+    dark:        "#AD1F1F",
+    light:       "#FDE8E8",
 }
 export const warning = {
     warning:           "#FFCC00",

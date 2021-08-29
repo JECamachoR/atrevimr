@@ -46,7 +46,7 @@ export function Text(props: TextProps): React.ReactElement {
     const bg = lightColor && darkColor ? 
     {colors: { light: lightColor, dark: darkColor }}
     :
-    {colorName: "body"}
+    {colorName: "text"}
     const color = useThemeColor(bg)
 
     return <DefaultText style={[{ color }, {fontFamily:"Poppins_400Regular"}, style]} {...otherProps} />
