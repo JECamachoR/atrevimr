@@ -35,7 +35,7 @@ const TransactionListItem = ({ transaction }: Props) => {
 
     const subtitleColor = useThemeColor({colorName: "placeholderTextColor"})
     const line = useThemeColor({colorName: "line"})
-
+    const color = useThemeColor({colorName: "text"})
     return (
         <Row
             lightColor={grayscale.offWhite}
@@ -46,7 +46,7 @@ const TransactionListItem = ({ transaction }: Props) => {
                 <Icon transaction={transaction} />
             </View>
             <View style={styles.center}>
-                <Text style={styles.concept}>{transaction.concept}</Text>
+                <Text style={[styles.concept, {color}]}>{transaction.concept}</Text>
                 <Text style={[styles.subtitle, {color: subtitleColor}]}>{transaction.fund?.name || ""}</Text>
             </View>
             <View style={styles.right}>
