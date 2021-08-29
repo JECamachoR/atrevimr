@@ -8,10 +8,10 @@ import { MaterialIcons } from "@expo/vector-icons"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavParamList } from "../../../types"
 import { UnsplashPhoto } from "react-native-unsplash"
-import { API, graphqlOperation } from "aws-amplify"
-import { createFund } from "../../graphql/mutations"
+// import { API, graphqlOperation } from "aws-amplify"
+// import { createFund } from "../../graphql/mutations"
+// import { CreateFundInput } from "../../../API"
 import CreateMoneyboxFormModal from "../../components/moneyboxes/CreateMoneyboxFormModal"
-import { CreateFundInput } from "../../../API"
 
 export type CreateMoneyboxType = {
     name?: string,
@@ -27,18 +27,20 @@ const CreateMoneyboxScreen = ({navigation}: Props): React.ReactElement => {
     const [moneyboxFormModalOpen, setMoneyboxFormModalOpen] = React.useState(false)
     const [moneybox, setMoneybox] = React.useState<CreateMoneyboxType>({category: "", balance: 0})
 
-    const handleSubmit = async (g: CreateMoneyboxType) => {
-        try {
-            await API.graphql(graphqlOperation(createFund, {input: {
-                ...g,
-                unsplashIMG: JSON.stringify(g.unsplashIMG)
-            } as CreateFundInput}))
-            setMoneyboxFormModalOpen(false)
-            navigation.popToTop()
-        } catch (err) {
-            console.error(err)
-        }
-    }
+    // const handleSubmit = async (g: CreateMoneyboxType) => {
+    //     try {
+    //         await API.graphql(graphqlOperation(createFund, {input: {
+    //             ...g,
+    //             unsplashIMG: JSON.stringify(g.unsplashIMG)
+    //         } as CreateFundInput}))
+    //         setMoneyboxFormModalOpen(false)
+    //         navigation.popToTop()
+    //     } catch (err) {
+    //         console.error(err)
+    //     }
+    // }
+
+    const handleSubmit = console.log
 
     return (
         <Screen style={styles.screen}>

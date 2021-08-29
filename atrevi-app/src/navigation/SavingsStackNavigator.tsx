@@ -10,6 +10,9 @@ const SavingsStackNavigator = (): React.ReactElement => {
             <SavingsStack.Screen
                 name="Savings"
                 component={SavingsScreen}
+                options={{
+                    headerShown: false,
+                }}
             />
         </SavingsStack.Navigator>
     )

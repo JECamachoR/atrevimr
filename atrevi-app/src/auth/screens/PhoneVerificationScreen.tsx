@@ -9,7 +9,7 @@ import PhoneNumberInput from "../../components/formComponents/PhoneNumberInput"
 import TextInput from "../../components/formComponents/TextInput"
 import Submitting from "../../components/Submitting"
 import { Text, View } from "../../components/Themed"
-import { createUser } from "../../graphql/mutations"
+// import { createUser } from "../../graphql/mutations"
 import { AuthParamList } from "../../../types"
 import { CountryCode } from "react-native-country-picker-modal"
 
@@ -29,9 +29,9 @@ const PhoneVerificationScreen = ({ route : {params}, navigation}: Props): React.
                 onSubmit={async (v) => {
                     try {
                         await Auth.confirmSignUp(v.phoneNumber, v.code)
-                        await graphqlOperation(createUser, {
-                            input: {phoneNumber: v.phoneNumber}
-                        })
+                        // await graphqlOperation(createUser, {
+                        //     input: {phoneNumber: v.phoneNumber}
+                        // })
                         if (params?.pass && params.phoneNumber) {
                             await Auth.signIn({username: params.phoneNumber, password: params.pass})
                         } else {

@@ -1,10 +1,26 @@
 {
   "auth": {
-    "atrevi": {
+    "atrevicd4ae34b": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
-      "customAuth": false
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "loginMechanisms": [
+          "PHONE_NUMBER"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ]
+      }
     }
   },
   "api": {
@@ -16,7 +32,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authatrevi"
+              "userPoolId": "authatrevicd4ae34b"
             }
           },
           "additionalAuthenticationProviders": []
@@ -25,33 +41,9 @@
     }
   },
   "storage": {
-    "s34e357462": {
+    "profilePicS3": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
-    }
-  },
-  "function": {
-    "testCountFunction": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "atrevi",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "atrevi",
-          "attributes": [
-            "GraphQLAPIIdOutput"
-          ]
-        }
-      ]
     }
   }
 }

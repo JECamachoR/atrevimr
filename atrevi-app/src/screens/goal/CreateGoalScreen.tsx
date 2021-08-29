@@ -9,8 +9,8 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { NavParamList } from "../../../types"
 import CreateGoalFormModal from "../../components/goals/CreateGoalFormModal"
 import { UnsplashPhoto } from "react-native-unsplash"
-import { API, graphqlOperation } from "aws-amplify"
-import { createGoal } from "../../graphql/mutations"
+// import { API, graphqlOperation } from "aws-amplify"
+// import { createGoal } from "../../graphql/mutations"
 
 export type CreateGoalType = {
     name?: string,
@@ -26,19 +26,21 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
     const [goalFormModalOpen, setGoalFormModalOpen] = React.useState(false)
     const [goal, setGoal] = React.useState<CreateGoalType>({category: "", date: new Date()})
 
-    const handleSubmit = async (g: CreateGoalType) => {
-        try {
-            await API.graphql(graphqlOperation(createGoal, {input: {
-                ...g, 
-                date: g.date?.toISOString().split("T")[0],
-                unsplashIMG: JSON.stringify(g.unsplashIMG)
-            }}))
-            setGoalFormModalOpen(false)
-            navigation.popToTop()
-        } catch (err) {
-            console.error(err)
-        }
-    }
+    // const handleSubmit = async (g: CreateGoalType) => {
+    //     try {
+    //         await API.graphql(graphqlOperation(createGoal, {input: {
+    //             ...g, 
+    //             date: g.date?.toISOString().split("T")[0],
+    //             unsplashIMG: JSON.stringify(g.unsplashIMG)
+    //         }}))
+    //         setGoalFormModalOpen(false)
+    //         navigation.popToTop()
+    //     } catch (err) {
+    //         console.error(err)
+    //     }
+    // }
+
+    const handleSubmit = console.log
 
     return (
         <Screen style={styles.screen}>

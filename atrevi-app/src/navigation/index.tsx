@@ -68,7 +68,7 @@ function RootStackNavigator() {
         <AuthContext.Provider value={user}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {
-                    user ?
+                    user || true ?
                         <>
                             <Stack.Screen name="Main" component={BottomTabNavigator} />
                             <Stack.Screen

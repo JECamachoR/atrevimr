@@ -1,25 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-atrevi-dev-161349-authRole",
-      "UnauthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-dev-161349-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-dev-161349-authRole",
+      "AuthRoleName": "amplify-atrevi-dev-202336-authRole",
+      "UnauthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-dev-202336-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-dev-202336-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-atrevi-dev-161349-deployment",
-      "UnauthRoleName": "amplify-atrevi-dev-161349-unauthRole",
-      "StackName": "amplify-atrevi-dev-161349",
-      "StackId": "arn:aws:cloudformation:us-east-1:963673112435:stack/amplify-atrevi-dev-161349/3f7f1ce0-df68-11eb-9a91-0e194195a24f",
-      "AmplifyAppId": "dm51mti6kch4x"
+      "DeploymentBucketName": "amplify-atrevi-dev-202336-deployment",
+      "UnauthRoleName": "amplify-atrevi-dev-202336-unauthRole",
+      "StackName": "amplify-atrevi-dev-202336",
+      "StackId": "arn:aws:cloudformation:us-east-1:963673112435:stack/amplify-atrevi-dev-202336/938a62f0-079e-11ec-ab36-1206176d6be9",
+      "AmplifyAppId": "d3rxbnkqxgehxd"
     },
     "categories": {
       "auth": {
-        "atrevi": {}
-      },
-      "function": {
-        "testCountFunction": {
-          "deploymentBucketName": "amplify-atrevi-dev-161349-deployment",
-          "s3Key": "amplify-builds/testCountFunction-53546d505671365a6a33-build.zip"
-        }
+        "atrevicd4ae34b": {}
       }
     }
   }
