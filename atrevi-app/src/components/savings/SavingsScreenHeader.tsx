@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
         fontFamily: "Poppins_600SemiBold",
         fontSize: 28,
         lineHeight: 42,
+        color: grayscale.offWhite
     },
     balanceRow: {
         marginTop: 16,
@@ -151,6 +152,7 @@ const styles = StyleSheet.create({
     balanceLabel: {
         fontSize: 12,
         lineHeight: 18,
+        color: grayscale.offWhite,
     },
     balance: {
         color: grayscale.offWhite,
@@ -176,10 +178,12 @@ const styles = StyleSheet.create({
     nrText: {
         fontSize: 12, 
         paddingHorizontal: 8,
+        color: grayscale.offWhite
     },
     plannedLabel: {
         fontSize: 14,
         lineHeight: 36,
+        color: grayscale.offWhite,
     },
     progress: {
         height: 86,
@@ -200,16 +204,19 @@ const styles = StyleSheet.create({
     },
     progressLabel: {
         fontSize: 12,
-        lineHeight: 18
+        lineHeight: 18,
+        color: grayscale.offWhite,
     },
     progressAccum: {
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 16
+        fontSize: 16,
+        color: grayscale.offWhite,
     },
     progressGoal: {
         fontFamily: "Poppins_400Regular",
         fontSize: 12,
         fontWeight: "400",
+        color: grayscale.offWhite,
     },
     goals: {
         marginRight: 16,
