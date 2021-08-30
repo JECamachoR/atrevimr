@@ -1,0 +1,76 @@
+{
+    "identityPoolName": "atreviUsers_identitypool",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "atrevi31e72104",
+    "userPoolName": "atreviUsers_userpool",
+    "autoVerifiedAttributes": [
+        "phone_number"
+    ],
+    "mfaConfiguration": "OPTIONAL",
+    "mfaTypes": [
+        "SMS Text Message",
+        "TOTP"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": true,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [
+        "Requires Lowercase",
+        "Requires Uppercase"
+    ],
+    "requiredAttributes": [
+        "phone_number"
+    ],
+    "aliasAttributes": [
+        "preferred_username"
+    ],
+    "userpoolClientGenerateSecret": false,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email",
+        "picture",
+        "phone_number"
+    ],
+    "userpoolClientReadAttributes": [
+        "email",
+        "picture"
+    ],
+    "userpoolClientLambdaRole": "atrevi31e72104_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": true,
+    "sharedId": "31e72104",
+    "resourceName": "atreviUsers",
+    "authSelections": "identityPoolAndUserPool",
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "useDefault": "manual",
+    "thirdPartyAuth": false,
+    "userPoolGroups": true,
+    "adminQueries": false,
+    "triggers": "{}",
+    "hostedUI": false,
+    "userPoolGroupList": [
+        "admin",
+        "alphaTester"
+    ],
+    "serviceName": "Cognito",
+    "usernameCaseSensitive": false,
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "breakCircularDependency": true,
+    "permissions": [],
+    "dependsOn": []
+}

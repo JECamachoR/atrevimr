@@ -7,9 +7,11 @@ const phoneNumber = yup.string()
 	.required("Requerido")
 
 const pass = yup.string()
-	.min(8, "Demasiado Corta")
-	.max(20, "Demasiado Larga")
-	.required("Requerido")
+	.min(8, "Too short")
+	.max(20, "Too long")
+	.matches(/.*[A-Z]*.*/, "Uppercase letter required")
+	.matches(/.*[a-z]*.*/, "Lowercase required")
+	.required("Required")
 
 export const SignInSchema = yup.object().shape({
 	phoneNumber,
@@ -18,12 +20,7 @@ export const SignInSchema = yup.object().shape({
 
 export const SignUpSchema = yup.object().shape({
 	phoneNumber,
-	firstName: yup.string(),
-	paternalLastName: yup.string(),
-	maternalLastName: yup.string(),
 	pass,
-	passConfirmation: pass
-		.oneOf([yup.ref("pass"), null], "Las contraseñas no son iguales"),
 })
 
 export const PhoneVerificationSchema = yup.object().shape({

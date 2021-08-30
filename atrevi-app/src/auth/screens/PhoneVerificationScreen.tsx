@@ -9,90 +9,90 @@ import PhoneNumberInput from "../../components/formComponents/PhoneNumberInput"
 import TextInput from "../../components/formComponents/TextInput"
 import Submitting from "../../components/Submitting"
 import { Text, View } from "../../components/Themed"
-// import { createUser } from "../../graphql/mutations"
 import { AuthParamList } from "../../../types"
 import { CountryCode } from "react-native-country-picker-modal"
+import { createUser } from "../../graphql/mutations"
 
 type Props = StackScreenProps<AuthParamList, "PhoneVerificationScreen">;
 
 const PhoneVerificationScreen = ({ route : {params}, navigation}: Props): React.ReactElement => {
 
-    return (
-        <View style={styles.container}>
-            <Formik
-                initialValues={{
-                    phoneNumber: params?.phoneNumber || "",
-                    phoneNumberWithoutCode: params?.phoneNumberWithoutCode || "",
-                    countryCode: params?.countryCode || "MX",
-                    code: ""
-                }}
-                onSubmit={async (v) => {
-                    try {
-                        await Auth.confirmSignUp(v.phoneNumber, v.code)
-                        // await graphqlOperation(createUser, {
-                        //     input: {phoneNumber: v.phoneNumber}
-                        // })
-                        if (params?.pass && params.phoneNumber) {
-                            await Auth.signIn({username: params.phoneNumber, password: params.pass})
-                        } else {
-                            navigation.popToTop()
-                        }
-                    } catch (err) {
-                        console.log("Error while confirming SignUp:", err)
-                    }
-                }}
-                validationSchema={PhoneVerificationSchema}
-            >
-                {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isSubmitting }) => {
-                    if (isSubmitting) {
-                        return <Submitting />
-                    }
-                    return (
-                        <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+	return (
+		<View style={styles.container}>
+			<Formik
+				initialValues={{
+					phoneNumber: params?.phoneNumber || "",
+					phoneNumberWithoutCode: params?.phoneNumberWithoutCode || "",
+					countryCode: params?.countryCode || "MX",
+					code: ""
+				}}
+				onSubmit={async (v) => {
+					try {
+						await Auth.confirmSignUp(v.phoneNumber, v.code)
+						await graphqlOperation(createUser, {
+							input: {phoneNumber: v.phoneNumber}
+						})
+						if (params?.pass && params.phoneNumber) {
+							await Auth.signIn({username: params.phoneNumber, password: params.pass})
+						} else {
+							navigation.popToTop()
+						}
+					} catch (err) {
+						console.log("Error while confirming SignUp:", err)
+					}
+				}}
+				validationSchema={PhoneVerificationSchema}
+			>
+				{({ handleChange, handleBlur, handleSubmit, values, errors, touched, isSubmitting }) => {
+					if (isSubmitting) {
+						return <Submitting />
+					}
+					return (
+						<View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
                             
-                            <View>
-                                <Text>Un código se envió a tu celular por SMS, ingrésalo abajo :) </Text>
-                            </View>
+							<View>
+								<Text>Un código se envió a tu celular por SMS, ingrésalo abajo :) </Text>
+							</View>
                             
-                            <PhoneNumberInput
-                                value={values.phoneNumber} 
-                                defaultCode={values.countryCode as CountryCode}
-                                placeholder="Número de cel"
-                                error={errors.phoneNumber && touched.phoneNumber ? errors.phoneNumber : undefined}
-                                onChangeText={handleChange("phoneNumberWithoutCode")}
-                                onChangeFormattedText={handleChange("phoneNumber")}
-                                onBlur={handleBlur("phoneNumber")}
-                                returnKeyType="send"
-                            />
+							<PhoneNumberInput
+								value={values.phoneNumberWithoutCode} 
+								defaultCode={values.countryCode as CountryCode}
+								placeholder="Número de cel"
+								error={errors.phoneNumber && touched.phoneNumber ? errors.phoneNumber : undefined}
+								onChangeText={handleChange("phoneNumberWithoutCode")}
+								onChangeFormattedText={handleChange("phoneNumber")}
+								onBlur={handleBlur("phoneNumber")}
+								returnKeyType="send"
+							/>
                             
-                            <TextInput 
-                                value={values.code}
-                                placeholder="Ingresa el Código"
-                                keyboardType="number-pad"
-                                error={errors.code && touched.code ? errors.code : undefined}
-                                onChangeText={handleChange("code")}
-                                onBlur={handleBlur("code")}
-                            />
+							<TextInput 
+								value={values.code}
+								placeholder="Ingresa el Código"
+								keyboardType="number-pad"
+								error={errors.code && touched.code ? errors.code : undefined}
+								onChangeText={handleChange("code")}
+								onBlur={handleBlur("code")}
+							/>
 
-                            <Button
-                                onPress={handleSubmit}
-                                title="Enviar"
-                            />
-                        </View>
-                    )
-                }
-                }
-            </Formik>
-        </View>
-    )
+							<Button
+								onPress={handleSubmit}
+								title="Enviar"
+							/>
+						</View>
+					)
+				}
+				}
+			</Formik>
+		</View>
+	)
 }
 
 export default PhoneVerificationScreen
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-    }
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+	}
 })

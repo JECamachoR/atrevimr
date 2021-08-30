@@ -52,7 +52,6 @@ type Transaction @model
 }
 
 type Counter @model
-@auth(rules: [{allow: owner, ownerField: "owner"}])
 @key(name: "byUser", fields: ["owner"]) {
     id: ID!
     owner: String
@@ -60,7 +59,6 @@ type Counter @model
 }
 
 type Counted @model
-@auth(rules: [{allow: owner, ownerField: "owner"}])
 @key(name: "byUser", fields: ["owner"]) {
     id: ID!
     owner: String

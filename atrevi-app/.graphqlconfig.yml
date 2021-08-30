@@ -1,18 +1,12 @@
 projects:
   atrevi:
-    schemaPath: amplify/backend/api/atrevi/build/schema.graphql
+    schemaPath: src/graphql/schema.json
     includes:
-      - src/graphql/**/*.ts
+      - src/graphql/**/*.js
     excludes:
       - ./amplify/**
     extensions:
       amplify:
-        codeGenTarget: typescript
-        generatedFileName: src/API.ts
+        codeGenTarget: javascript
+        generatedFileName: ''
         docsFilePath: src/graphql
-        region: us-east-1
-        apiId: null
-        maxDepth: 2
-extensions:
-  amplify:
-    version: 3

@@ -291,6 +291,7 @@ export type CreateCounterInput = {
 };
 
 export type ModelCounterConditionInput = {
+  owner?: ModelStringInput | null,
   count?: ModelIntInput | null,
   and?: Array< ModelCounterConditionInput | null > | null,
   or?: Array< ModelCounterConditionInput | null > | null,
@@ -334,6 +335,7 @@ export type CreateCountedInput = {
 };
 
 export type ModelCountedConditionInput = {
+  owner?: ModelStringInput | null,
   and?: Array< ModelCountedConditionInput | null > | null,
   or?: Array< ModelCountedConditionInput | null > | null,
   not?: ModelCountedConditionInput | null,
@@ -1437,10 +1439,6 @@ export type OnDeleteTransactionSubscription = {
   } | null,
 };
 
-export type OnCreateCounterSubscriptionVariables = {
-  owner: string,
-};
-
 export type OnCreateCounterSubscription = {
   onCreateCounter?:  {
     __typename: "Counter",
@@ -1450,10 +1448,6 @@ export type OnCreateCounterSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
-};
-
-export type OnUpdateCounterSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnUpdateCounterSubscription = {
@@ -1467,10 +1461,6 @@ export type OnUpdateCounterSubscription = {
   } | null,
 };
 
-export type OnDeleteCounterSubscriptionVariables = {
-  owner: string,
-};
-
 export type OnDeleteCounterSubscription = {
   onDeleteCounter?:  {
     __typename: "Counter",
@@ -1480,10 +1470,6 @@ export type OnDeleteCounterSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
-};
-
-export type OnCreateCountedSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnCreateCountedSubscription = {
@@ -1496,10 +1482,6 @@ export type OnCreateCountedSubscription = {
   } | null,
 };
 
-export type OnUpdateCountedSubscriptionVariables = {
-  owner: string,
-};
-
 export type OnUpdateCountedSubscription = {
   onUpdateCounted?:  {
     __typename: "Counted",
@@ -1508,10 +1490,6 @@ export type OnUpdateCountedSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
-};
-
-export type OnDeleteCountedSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnDeleteCountedSubscription = {

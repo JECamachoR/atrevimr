@@ -46,6 +46,7 @@
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-currency-input": "^1.0.1",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-get-random-values": "^1.7.0",
     "react-native-phone-number-input": "^2.1.0",
     "react-native-progress": "^5.0.0",
     "react-native-reanimated": "~2.2.0",
@@ -54,6 +55,7 @@
     "react-native-svg": "12.1.1",
     "react-native-unsplash": "^0.0.9",
     "react-native-web": "~0.13.12",
+    "uuid": "^8.3.2",
     "yup": "^0.32.9"
   },
   "devDependencies": {
@@ -66,6 +68,7 @@
     "@types/jest": "^27.0.1",
     "@types/react": "^17.0.19",
     "@types/react-native": "^0.64.13",
+    "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
     "babel-jest": "^27.0.6",
