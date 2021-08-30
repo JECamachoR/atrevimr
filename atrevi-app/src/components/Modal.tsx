@@ -1,9 +1,8 @@
 import { MaterialIcons } from "@expo/vector-icons"
 import Constants from "expo-constants"
-import { t } from "i18n-js"
 import * as React from "react"
 import { Modal as DefaultModal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View as DefaultView } from "react-native"
-import { darkMode, grayscale, secondary } from "../constants/Colors"
+import { secondary } from "../constants/Colors"
 import { Row } from "./Layout"
 import { useThemeColor, Text, View, ViewProps } from "./Themed"
 
@@ -55,7 +54,7 @@ const Modal = ({
 									</TouchableOpacity>}
 								</View>
 								<View style={styles.headCenter}>
-									<Text>{title}</Text>
+									<Text style={styles.title}>{title}</Text>
 								</View>
 								<View style={styles.headRight}>
 									{rightComponent}
@@ -88,6 +87,10 @@ const styles = StyleSheet.create({
 		height: 44,
 		borderBottomWidth: 1,
 		paddingHorizontal: 16,
+	},
+	title: {
+		fontFamily: "Poppins_600SemiBold",
+		fontSize: 16,
 	},
 	headLeft: {
 		flex: 1,
