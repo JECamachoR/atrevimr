@@ -22,16 +22,16 @@ export function useThemeColor({colors, colorName} : {
     colors?: { light: string ; dark: string } | undefined,
     colorName?: keyof typeof Colors.light & keyof typeof Colors.dark | undefined
 }): string {
-    const theme = useColorScheme()
+	const theme = useColorScheme()
 
-    if (colors) {
-        return colors[theme]
-    } else if (colorName) {
-        return Colors[theme][colorName]
-    } else return "#FFFFFF"
+	if (colors) {
+		return colors[theme]
+	} else if (colorName) {
+		return Colors[theme][colorName]
+	} else return "#FFFFFF"
 }
 
-type ThemeProps = {
+export type ThemeProps = {
     lightColor?: string;
     darkColor?: string;
 };
@@ -42,56 +42,56 @@ export type ScrollViewProps = ThemeProps & DefaultScrollView["props"];
 export type DefaultKeyboardAvoidingViewProps = ThemeProps & DefaultKeyboardAvoidingView["props"];
 
 export function Text(props: TextProps): React.ReactElement {
-    const { style, lightColor, darkColor, ...otherProps } = props
-    const bg = lightColor && darkColor ? 
-    {colors: { light: lightColor, dark: darkColor }}
-    :
-    {colorName: "text"}
-    const color = useThemeColor(bg)
+	const { style, lightColor, darkColor, ...otherProps } = props
+	const bg = lightColor && darkColor ? 
+		{colors: { light: lightColor, dark: darkColor }}
+		:
+		{colorName: "text"}
+	const color = useThemeColor(bg)
 
-    return <DefaultText style={[{ color }, {fontFamily:"Poppins_400Regular"}, style]} {...otherProps} />
+	return <DefaultText style={[{ color }, {fontFamily:"Poppins_400Regular"}, style]} {...otherProps} />
 }
 
 export function View(props: ViewProps): React.ReactElement {
-    const { style, lightColor, darkColor, ...otherProps } = props
-    const bg = lightColor && darkColor ? 
-    {colors: { light: lightColor, dark: darkColor }}
-    :
-    {colorName: "background"}
-    const backgroundColor = useThemeColor(bg)
+	const { style, lightColor, darkColor, ...otherProps } = props
+	const bg = lightColor && darkColor ? 
+		{colors: { light: lightColor, dark: darkColor }}
+		:
+		{colorName: "background"}
+	const backgroundColor = useThemeColor(bg)
 
-    return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />
+	return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />
 }
 
 export function ScrollView(props: ScrollViewProps): React.ReactElement {
-    const { style, lightColor, darkColor, ...otherProps } = props
-    const bg = lightColor && darkColor ? 
-    {colors: { light: lightColor, dark: darkColor }}
-    :
-    {colorName: "background"}
-    const backgroundColor = useThemeColor(bg)
+	const { style, lightColor, darkColor, ...otherProps } = props
+	const bg = lightColor && darkColor ? 
+		{colors: { light: lightColor, dark: darkColor }}
+		:
+		{colorName: "background"}
+	const backgroundColor = useThemeColor(bg)
 
-    return <DefaultScrollView style={[{ backgroundColor }, style]} {...otherProps} />
+	return <DefaultScrollView style={[{ backgroundColor }, style]} {...otherProps} />
 }
 
 export function KeyboardAvoidingView(props: DefaultKeyboardAvoidingViewProps): React.ReactElement {
-    const { style, lightColor, darkColor, ...otherProps } = props
-    const bg = lightColor && darkColor ? 
-    {colors: { light: lightColor, dark: darkColor }}
-    :
-    {colorName: "background"}
-    const backgroundColor = useThemeColor(bg)
+	const { style, lightColor, darkColor, ...otherProps } = props
+	const bg = lightColor && darkColor ? 
+		{colors: { light: lightColor, dark: darkColor }}
+		:
+		{colorName: "background"}
+	const backgroundColor = useThemeColor(bg)
 
-    return <DefaultKeyboardAvoidingView style={[{ backgroundColor }, style]} {...otherProps} />
+	return <DefaultKeyboardAvoidingView style={[{ backgroundColor }, style]} {...otherProps} />
 }
 
 export function Screen(props: ViewProps): React.ReactElement {
-    const { style, lightColor, darkColor, ...otherProps } = props
-    const bg = lightColor && darkColor ? 
-    {colors: { light: lightColor, dark: darkColor }}
-    :
-    {colorName: "background"}
-    const backgroundColor = useThemeColor(bg)
+	const { style, lightColor, darkColor, ...otherProps } = props
+	const bg = lightColor && darkColor ? 
+		{colors: { light: lightColor, dark: darkColor }}
+		:
+		{colorName: "background"}
+	const backgroundColor = useThemeColor(bg)
 
-    return <View style={[{ backgroundColor, flex: 1, paddingTop: Constants.statusBarHeight }, style]} {...otherProps} />
+	return <View style={[{ backgroundColor, flex: 1, paddingTop: Constants.statusBarHeight }, style]} {...otherProps} />
 }
