@@ -12,6 +12,8 @@ import PlusButtonModal from "../../components/home/PlusButtonModal"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavParamList } from "../../../types"
 import GoalsContext from "../../contexts/GoalsContext"
+import MoneyboxesContext from "../../contexts/MoneyboxesContext"
+import GoalList from "../../components/goals/GoalList"
 
 type Props = StackScreenProps<NavParamList, "Home">
 
@@ -24,10 +26,7 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 
 
 	const goals = React.useContext(GoalsContext)
-
-	React.useEffect(() => {
-		goals.forEach(g => console.log(g))
-	}, [goals])
+	const moneyboxes = React.useContext(MoneyboxesContext)
 
 	return (
 		<Screen>
@@ -52,11 +51,36 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 				</View>
 			</View>
 
-			<CreateGoalCard goToCreateGoal={() => navigation.navigate("CreateGoal")} />
-
-			<CreateMoneyboxCard goToCreateMoneybox={() => navigation.navigate("CreateMoneybox")} />
-
+			{ goals.length ? 
+				<GoalList goals={goals} />
+				:
+				<CreateGoalCard goToCreateGoal={() => navigation.navigate("CreateGoal")} />
+			}
+			{ moneyboxes.length ? 
+				null
+				:
+				<CreateMoneyboxCard goToCreateMoneybox={() => navigation.navigate("CreateMoneybox")} />
+			}
 			<RoundButton variant="plus" onPress={() => setPlusButtonModalOpen(true)} style={styles.roundButtonPosition}/>
+			{/* 
+			<Button
+				title="initialSignup"
+				onPress={async () => {
+					try {
+						const r1 = await API.graphql(graphqlOperation(createUser, {
+							input: {phone: auth.username, id: auth.username} as CreateUserInput
+						}))
+						console.log(r1)
+						const r2 = await API.graphql(graphqlOperation(createFund, {input: {
+							name: "goals",
+							balance: 0,
+						} as CreateFundInput}))
+						console.log(r2)
+					} catch (err) {
+						console.error(err)
+					}
+				}}
+			/> */}
 		</Screen>
 	)
 }

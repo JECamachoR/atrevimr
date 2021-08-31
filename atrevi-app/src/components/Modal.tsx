@@ -2,7 +2,6 @@ import { MaterialIcons } from "@expo/vector-icons"
 import Constants from "expo-constants"
 import * as React from "react"
 import { Modal as DefaultModal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View as DefaultView } from "react-native"
-import { secondary } from "../constants/Colors"
 import { Row } from "./Layout"
 import { useThemeColor, Text, View, ViewProps } from "./Themed"
 
@@ -50,7 +49,7 @@ const Modal = ({
 							<Row style={[styles.headRow, {borderBottomColor: useThemeColor({colorName: "line"})}]}>
 								<View style={styles.headLeft}>
 									{leftComponent || <TouchableOpacity onPress={hideModal}>
-										<MaterialIcons name="keyboard-arrow-down" size={28} color={secondary.default} />
+										<MaterialIcons name="keyboard-arrow-down" size={28} color={useThemeColor({colorName: "link"})} />
 									</TouchableOpacity>}
 								</View>
 								<View style={styles.headCenter}>

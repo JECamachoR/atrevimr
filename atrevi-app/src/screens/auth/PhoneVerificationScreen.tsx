@@ -12,7 +12,7 @@ import { Text, View } from "../../components/Themed"
 import { AuthParamList } from "../../../types"
 import { CountryCode } from "react-native-country-picker-modal"
 import { createFund, createUser } from "../../graphql/mutations"
-import { CreateFundInput } from "../../API"
+import { CreateFundInput, CreateUserInput } from "../../API"
 
 type Props = StackScreenProps<AuthParamList, "PhoneVerificationScreen">;
 
@@ -30,20 +30,13 @@ const PhoneVerificationScreen = ({ route : {params}, navigation}: Props): React.
 				onSubmit={async (v) => {
 					try {
 						await Auth.confirmSignUp(v.phoneNumber, v.code)
-						await API.graphql(graphqlOperation(createUser, {
-							input: {phoneNumber: v.phoneNumber}
-						}))
-						await API.graphql(graphqlOperation(createFund, {input: {
-							name: "goals",
-							balance: 0,
-						} as CreateFundInput}))
 						if (params?.pass && params.phoneNumber) {
 							await Auth.signIn({username: params.phoneNumber, password: params.pass})
 						} else {
 							navigation.popToTop()
 						}
 					} catch (err) {
-						console.log("Error while confirming SignUp:", err)
+						console.error("Error while confirming SignUp:", err)
 					}
 				}}
 				validationSchema={PhoneVerificationSchema}

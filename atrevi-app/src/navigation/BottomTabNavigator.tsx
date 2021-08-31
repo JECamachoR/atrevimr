@@ -92,7 +92,6 @@ const BottomTabNavigator = (): React.ReactElement => {
 			owner: auth.username
 		})) as Observable<object>).subscribe({
 			next: ({value}: {value: GraphQLResult<OnCreateGoalSubscription>}) => {
-				console.log(value)
 				if (value.data?.onCreateGoal?.id) {
 					const ng = value.data.onCreateGoal as Goal
 					setGoals(g => ([...g, ng]))
