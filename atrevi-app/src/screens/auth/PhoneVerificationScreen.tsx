@@ -1,9 +1,9 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import { Auth, graphqlOperation } from "aws-amplify"
+import { API, Auth, graphqlOperation } from "aws-amplify"
 import { Formik } from "formik"
 import * as React from "react"
 import { StyleSheet } from "react-native"
-import { PhoneVerificationSchema } from "../schemas"
+import { PhoneVerificationSchema } from "../../auth/schemas"
 import Button from "../../components/Button"
 import PhoneNumberInput from "../../components/formComponents/PhoneNumberInput"
 import TextInput from "../../components/formComponents/TextInput"
@@ -11,7 +11,8 @@ import Submitting from "../../components/Submitting"
 import { Text, View } from "../../components/Themed"
 import { AuthParamList } from "../../../types"
 import { CountryCode } from "react-native-country-picker-modal"
-import { createUser } from "../../graphql/mutations"
+import { createFund, createUser } from "../../graphql/mutations"
+import { CreateFundInput } from "../../API"
 
 type Props = StackScreenProps<AuthParamList, "PhoneVerificationScreen">;
 
@@ -29,9 +30,13 @@ const PhoneVerificationScreen = ({ route : {params}, navigation}: Props): React.
 				onSubmit={async (v) => {
 					try {
 						await Auth.confirmSignUp(v.phoneNumber, v.code)
-						await graphqlOperation(createUser, {
+						await API.graphql(graphqlOperation(createUser, {
 							input: {phoneNumber: v.phoneNumber}
-						})
+						}))
+						await API.graphql(graphqlOperation(createFund, {input: {
+							name: "goals",
+							balance: 0,
+						} as CreateFundInput}))
 						if (params?.pass && params.phoneNumber) {
 							await Auth.signIn({username: params.phoneNumber, password: params.pass})
 						} else {

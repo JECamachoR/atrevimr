@@ -15,17 +15,24 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import GoalsContext from "../contexts/GoalsContext"
 import MoneyboxesContext from "../contexts/MoneyboxesContext"
 import TransactionsContext from "../contexts/TransactionsContext"
-import { Fund, Goal, ListFundsQuery, ListGoalsQuery, ListTransactionsQuery, OnCreateFundSubscription, OnCreateGoalSubscription, OnCreateTransactionSubscription, OnDeleteFundSubscription, OnDeleteGoalSubscription, OnUpdateFundSubscription, OnUpdateGoalSubscription, Transaction } from "../API"
+import { Fund, Goal, ListFundsQuery, ListGoalsQuery, ListTransactionsQuery, 
+	OnCreateFundSubscription, OnCreateGoalSubscription, OnCreateTransactionSubscription, 
+	OnDeleteFundSubscription, OnDeleteGoalSubscription, OnUpdateFundSubscription, 
+	OnUpdateGoalSubscription, Transaction } from "../API"
 import GoalFundContext from "../contexts/GoalFundContext"
 import { API, graphqlOperation } from "aws-amplify"
 import { listFunds, listGoals, listTransactions } from "../graphql/queries"
 import { GraphQLResult } from "@aws-amplify/api-graphql"
-import { onCreateFund, onCreateGoal, onCreateTransaction, onDeleteFund, onDeleteGoal, onUpdateFund, onUpdateGoal } from "../graphql/subscriptions"
+import { onCreateFund, onCreateGoal, onCreateTransaction, onDeleteFund, 
+	onDeleteGoal, onUpdateFund, onUpdateGoal } from "../graphql/subscriptions"
 import { Observable } from "zen-observable-ts"
+import AuthContext from "../auth/AuthContext"
 
 const BottomTab = createBottomTabNavigator()
 
 const BottomTabNavigator = (): React.ReactElement => {
+
+	const auth = React.useContext(AuthContext)
 
 	const [goals, setGoals] = React.useState<Goal[]>([])
 	const [moneyboxes, setMoneyboxes] = React.useState<Fund[]>([])
@@ -81,20 +88,25 @@ const BottomTabNavigator = (): React.ReactElement => {
 			}
 		}
 
-		const onGoalCreation = (API.graphql(graphqlOperation(onCreateGoal)) as Observable<object>).subscribe({
-			next: (value: GraphQLResult<OnCreateGoalSubscription>) => {
+		const onGoalCreation = (API.graphql(graphqlOperation(onCreateGoal, {
+			owner: auth.username
+		})) as Observable<object>).subscribe({
+			next: ({value}: {value: GraphQLResult<OnCreateGoalSubscription>}) => {
+				console.log(value)
 				if (value.data?.onCreateGoal?.id) {
 					const ng = value.data.onCreateGoal as Goal
 					setGoals(g => ([...g, ng]))
 				}
 			},
-			error: console.error
+			error: e => console.error(e)
 		})
 
-		const onGoalDeletion = (API.graphql(graphqlOperation(onDeleteGoal))as Observable<object>).subscribe({
-			next: (v: GraphQLResult<OnDeleteGoalSubscription>) => {
-				if (v.data?.onDeleteGoal?.id) {
-					const dg = v.data.onDeleteGoal as Goal
+		const onGoalDeletion = (API.graphql(graphqlOperation(onDeleteGoal, {
+			owner: auth.username
+		}))as Observable<object>).subscribe({
+			next: ({value}: {value: GraphQLResult<OnDeleteGoalSubscription>}) => {
+				if (value.data?.onDeleteGoal?.id) {
+					const dg = value.data.onDeleteGoal as Goal
 					setGoals(g => g.filter(goal => {
 						if (goal.id !== dg.id) return goal
 					}))
@@ -103,10 +115,12 @@ const BottomTabNavigator = (): React.ReactElement => {
 			error: console.error
 		})
 
-		const onGoalUpdate = (API.graphql(graphqlOperation(onUpdateGoal)) as Observable<object>).subscribe({
-			next: (v: GraphQLResult<OnUpdateGoalSubscription>) => {
-				if (v.data?.onUpdateGoal){
-					const ug = v.data.onUpdateGoal as Goal
+		const onGoalUpdate = (API.graphql(graphqlOperation(onUpdateGoal, {
+			owner: auth.username
+		})) as Observable<object>).subscribe({
+			next: ({value}: {value: GraphQLResult<OnUpdateGoalSubscription>}) => {
+				if (value.data?.onUpdateGoal){
+					const ug = value.data.onUpdateGoal as Goal
 					setGoals(goals => goals.map(g => {
 						if (g.id === ug.id) return ug
 						return g
@@ -116,8 +130,10 @@ const BottomTabNavigator = (): React.ReactElement => {
 			error: console.error
 		})
 
-		const onFundCreation = (API.graphql(graphqlOperation(onCreateFund)) as Observable<object>).subscribe({
-			next: (value: GraphQLResult<OnCreateFundSubscription>) => {
+		const onFundCreation = (API.graphql(graphqlOperation(onCreateFund, {
+			owner: auth.username
+		})) as Observable<object>).subscribe({
+			next: ({value}:{value: GraphQLResult<OnCreateFundSubscription>}) => {
 				if (value.data?.onCreateFund?.id) {
 					const nf = value.data.onCreateFund as Fund
 					setMoneyboxes(g => ([...g, nf]))
@@ -126,10 +142,12 @@ const BottomTabNavigator = (): React.ReactElement => {
 			error: console.error
 		})
 
-		const onFundDeletion = (API.graphql(graphqlOperation(onDeleteFund))as Observable<object>).subscribe({
-			next: (v: GraphQLResult<OnDeleteFundSubscription>) => {
-				if (v.data?.onDeleteFund?.id) {
-					const df = v.data.onDeleteFund as Fund
+		const onFundDeletion = (API.graphql(graphqlOperation(onDeleteFund, {
+			owner: auth.username
+		}))as Observable<object>).subscribe({
+			next: ({value}: {value: GraphQLResult<OnDeleteFundSubscription>}) => {
+				if (value.data?.onDeleteFund?.id) {
+					const df = value.data.onDeleteFund as Fund
 					setMoneyboxes(f => f.filter(m => {
 						if (m.id !== df.id) return m
 					}))
@@ -138,10 +156,12 @@ const BottomTabNavigator = (): React.ReactElement => {
 			error: console.error
 		})
    
-		const onFundUpdate = (API.graphql(graphqlOperation(onUpdateFund)) as Observable<object>).subscribe({
-			next: (v: GraphQLResult<OnUpdateFundSubscription>) => {
-				if (v.data?.onUpdateFund){
-					const uf = v.data.onUpdateFund as Fund
+		const onFundUpdate = (API.graphql(graphqlOperation(onUpdateFund, {
+			owner: auth.username
+		})) as Observable<object>).subscribe({
+			next: ({value}: {value: GraphQLResult<OnUpdateFundSubscription>}) => {
+				if (value.data?.onUpdateFund){
+					const uf = value.data.onUpdateFund as Fund
 					if (uf.name === "goals") {
 						setGoalFund(uf)
 					} else {
@@ -155,8 +175,10 @@ const BottomTabNavigator = (): React.ReactElement => {
 			error: console.error
 		})
 
-		const onTransactionCreation = (API.graphql(graphqlOperation(onCreateTransaction)) as Observable<object>).subscribe({
-			next: (value: GraphQLResult<OnCreateTransactionSubscription>) => {
+		const onTransactionCreation = (API.graphql(graphqlOperation(onCreateTransaction, {
+			owner: auth.username
+		})) as Observable<object>).subscribe({
+			next: ({value}: {value: GraphQLResult<OnCreateTransactionSubscription>}) => {
 				if (value.data?.onCreateTransaction?.id) {
 					const nt = value.data.onCreateTransaction as Transaction
 					setTransactions(t => ([...t, nt]))
