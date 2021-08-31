@@ -14,12 +14,43 @@ export const getUser = /* GraphQL */ `
       name
       profileIMG
       goals {
+        items {
+          id
+          owner
+          name
+          ammount
+          date
+          unsplashIMG
+          category
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       funds {
+        items {
+          id
+          owner
+          name
+          balance
+          recurringAmmount
+          category
+          unsplashIMG
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       transactions {
+        items {
+          id
+          fundID
+          owner
+          ammount
+          concept
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -43,6 +74,15 @@ export const listUsers = /* GraphQL */ `
         DOTW
         name
         profileIMG
+        goals {
+          nextToken
+        }
+        funds {
+          nextToken
+        }
+        transactions {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -98,6 +138,15 @@ export const getFund = /* GraphQL */ `
       category
       unsplashIMG
       transactions {
+        items {
+          id
+          fundID
+          owner
+          ammount
+          concept
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -120,6 +169,9 @@ export const listFunds = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
+        transactions {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -143,6 +195,9 @@ export const getTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
+        transactions {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -164,6 +219,17 @@ export const listTransactions = /* GraphQL */ `
         owner
         ammount
         concept
+        fund {
+          id
+          owner
+          name
+          balance
+          recurringAmmount
+          category
+          unsplashIMG
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }

@@ -12,24 +12,24 @@ import awsconfig from "./aws-exports"
 Amplify.configure(awsconfig)
 
 const App = (): React.ReactElement => {
-    const isLoadingComplete = useCachedResources()
-    const colorScheme = useColorScheme()
-    const [fontsLoaded] = useFonts({
-        Poppins_400Regular,
-        Poppins_600SemiBold,
-        Poppins_800ExtraBold,
-        Poppins_500Medium,
-    })
+	const isLoadingComplete = useCachedResources()
+	const colorScheme = useColorScheme()
+	const [fontsLoaded] = useFonts({
+		Poppins_400Regular,
+		Poppins_600SemiBold,
+		Poppins_800ExtraBold,
+		Poppins_500Medium,
+	})
   
-    if (!isLoadingComplete || !fontsLoaded) {
-        return <></>
-    } else {
-        return (
-            <>
-                <Navigation colorScheme={colorScheme} />
-                <StatusBar style="auto"/>
-            </>
-        )
-    }
+	if (!isLoadingComplete || !fontsLoaded) {
+		return <></>
+	} else {
+		return (
+			<>
+				<Navigation colorScheme={colorScheme} />
+				<StatusBar style="auto"/>
+			</>
+		)
+	}
 }
 export default App
