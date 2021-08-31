@@ -15,12 +15,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import GoalsContext from "../contexts/GoalsContext"
 import MoneyboxesContext from "../contexts/MoneyboxesContext"
 import TransactionsContext from "../contexts/TransactionsContext"
-import { Fund, Goal, ListFundsQuery, ListGoalsQuery, ListTransactionsQuery, OnCreateFundSubscription, OnCreateGoalSubscription, OnCreateTransactionSubscription, OnDeleteFundSubscription, OnDeleteGoalSubscription, OnDeleteTransactionSubscription, OnUpdateFundSubscription, OnUpdateGoalSubscription, OnUpdateTransactionSubscription, Transaction } from "../API"
+import { Fund, Goal, ListFundsQuery, ListGoalsQuery, ListTransactionsQuery, OnCreateFundSubscription, OnCreateGoalSubscription, OnCreateTransactionSubscription, OnDeleteFundSubscription, OnDeleteGoalSubscription, OnUpdateFundSubscription, OnUpdateGoalSubscription, Transaction } from "../API"
 import GoalFundContext from "../contexts/GoalFundContext"
 import { API, graphqlOperation } from "aws-amplify"
 import { listFunds, listGoals, listTransactions } from "../graphql/queries"
 import { GraphQLResult } from "@aws-amplify/api-graphql"
-import { onCreateFund, onCreateGoal, onCreateTransaction, onDeleteFund, onDeleteGoal, onDeleteTransaction, onUpdateFund, onUpdateGoal, onUpdateTransaction } from "../graphql/subscriptions"
+import { onCreateFund, onCreateGoal, onCreateTransaction, onDeleteFund, onDeleteGoal, onUpdateFund, onUpdateGoal } from "../graphql/subscriptions"
 import { Observable } from "zen-observable-ts"
 
 const BottomTab = createBottomTabNavigator()
@@ -31,7 +31,6 @@ const BottomTabNavigator = (): React.ReactElement => {
 	const [moneyboxes, setMoneyboxes] = React.useState<Fund[]>([])
 	const [transactions, setTransactions] = React.useState<Transaction[]>([])
 	const [goalFund, setGoalFund] = React.useState<Fund | null>(null)
-	const [reload, setReload] = React.useState(0)
 
 	React.useEffect(() => {
 		const loadGoals = async () => {
@@ -165,6 +164,10 @@ const BottomTabNavigator = (): React.ReactElement => {
 			},
 			error: console.error
 		})
+
+		loadGoals()
+		loadFunds()
+		loadTransactions()
 
 		return () => {
 			onGoalCreation.unsubscribe()
