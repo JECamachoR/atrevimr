@@ -20,7 +20,6 @@ const GoalList = ({ goals } : GoalListProps): React.ReactElement => {
 	const link = useThemeColor({colorName: "link"})
 	const bg = useThemeColor({colorName: "background"})
 	const {width} = useWindowDimensions()
-	console.log("width", width)
 
 	return (
 		<View style={styles.container}>
