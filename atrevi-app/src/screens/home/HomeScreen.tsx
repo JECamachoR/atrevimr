@@ -52,16 +52,21 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 			</View>
 
 			{ goals.length || moneyboxes.length ? 
-				<GoalList goals={goals} />
+				<>
+					<View style={{marginBottom: 16}}>
+						<GoalList goals={goals} />
+					</View>
+					<MoneyboxList moneyboxes={moneyboxes} />
+				</>
 				:
-				<CreateGoalCard goToCreateGoal={() => navigation.navigate("CreateGoal")} />
+				<>
+					<CreateGoalCard goToCreateGoal={() => navigation.navigate("CreateGoal")} />
+					<CreateMoneyboxCard goToCreateMoneybox={() => navigation.navigate("CreateMoneybox")} />
+				</>
 			}
-			{ moneyboxes.length || goals.length ? 
-				<MoneyboxList moneyboxes={moneyboxes} />
-				:
-				<CreateMoneyboxCard goToCreateMoneybox={() => navigation.navigate("CreateMoneybox")} />
-			}
+
 			<RoundButton variant="plus" onPress={() => setPlusButtonModalOpen(true)} style={styles.roundButtonPosition}/>
+
 			{/* 
 			<Button
 				title="initialSignup"
