@@ -1,9 +1,8 @@
 import * as React from "react"
 import { StyleSheet, TouchableOpacity } from "react-native"
 import { Row } from "../../components/Layout"
-import { Screen, Text, View } from "../../components/Themed"
-import { grayscale, secondary } from "../../constants/Colors"
-import i18n from "i18n-js"
+import { Screen, Text, useThemeColor, View } from "../../components/Themed"
+import { darkMode, grayscale, primary, secondary } from "../../constants/Colors"
 import { MaterialIcons } from "@expo/vector-icons"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavParamList } from "../../../types"
@@ -11,9 +10,8 @@ import CreateGoalFormModal from "../../components/goals/CreateGoalFormModal"
 import { UnsplashPhoto } from "react-native-unsplash"
 import { API, graphqlOperation } from "aws-amplify"
 import { createGoal } from "../../graphql/mutations"
-
-// import { API, graphqlOperation } from "aws-amplify"
-// import { createGoal } from "../../graphql/mutations"
+import CreateCustomGoalCard from "../../components/goals/CreateCustomGoalCard"
+import { t } from "i18n-js"
 
 export type CreateGoalType = {
     name?: string,
@@ -44,7 +42,10 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 	}
 
 	return (
-		<Screen style={styles.screen}>
+		<Screen style={styles.screen}
+			lightColor={secondary.default}
+			darkColor={darkMode.background}
+		>
 
 			<CreateGoalFormModal
 				hideModal={() => setGoalFormModalOpen(false)}
@@ -57,21 +58,28 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 			<Row style={styles.head}>
 				<View style={styles.headLeft}>
 					<TouchableOpacity onPress={()=>navigation.goBack()}>
-						<MaterialIcons name="arrow-back" size={40} color={grayscale.offWhite} />
+						<MaterialIcons name="arrow-back" size={30} color={useThemeColor({colors: {
+							light: grayscale.offWhite,
+							dark: primary.default,
+						}})} />
 					</TouchableOpacity>
 				</View>
 				<View style={styles.headCenter}>
-					<Text style={styles.title}>{i18n.t("Create a Goal")}</Text>
+					<Text
+						lightColor={grayscale.offWhite}
+						darkColor={primary.default}
+						style={styles.title}
+					>{t("Create a Goal")}</Text>
 				</View>
 				<View style={styles.headRight}></View>
 			</Row>
 
-			<TouchableOpacity onPress={() => {
+			<CreateCustomGoalCard action={() => {
 				setGoalFormModalOpen(true)
 				setGoal({category: ""})
-			}}>
-				<View style={styles.custom}></View>
-			</TouchableOpacity>
+			}}
+			/>
+			
 		</Screen>
 	)
 }
@@ -80,40 +88,32 @@ export default CreateGoalScreen
 
 const styles = StyleSheet.create({
 	screen: {
-		backgroundColor: secondary.default,
 	},
 	head: {
 		height: 48,
 		margin: 16,
+		backgroundColor: "#00000000",
 	},
 	headLeft: {
 		flex: 1,
-		backgroundColor: secondary.default,
-		alignItems: "center",
+		backgroundColor: "#00000000",
+		alignItems: "flex-start",
 		justifyContent: "center",
 	},
 	headRight: {
 		flex: 1,
-		backgroundColor: secondary.default,
+		backgroundColor: "#00000000",
 		alignItems: "center",
 		justifyContent: "center",
 	},
 	headCenter: {
 		flex: 4,
-		backgroundColor: secondary.default,
+		backgroundColor: "#00000000",
 		alignItems: "center",
 		justifyContent: "center",
 	},
 	title: {
 		fontFamily: "Poppins_600SemiBold",
 		fontSize: 24,
-		color: grayscale.offWhite,
 	},
-	custom: {
-		height: 176,
-		marginHorizontal: 16,
-		marginBottom: 16,
-		borderRadius: 15,
-		overflow: "hidden"
-	}
 })
