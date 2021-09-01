@@ -5,7 +5,6 @@ import { Text, View, useThemeColor } from "../Themed"
 import i18n from "i18n-js"
 import { primary, secondary } from "../../constants/Colors"
 import FormView from "../formComponents/FormView"
-import CurrencyInput from "react-native-currency-input"
 import { Formik } from "formik"
 import { CreateMoneyboxType } from "../../screens/moneybox/CreateMoneyboxScreen"
 import Modal from "../Modal"
@@ -71,7 +70,7 @@ const CreateMoneyboxFormModal = ({ visible, hideModal, moneybox, handleSubmit }:
 								<Text style={styles.subtitle}>{i18n.t("Savings")}</Text>
 								<Text style={styles.label}>{i18n.t("How much do you need?")}</Text>
 								<NeededAmmountInput
-									handleBlur={handleBlur("ammount")}
+									handleBlur={handleBlur("recurringAmmount")}
 									handleChange={(v) => setFieldValue("recurringAmmount", v)}
 									value={values.recurringAmmount}
 								/>
