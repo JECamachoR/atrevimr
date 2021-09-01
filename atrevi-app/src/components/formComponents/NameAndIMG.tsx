@@ -22,7 +22,7 @@ const NameAndIMG = ({ unsplashIMG, name, changeIMG, handleTextChange, handleBlur
 	const [unsplashOpen, setUnsplashOpen] = React.useState(false)
 	const line = useThemeColor({colorName: "line"})
 	const ph = useThemeColor({colorName: "placeholderTextColor"})
-    
+
 	return (
 		<ImageBackground
 			style={[styles.card, {backgroundColor: useThemeColor({colorName: "inputBackground"})}]}

@@ -14,18 +14,28 @@ type Props = {
     rightComponent?: React.ReactElement,
     children?: DefaultView["props"]["children"],
     title?: string
+	onClose?: () => void,
 }
 
 const Modal = ({
 	modalProps, 
 	containerProps, 
-	hideModal, 
+	hideModal: preHideModal, 
 	visible, 
 	children, 
 	title, 
 	leftComponent,
-	rightComponent
+	rightComponent,
+	onClose,
 }: Props): React.ReactElement => {
+
+	const hideModal = () => {
+		preHideModal()
+		if (onClose) {
+			onClose()
+		}
+	}
+
 	return (
 		<DefaultModal
 			transparent={true}

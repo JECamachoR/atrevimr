@@ -73,7 +73,7 @@ const CreateMoneyboxScreen = ({navigation}: Props): React.ReactElement => {
 						lightColor={grayscale.offWhite}
 						darkColor={primary.default}
 						style={styles.title}
-					>{i18n.t("Create a Goal")}</Text>
+					>{i18n.t("Create a Moneybox")}</Text>
 				</View>
 				<View style={styles.headRight}></View>
 			</Row>
