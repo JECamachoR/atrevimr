@@ -29,7 +29,7 @@ type Props = StackScreenProps<NavParamList, "CreateGoal">
 
 const CreateMoneyboxScreen = ({navigation}: Props): React.ReactElement => {
 	const [moneyboxFormModalOpen, setMoneyboxFormModalOpen] = React.useState(false)
-	const [moneybox, setMoneybox] = React.useState<CreateMoneyboxType>({category: "", balance: 0})
+	const [moneybox, setMoneybox] = React.useState<CreateMoneyboxType>({category: "", balance: 0, recurringAmmount: null})
 
 	const handleSubmit = async (g: CreateMoneyboxType) => {
 		try {

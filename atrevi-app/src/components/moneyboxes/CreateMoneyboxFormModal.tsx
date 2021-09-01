@@ -11,6 +11,7 @@ import Modal from "../Modal"
 import NameAndIMG from "../formComponents/NameAndIMG"
 import CategoryPicker from "../formComponents/CategoryPicker"
 import NeededAmmountInput from "../formComponents/NeededAmmountInput"
+import { MoneyboxCreationSchema } from "../../schemas"
 
 type Props = {
     visible: boolean,
@@ -28,8 +29,10 @@ const CreateMoneyboxFormModal = ({ visible, hideModal, moneybox, handleSubmit }:
 		<Formik
 			initialValues={moneybox}
 			onSubmit={handleSubmit}
+			validationSchema={MoneyboxCreationSchema}
+			validateOnChange={false}
 		>
-			{({values, handleChange, handleBlur, setFieldValue, submitForm, resetForm}) => {
+			{({values, handleChange, handleBlur, setFieldValue, submitForm, resetForm, errors}) => {
 
 				return (
 					<Modal
@@ -58,12 +61,15 @@ const CreateMoneyboxFormModal = ({ visible, hideModal, moneybox, handleSubmit }:
 								name={values.name}
 								unsplashIMG={values.unsplashIMG}
 								variant={"moneybox"}
+								nameError={errors.name}
+								imgError={errors.unsplashIMG}
 							/>
 
 							<CategoryPicker
 								category={values.category}
 								selectCategory={(c) => setFieldValue("category", c)}
 								variant="moneybox"
+								error={errors.category}
 							/>
 
 							<View>
@@ -73,6 +79,7 @@ const CreateMoneyboxFormModal = ({ visible, hideModal, moneybox, handleSubmit }:
 									handleBlur={handleBlur("recurringAmmount")}
 									handleChange={(v) => setFieldValue("recurringAmmount", v)}
 									value={values.recurringAmmount}
+									error={errors.recurringAmmount}
 								/>
 							</View>
 
