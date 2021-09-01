@@ -57,7 +57,7 @@ const PlusButtonModal = ({hideModal, goToCreateGoal, goToCreateMoneybox, ...prop
 							goToCreateGoal()
 						}}>
 							<View style={[styles.iconContainer, {backgroundColor: goalBG}]}>
-								<Bullseye color={color} />
+								<View style={styles.iconTransform}><Bullseye color={color} /></View>
 							</View>
 						</TouchableOpacity>
 					</Row>
@@ -77,7 +77,7 @@ const PlusButtonModal = ({hideModal, goToCreateGoal, goToCreateMoneybox, ...prop
 							goToCreateMoneybox()
 						}}>
 							<View style={[styles.iconContainer, {backgroundColor: mbBG}]}>
-								<Piggybank color={color} />
+								<View style={styles.iconTransform}><Piggybank color={color} /></View>
 							</View>
 						</TouchableOpacity>
 					</Row>
@@ -128,5 +128,11 @@ const styles = StyleSheet.create({
 	btnText: {
 		fontFamily: "Poppins_600SemiBold",
 		height: 24,
+	},
+	iconTransform: {
+		transform: [
+			{scale: 0.85}
+		],
+		backgroundColor: "#00000000",
 	}
 })
