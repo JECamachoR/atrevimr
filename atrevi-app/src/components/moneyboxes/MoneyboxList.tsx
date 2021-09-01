@@ -1,18 +1,18 @@
 import * as React from "react"
 import { StyleSheet, useWindowDimensions } from "react-native"
-import GoalCard from "./GoalCard"
+import MoneyboxCard from "./MoneyboxCard"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import { Text, useThemeColor, View } from "../Themed"
-import { Goal } from "../../API"
+import { Fund } from "../../API"
 import { Row } from "../Layout"
-import { Bullseye } from "../../assets/icons/goals"
 import { t } from "i18n-js"
+import { Piggybank } from "../../assets/icons/moneyboxes"
 
-interface GoalListProps {
-    goals: Goal[];
+interface MoneyboxListProps {
+    moneyboxes: Fund[];
 }
 
-const GoalList = ({ goals } : GoalListProps): React.ReactElement => {
+const MoneyboxList = ({ moneyboxes } : MoneyboxListProps): React.ReactElement => {
 
 	const [index, setIndex] = React.useState(0)
 
@@ -26,23 +26,22 @@ const GoalList = ({ goals } : GoalListProps): React.ReactElement => {
 			<Row style={styles.row}>
 				<View style={[styles.svgBG, {backgroundColor: link}]}>
 					<View style={styles.svgContainer}>
-						<Bullseye color={bg} />
+						<Piggybank color={bg} />
 					</View>
 				</View>
-				<Text style={[styles.title, {color: link}]}> {t("Goals")}</Text>
+				<Text style={[styles.title, {color: link}]}> {t("Moneyboxes")}</Text>
 			</Row>
 			<View style={styles.carouselContainer}>
 				<Carousel 
-					data={goals}
-					renderItem={({item}) => <GoalCard goal={item} />}
+					data={moneyboxes}
+					renderItem={({item}) => <MoneyboxCard moneybox={item} />}
 					sliderWidth={width - 32|| 300}
 					itemWidth={width - 32 || 300}
 					onSnapToItem={(index) => setIndex(index)}
-					pagingEnabled={true}
 				/>
 				<View style={styles.pagContainer}>
 					<Pagination
-						dotsLength={goals.length}
+						dotsLength={moneyboxes.length}
 						activeDotIndex={index}
 						containerStyle={styles.pagContainer}
 						dotStyle={[
@@ -60,7 +59,7 @@ const GoalList = ({ goals } : GoalListProps): React.ReactElement => {
 	)
 }
 
-export default GoalList
+export default MoneyboxList
 
 const styles = StyleSheet.create({
 	container: {

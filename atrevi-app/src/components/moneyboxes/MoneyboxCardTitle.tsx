@@ -1,14 +1,14 @@
 import * as React from "react"
 import { StyleSheet } from "react-native"
-import { Goal } from "../../API"
+import { Fund } from "../../API"
 import { Text, View, ViewProps, useThemeColor } from "../../components/Themed"
 
-interface GoalTitleProps {
-    goal: Goal; 
+interface MoneyboxCardTitleProps {
+    moneybox: Fund; 
     containerStyle?: ViewProps["style"];
 }
 
-const GoalTitle = ({goal, containerStyle}: GoalTitleProps): React.ReactElement => {
+const MoneyboxCardTitle = ({moneybox, containerStyle}: MoneyboxCardTitleProps): React.ReactElement => {
 
 	const linkColor = useThemeColor({colorName: "link"})
 	const backgroundColor = useThemeColor({colorName: "background"})
@@ -18,19 +18,19 @@ const GoalTitle = ({goal, containerStyle}: GoalTitleProps): React.ReactElement =
 		<View style={[styles.goalText, {backgroundColor, borderColor}, containerStyle]}>
 			<View style={styles.transparent}>
 				<Text style={[styles.name, {color: linkColor}]}>
-					{goal.name}
+					{moneybox.name}
 				</Text>
 			</View>
 			<View style={styles.transparent}>
 				<Text style={[styles.date, {color: linkColor}]}>
-					{goal.date}
+					{}
 				</Text>
 			</View>
 		</View>
 	)
 }
 
-export default GoalTitle
+export default MoneyboxCardTitle
 
 const styles = StyleSheet.create({
 	name: {
@@ -59,5 +59,5 @@ const styles = StyleSheet.create({
 	},
 	transparent: {
 		backgroundColor: "#00000000",
-	},
+	}
 })

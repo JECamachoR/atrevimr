@@ -14,6 +14,7 @@ import { NavParamList } from "../../../types"
 import GoalsContext from "../../contexts/GoalsContext"
 import MoneyboxesContext from "../../contexts/MoneyboxesContext"
 import GoalList from "../../components/goals/GoalList"
+import MoneyboxList from "../../components/moneyboxes/MoneyboxList"
 
 type Props = StackScreenProps<NavParamList, "Home">
 
@@ -23,7 +24,6 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 
 	const colorScheme = useColorScheme()
 	const iconColor = useThemeColor({colorName: "iconColor"})
-
 
 	const goals = React.useContext(GoalsContext)
 	const moneyboxes = React.useContext(MoneyboxesContext)
@@ -38,7 +38,7 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 				goToCreateMoneybox={()=> navigation.navigate("CreateMoneybox")}
 			/>
 
-			<View style={styles.titleRow} >
+			<View style={[styles.titleRow, goals.length || moneyboxes.length ? {paddingBottom: 0} : {}]} >
 				<View style={styles.logo} >
 					{colorScheme === "dark" ? <HomeLogoDark /> : <HomeLogoLight height={30} width={127} /> }
 				</View>
@@ -51,13 +51,13 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 				</View>
 			</View>
 
-			{ goals.length ? 
+			{ goals.length || moneyboxes.length ? 
 				<GoalList goals={goals} />
 				:
 				<CreateGoalCard goToCreateGoal={() => navigation.navigate("CreateGoal")} />
 			}
-			{ moneyboxes.length ? 
-				null
+			{ moneyboxes.length || goals.length ? 
+				<MoneyboxList moneyboxes={moneyboxes} />
 				:
 				<CreateMoneyboxCard goToCreateMoneybox={() => navigation.navigate("CreateMoneybox")} />
 			}

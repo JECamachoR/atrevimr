@@ -1,7 +1,8 @@
 import "react-native-gesture-handler"
 import { StatusBar } from "expo-status-bar"
 import * as React from "react"
-
+import { LogBox } from "react-native"
+LogBox.ignoreLogs(["Setting a timer"])
 import useCachedResources from "./hooks/useCachedResources"
 import useColorScheme from "./hooks/useColorScheme"
 import Navigation from "./navigation"

@@ -27,6 +27,7 @@ import { onCreateFund, onCreateGoal, onCreateTransaction, onDeleteFund,
 	onDeleteGoal, onUpdateFund, onUpdateGoal } from "../graphql/subscriptions"
 import { Observable } from "zen-observable-ts"
 import AuthContext from "../auth/AuthContext"
+import Loading from "../components/Loading"
 
 const BottomTab = createBottomTabNavigator()
 
@@ -38,6 +39,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 	const [moneyboxes, setMoneyboxes] = React.useState<Fund[]>([])
 	const [transactions, setTransactions] = React.useState<Transaction[]>([])
 	const [goalFund, setGoalFund] = React.useState<Fund | null>(null)
+	const [loading, setLoading] = React.useState(true)
 
 	React.useEffect(() => {
 		const loadGoals = async () => {
@@ -87,6 +89,14 @@ const BottomTabNavigator = (): React.ReactElement => {
 				console.error(e)
 			}
 		}
+
+		const load = async () => {
+			await loadGoals()
+			await loadFunds()
+			await loadTransactions()
+		}
+
+		load().then(() => setLoading(false))
 
 		const onGoalCreation = (API.graphql(graphqlOperation(onCreateGoal, {
 			owner: auth.username
@@ -186,10 +196,6 @@ const BottomTabNavigator = (): React.ReactElement => {
 			error: console.error
 		})
 
-		loadGoals()
-		loadFunds()
-		loadTransactions()
-
 		return () => {
 			onGoalCreation.unsubscribe()
 			onGoalDeletion.unsubscribe()
@@ -202,6 +208,8 @@ const BottomTabNavigator = (): React.ReactElement => {
 	}, [])
 
 	const insets = useSafeAreaInsets()
+
+	if (loading) return <Loading />
 
 	return (
 		<GoalsContext.Provider value={goals}>
