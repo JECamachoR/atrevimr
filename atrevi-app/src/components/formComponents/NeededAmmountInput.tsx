@@ -2,18 +2,21 @@ import * as React from "react"
 import { NativeSyntheticEvent, StyleSheet, TextInputFocusEventData } from "react-native"
 import CurrencyInput from "react-native-currency-input"
 import { useThemeColor } from "../Themed"
+import { error as errorColor } from "../../constants/Colors"
 
 type Props = {
     value: number | null | undefined,
     handleChange: (v: number) => void,
     handleBlur: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void,
+	error?: string | undefined,
 }
 
-const NeededAmmountInput = ({ value, handleBlur, handleChange }: Props): React.ReactElement => {
+const NeededAmmountInput = ({ value, handleBlur, handleChange, error }: Props): React.ReactElement => {
 
 	const line = useThemeColor({colorName: "line"})
 	const ph = useThemeColor({colorName: "placeholderTextColor"})
 	const color = useThemeColor({colorName: "text"})
+
 	return (
 		<CurrencyInput
 			value={value || null}
@@ -23,7 +26,7 @@ const NeededAmmountInput = ({ value, handleBlur, handleChange }: Props): React.R
 			style={[
 				styles.currencyInput, 
 				{
-					borderColor: line,
+					borderColor: error ? errorColor.default : line,
 					color
 				}
 			]}
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
 		borderRadius: 15,
 		paddingHorizontal: 16,
 		marginTop: 8,
-		marginBottom: 16,
+		marginBottom: 8,
 		fontFamily: "Poppins_400Regular",
 		fontSize: 18,
 	},

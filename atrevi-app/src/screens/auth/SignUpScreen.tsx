@@ -8,7 +8,7 @@ import { Text, View, Screen } from "../../components/Themed"
 import TextInput from "../../components/formComponents/TextInput"
 import { AuthParamList } from "../../../types"
 import { grayscale, primary, secondary } from "../../constants/Colors"
-import { SignUpSchema } from "../../auth/schemas"
+import { SignUpSchema } from "../../schemas"
 import { Auth } from "aws-amplify"
 import FormView from "../../components/formComponents/FormView"
 

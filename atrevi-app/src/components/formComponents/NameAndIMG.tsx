@@ -3,10 +3,11 @@ import { t } from "i18n-js"
 import * as React from "react"
 import { ImageBackground, NativeSyntheticEvent, StyleSheet, TextInput, TextInputFocusEventData, TouchableOpacity } from "react-native"
 import { UnsplashPhoto } from "react-native-unsplash"
-import { darkMode, grayscale, primary, secondary, success } from "../../constants/Colors"
+import { darkMode, grayscale, primary, secondary, success, error as errorColor } from "../../constants/Colors"
 import { Row } from "../Layout"
 import PicturePicker from "../PicturePicker"
 import { Text, useThemeColor, View } from "../Themed"
+import ErrorText from "./ErrorText"
 
 type Props = {
     name: string | undefined,
@@ -14,73 +15,77 @@ type Props = {
     handleTextChange: (s: string) => void,
     handleBlur: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void,
     changeIMG: (img: UnsplashPhoto["urls"]) => void,
-    variant: "goals" | "moneybox"
+    variant: "goals" | "moneybox",
+	nameError?: string | undefined,
+	imgError?: string | undefined,
 }
 
-const NameAndIMG = ({ unsplashIMG, name, changeIMG, handleTextChange, handleBlur, variant }: Props): React.ReactElement => {
+const NameAndIMG = ({ unsplashIMG, name, changeIMG, handleTextChange, handleBlur, variant, nameError, imgError }: Props): React.ReactElement => {
 
 	const [unsplashOpen, setUnsplashOpen] = React.useState(false)
 	const line = useThemeColor({colorName: "line"})
+	const border = nameError ? errorColor.default : line
 	const ph = useThemeColor({colorName: "placeholderTextColor"})
-
+	const imgInviteColor = imgError ? errorColor.default : ph
+	const link = useThemeColor({colors: {
+		light: grayscale.offWhite,
+		dark: darkMode.background
+	}})
 	return (
-		<ImageBackground
-			style={[styles.card, {backgroundColor: useThemeColor({colorName: "inputBackground"})}]}
-			source={{uri: unsplashIMG?.regular}}
-		>
-			<PicturePicker 
-				choosePic={changeIMG}
-				closeUnsplash={() => setUnsplashOpen(false)}
-				unsplashOpen={unsplashOpen}
-			/>
-
-			{ unsplashIMG ?
-				<Row style={[styles.cardIMG, {alignItems: "flex-start", justifyContent: "flex-end"}]}>
-					<TouchableOpacity
-						onPress={() => setUnsplashOpen(true)}
-					>
-						<View 
-							lightColor={variant === "goals" ? secondary.default : success.dark}
-							darkColor={primary.default}
-							style={{
-								width: 30,
-								height: 30,
-								alignItems: "center",
-								justifyContent: "center",
-								borderRadius: 15,
-							}}
-						>
-							<MaterialIcons name="edit" size={19} color={useThemeColor({colors: {
-								light: grayscale.offWhite,
-								dark: darkMode.background
-							}})} />
-						</View>
-					</TouchableOpacity>
-				</Row>
-				:
-				<TouchableOpacity style={{flex: 1}} onPress={() => setUnsplashOpen(true)}>
-					<Row style={styles.cardIMG}>
-						<MaterialIcons name="image" size={24} color={useThemeColor({colors: {
-							light: grayscale.placeholder,
-							dark: darkMode.placeholder
-						}})} />
-						<Text style={styles.cardIMGText}>
-							{t("Choose a photo")}
-						</Text>
-					</Row>
-				</TouchableOpacity>
-			}
-			<View style={[styles.cardTitleContainer, {borderColor: line}]}>
-				<TextInput
-					placeholder={t("Name your goal")}
-					placeholderTextColor={ph}
-					value={name || ""}
-					onChangeText={handleTextChange}
-					onBlur={handleBlur}
-					style={[styles.cardTitle, {color: useThemeColor({colorName: "link"})}]}
+		<>
+			<ImageBackground
+				style={[styles.card, {backgroundColor: useThemeColor({colorName: "inputBackground"})}]}
+				source={{uri: unsplashIMG?.regular}}
+			>
+				<PicturePicker 
+					choosePic={changeIMG}
+					closeUnsplash={() => setUnsplashOpen(false)}
+					unsplashOpen={unsplashOpen}
 				/>
-			</View>
-		</ImageBackground>
+
+				{ unsplashIMG ?
+					<Row style={[styles.cardIMG, {alignItems: "flex-start", justifyContent: "flex-end"}]}>
+						<TouchableOpacity
+							onPress={() => setUnsplashOpen(true)}
+						>
+							<View 
+								lightColor={variant === "goals" ? secondary.default : success.dark}
+								darkColor={primary.default}
+								style={{
+									width: 30,
+									height: 30,
+									alignItems: "center",
+									justifyContent: "center",
+									borderRadius: 15,
+								}}
+							>
+								<MaterialIcons name="edit" size={19} color={link} />
+							</View>
+						</TouchableOpacity>
+					</Row>
+					:
+					<TouchableOpacity style={{flex: 1}} onPress={() => setUnsplashOpen(true)}>
+						<Row style={styles.cardIMG}>
+							<MaterialIcons name="image" size={24} color={imgInviteColor} />
+							<Text style={[styles.cardIMGText, {color: imgInviteColor}]}>
+								{t("Choose a photo")}
+							</Text>
+						</Row>
+					</TouchableOpacity>
+				}
+				<View style={[styles.cardTitleContainer, {borderColor: border}]}>
+					<TextInput
+						placeholder={t("Name your goal")}
+						placeholderTextColor={ph}
+						value={name || ""}
+						onChangeText={handleTextChange}
+						onBlur={handleBlur}
+						style={[styles.cardTitle, {color: useThemeColor({colorName: "link"})}]}
+					/>
+				</View>
+			</ImageBackground>
+			<ErrorText error={nameError} style={styles.errorText} />
+		</>
 	)
 }
 
@@ -101,7 +106,6 @@ const styles = StyleSheet.create({
 		padding: 16,
 	},
 	cardIMGText: {
-		color: grayscale.placeholder,
 		fontFamily: "Poppins_600SemiBold",
 		fontSize: 16,
 		lineHeight: 24,
@@ -122,4 +126,7 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		fontSize: 20,
 	},
+	errorText :{
+		marginTop: 8,
+	}
 })

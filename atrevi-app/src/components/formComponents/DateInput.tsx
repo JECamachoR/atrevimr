@@ -4,6 +4,8 @@ import DateTimePicker from "@react-native-community/datetimepicker"
 import InputLabel from "./InputLabel"
 import { useThemeColor } from "../Themed"
 import { t } from "i18n-js"
+import ErrorText from "./ErrorText"
+import { primary, secondary, success } from "../../constants/Colors"
 
 interface DateInputProps {
     field: string;
@@ -12,9 +14,11 @@ interface DateInputProps {
     label?: string;
     text?: string;
     maxDate?: Date;
+	error?: string | undefined,
+	variant?: "secondary" | "successDark"
 }
 
-const DateInput = ({date : passedDate, setDate, field, label, text, maxDate} : DateInputProps): React.ReactElement => {
+const DateInput = ({ date: passedDate, setDate, field, label, text, maxDate, error, variant } : DateInputProps): React.ReactElement => {
     
 	const [show, setShow] = React.useState<boolean>(false)
 
@@ -23,7 +27,11 @@ const DateInput = ({date : passedDate, setDate, field, label, text, maxDate} : D
 
 	const today = new Date()
 
-	const backgroundColor = useThemeColor({colorName: "link"})
+	const backgroundColor = useThemeColor({colors: {
+		dark: primary.default,
+		light: variant === "secondary" ? secondary.default : success.dark
+	}})
+	const color = useThemeColor({colorName: "background"})
 
 	let date : Date | null | undefined
 	if (!passedDate) {
@@ -42,12 +50,13 @@ const DateInput = ({date : passedDate, setDate, field, label, text, maxDate} : D
 				onPress={showDatePicker}
 			>
 				<View style={{flex: 1, justifyContent: "center"}}>
-					<Text style={styles.text}>{text || t("Date")}</Text>
+					<Text style={[styles.text, {color}]}>{text || t("Date")}</Text>
 				</View>
 				<View style={{flex: 1, alignItems: "flex-end",  justifyContent: "center"}}>
-					<Text style={styles.text}>{date instanceof Date ? date.toDateString() : today}</Text>
+					<Text style={[styles.text, {color}]}>{date instanceof Date ? date.toDateString() : today}</Text>
 				</View>
 			</TouchableOpacity>
+			<ErrorText error={error} />
 			{show && <DateTimePicker
 				testID="dateTimePicker"
 				value={date instanceof Date ? date : today}
@@ -71,7 +80,6 @@ const styles = StyleSheet.create({
 		fontFamily: "Poppins_400Regular",
 		fontSize: 16,
 		lineHeight: 28,
-		color: "#FFFFFF",
 	},
 	dateButton: {
 		flexDirection: "row",

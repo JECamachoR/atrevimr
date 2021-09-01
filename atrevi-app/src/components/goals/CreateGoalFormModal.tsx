@@ -12,6 +12,8 @@ import Modal from "../Modal"
 import CategoryPicker from "../formComponents/CategoryPicker"
 import NameAndIMG from "../formComponents/NameAndIMG"
 import NeededAmmountInput from "../formComponents/NeededAmmountInput"
+import { GoalCreationSchema } from "../../schemas"
+import ErrorText from "../formComponents/ErrorText"
 
 type Props = {
     visible: boolean,
@@ -29,9 +31,11 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 		<Formik
 			initialValues={goal}
 			onSubmit={handleSubmit}
+			validationSchema={GoalCreationSchema}
+			validateOnChange={false}
 		>
-			{({values, handleChange, handleBlur, setFieldValue, submitForm, resetForm}) => {
-    
+			{({ values, handleChange, handleBlur, setFieldValue, submitForm, resetForm, errors }) => {
+				
 				return (
 					
 					<Modal
@@ -59,13 +63,16 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 								handleTextChange={handleChange("name")}
 								name={values.name}
 								unsplashIMG={values.unsplashIMG}
-								variant={"moneybox"}
+								variant={"goals"}
+								nameError={errors.name}
+								imgError={errors.unsplashIMG}
 							/>
 
 							<CategoryPicker
 								category={values.category}
 								selectCategory={(c) => setFieldValue("category", c)}
-								variant="moneybox"
+								variant="goals"
+								error={errors.category}
 							/>
 
 							<View>
@@ -75,12 +82,15 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 									handleBlur={handleBlur("ammount")}
 									handleChange={(v) => setFieldValue("ammount", v)}
 									value={values.ammount}
+									error={errors.ammount}
 								/>
+								<ErrorText error={errors.ammount} />
 								<Text style={styles.label}>{i18n.t("When do you need it?")}</Text>
 								<DateInput
 									date={values.date}
 									field={"date"}
 									setDate={setFieldValue}
+									variant="secondary"
 								/>
 							</View>
 							<View style={[styles.estimateCard, {borderColor: line}]}></View>
