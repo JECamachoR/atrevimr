@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "atreviUsers": {}
+        "atreviUsers": {},
+        "userPoolGroups": {}
       }
     }
   }
