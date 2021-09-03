@@ -25,63 +25,63 @@ type Props = {
 
 const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.ReactElement => {
 
-	const [totalBalance, setTotalBalance] = React.useState<number | null | undefined>(null)
-	const [goalsProgress, setGoalsProgress] = React.useState<number>(0)
-	const [goalsExpected,setGoalsExpected] = React.useState<number>(0)
-	const [moneyboxesBalance, setMoneyboxesBalance] = React.useState<number>(0)
-	const [moneyboxesExpected, setMoneyboxesExpected] = React.useState<number>(0)
+	const [totalBalance, setTotalBalance] = React.useState<number | null | undefined>(1)
+	const [goalsProgress, setGoalsProgress] = React.useState<number>(1)
+	const [goalsExpected,setGoalsExpected] = React.useState<number>(2)
+	const [moneyboxesBalance, setMoneyboxesBalance] = React.useState<number>(1)
+	const [moneyboxesExpected, setMoneyboxesExpected] = React.useState<number>(2)
 
 	const { username } = React.useContext(AuthContext)
 	const transactions = React.useContext(TransactionsContext)
 	const moneyboxes = React.useContext(MoneyboxesContext)
 	const goalFund = React.useContext(GoalFundContext)
 
-	React.useEffect(() => {
-		const load = async () => {
-			const u = await API.graphql(graphqlOperation(getUser, {id: username})) as GraphQLResult<GetUserQuery>
-			setTotalBalance(u.data?.getUser?.balance)
-		}
-		load()
-		// eslint-disable-next-line @typescript-eslint/ban-types
-		const sus = (API.graphql(graphqlOperation(onUpdateUser, {owner: username})) as Observable<object>).subscribe({
-			next: ({value}: {value: OnUpdateUserSubscription}) => {
-				setTotalBalance(value.onUpdateUser?.balance)
-			},
-			error: console.error
-		})
-		return () => sus.unsubscribe()
-	}, [])
+	// React.useEffect(() => {
+	// 	const load = async () => {
+	// 		const u = await API.graphql(graphqlOperation(getUser, {id: username})) as GraphQLResult<GetUserQuery>
+	// 		setTotalBalance(u.data?.getUser?.balance)
+	// 	}
+	// 	load()
+	// 	// eslint-disable-next-line @typescript-eslint/ban-types
+	// 	const sus = (API.graphql(graphqlOperation(onUpdateUser, {owner: username})) as Observable<object>).subscribe({
+	// 		next: ({value}: {value: OnUpdateUserSubscription}) => {
+	// 			setTotalBalance(value.onUpdateUser?.balance)
+	// 		},
+	// 		error: console.error
+	// 	})
+	// 	return () => sus.unsubscribe()
+	// }, [])
 
-	React.useEffect(() => {
-		setGoalsProgress(transactions.reduce((prev, curr): number => {
-			if (goalFund?.id) {
-				if (curr.fundID === goalFund.id) {
-					return curr.ammount + prev
-				}
-				else return prev
-			}
-			else return prev
-		}, 0))
-		setMoneyboxesBalance(transactions.reduce((prev, curr): number => {
-			if (curr.fundID !== goalFund?.id) {
-				return curr.ammount + prev
-			}
-			else return prev
-		}, 0))
-	}, [transactions])
+	// React.useEffect(() => {
+	// 	setGoalsProgress(transactions.reduce((prev, curr): number => {
+	// 		if (goalFund?.id) {
+	// 			if (curr.fundID === goalFund.id) {
+	// 				return curr.ammount + prev
+	// 			}
+	// 			else return prev
+	// 		}
+	// 		else return prev
+	// 	}, 0))
+	// 	setMoneyboxesBalance(transactions.reduce((prev, curr): number => {
+	// 		if (curr.fundID !== goalFund?.id) {
+	// 			return curr.ammount + prev
+	// 		}
+	// 		else return prev
+	// 	}, 0))
+	// }, [transactions])
 	
-	React.useEffect(() => {
-		setGoalsExpected(goalFund?.recurringAmmount || 0)
-	}, [goalFund])
+	// React.useEffect(() => {
+	// 	setGoalsExpected(goalFund?.recurringAmmount || 0)
+	// }, [goalFund])
 
-	React.useEffect(() => {
-		setMoneyboxesExpected(moneyboxes.reduce((prev, curr) => {
-			if (curr.id !== goalFund?.id) {
-				return (curr.recurringAmmount || 0) + prev
-			}
-			else return prev
-		}, 0))
-	}, [moneyboxes])
+	// React.useEffect(() => {
+	// 	setMoneyboxesExpected(moneyboxes.reduce((prev, curr) => {
+	// 		if (curr.id !== goalFund?.id) {
+	// 			return (curr.recurringAmmount || 0) + prev
+	// 		}
+	// 		else return prev
+	// 	}, 0))
+	// }, [moneyboxes])
 
 	const divColor = useThemeColor({colors: {light: "#5B6BC0", dark: "#3E3E3F"}})
 

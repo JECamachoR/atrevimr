@@ -14,6 +14,10 @@ import NameAndIMG from "../formComponents/NameAndIMG"
 import NeededAmmountInput from "../formComponents/NeededAmmountInput"
 import { GoalCreationSchema } from "../../schemas"
 import ErrorText from "../formComponents/ErrorText"
+import shortPlan from "../../../functions/shortPlan"
+import getSavingDate from "../../../functions/getSavingDate"
+import GoalFundContext from "../../contexts/GoalFundContext"
+import GoalsContext from "../../contexts/GoalsContext"
 
 type Props = {
     visible: boolean,
@@ -24,18 +28,40 @@ type Props = {
 }
 
 const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props): React.ReactElement => {
+
+	const goalList = React.useContext(GoalsContext)
+		.map(v => ({...v, date: new Date(v.date)})) as {ammount: number, date: Date}[]
+	const goalFund = React.useContext(GoalFundContext)
     
 	const line = useThemeColor({colorName: "line"})
-
+	const today = new Date()
+	
 	return (
 		<Formik
-			initialValues={goal}
+			initialValues={{...goal, recurringAmmount: 0}}
 			onSubmit={handleSubmit}
 			validationSchema={GoalCreationSchema}
 			validateOnChange={false}
 		>
 			{({ values, handleChange, handleBlur, setFieldValue, submitForm, resetForm, errors }) => {
 				
+				const calculateSavings = () => {
+					if (!values.ammount || !values.date) return
+					console.log("to get ", values.ammount)
+					console.log("by", values.date)
+					const list = [...goalList]
+					list.push({ammount: values.ammount, date: values.date})
+					const r = shortPlan(
+						list,
+						"7day", 
+						"monday", 
+						{ ammount: goalFund?.balance || 0, savingDate: getSavingDate(today, "7day", "monday") }
+					)
+					setFieldValue("recurringAmmount", r[0])
+				}
+
+				React.useEffect(() => calculateSavings(), [values.ammount, values.date])
+
 				return (
 					
 					<Modal
@@ -93,7 +119,16 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 									variant="secondary"
 								/>
 							</View>
-							<View style={[styles.estimateCard, {borderColor: line}]}></View>
+							<View style={[styles.estimateCard, {borderColor: line}]}>
+								{Boolean(values.recurringAmmount) && 
+								<>
+									<Text>For this goal you will need to save:</Text>
+									<Text>{(values.recurringAmmount - (goalFund?.recurringAmmount || 0) )}</Text>
+									<Text>Adding up your other goals, you will save:</Text>
+									<Text>{values.recurringAmmount}</Text>
+								</>	
+								}
+							</View>
 						</FormView>
 					</Modal>
 				

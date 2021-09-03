@@ -6,11 +6,17 @@ import { useThemeColor, View } from "../Themed"
 import TransactionListHeader from "./TransactionListHeader"
 import TransactionListItem from "./TransactionListItem"
 
+const Separator = () => {
+	const separatorColor = useThemeColor({colorName: "line"})
+	return (
+		<View style={[styles.separator, {backgroundColor: separatorColor}]}/>
+	)
+}
+
 const TransactionList = (): React.ReactElement => {
 
 	const transactions = React.useContext(TransactionsContext)
 
-	const separatorColor = useThemeColor({colorName: "line"})
 
 	return (
 		<View style={styles.container}>
@@ -19,7 +25,7 @@ const TransactionList = (): React.ReactElement => {
 				renderItem={({item}) => <TransactionListItem transaction={item} />}
 				keyExtractor={(_, index) => "" + index}
 				ListHeaderComponent={TransactionListHeader}
-				ItemSeparatorComponent={() => <View style={[styles.separator, {backgroundColor: separatorColor}]}/>}
+				ItemSeparatorComponent={Separator}
 			/>
 		</View>
 	)
