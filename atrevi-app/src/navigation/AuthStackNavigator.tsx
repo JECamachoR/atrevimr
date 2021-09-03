@@ -4,6 +4,7 @@ import PhoneVerificationScreen from "../screens/auth/PhoneVerificationScreen"
 import SignInScreen from "../screens/auth/SignInScreen"
 import SignUpScreen from "../screens/auth/SignUpScreen"
 import { createStackNavigator } from "@react-navigation/stack"
+import WelcomeScreen from "../screens/auth/WelcomeScreen"
 
 const AuthStack = createStackNavigator<AuthParamList>()
 
@@ -11,7 +12,7 @@ const AuthStackNavigator = (): React.ReactElement => {
     
 	return (
 		<AuthStack.Navigator 
-			initialRouteName="SignInScreen">
+			initialRouteName="WelcomeScreen">
 			<AuthStack.Screen
 				name="SignInScreen"
 				component={SignInScreen}
@@ -25,6 +26,11 @@ const AuthStackNavigator = (): React.ReactElement => {
 			<AuthStack.Screen
 				name="PhoneVerificationScreen"
 				component={PhoneVerificationScreen}
+				options={{headerShown: false}}
+			/>
+			<AuthStack.Screen
+				name="WelcomeScreen"
+				component={WelcomeScreen}
 				options={{headerShown: false}}
 			/>
 		</AuthStack.Navigator>

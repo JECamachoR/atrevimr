@@ -8,6 +8,16 @@ import { MaterialIcons } from "@expo/vector-icons"
 import { StatusBar } from "expo-status-bar"
 import { formatNumber } from "react-native-currency-input"
 import { Bar } from "react-native-progress"
+import { API, graphqlOperation } from "aws-amplify"
+import { getUser } from "../../graphql/queries"
+import AuthContext from "../../auth/AuthContext"
+import { GraphQLResult } from "@aws-amplify/api-graphql"
+import { GetUserQuery, OnUpdateUserSubscription } from "../../API"
+import { Observable } from "zen-observable-ts"
+import { onUpdateUser } from "../../graphql/subscriptions"
+import MoneyboxesContext from "../../contexts/MoneyboxesContext"
+import GoalFundContext from "../../contexts/GoalFundContext"
+import TransactionsContext from "../../contexts/TransactionsContext"
 
 type Props = {
     openCreateTransactionModal: () => void
@@ -15,7 +25,63 @@ type Props = {
 
 const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.ReactElement => {
 
-	const [totalBalance, setTotalBalance] = React.useState(5000)
+	const [totalBalance, setTotalBalance] = React.useState<number | null | undefined>(null)
+	const [goalsProgress, setGoalsProgress] = React.useState<number>(0)
+	const [goalsExpected,setGoalsExpected] = React.useState<number>(0)
+	const [moneyboxesBalance, setMoneyboxesBalance] = React.useState<number>(0)
+	const [moneyboxesExpected, setMoneyboxesExpected] = React.useState<number>(0)
+
+	const { username } = React.useContext(AuthContext)
+	const transactions = React.useContext(TransactionsContext)
+	const moneyboxes = React.useContext(MoneyboxesContext)
+	const goalFund = React.useContext(GoalFundContext)
+
+	React.useEffect(() => {
+		const load = async () => {
+			const u = await API.graphql(graphqlOperation(getUser, {id: username})) as GraphQLResult<GetUserQuery>
+			setTotalBalance(u.data?.getUser?.balance)
+		}
+		load()
+		// eslint-disable-next-line @typescript-eslint/ban-types
+		const sus = (API.graphql(graphqlOperation(onUpdateUser, {owner: username})) as Observable<object>).subscribe({
+			next: ({value}: {value: OnUpdateUserSubscription}) => {
+				setTotalBalance(value.onUpdateUser?.balance)
+			},
+			error: console.error
+		})
+		return () => sus.unsubscribe()
+	}, [])
+
+	React.useEffect(() => {
+		setGoalsProgress(transactions.reduce((prev, curr): number => {
+			if (goalFund?.id) {
+				if (curr.fundID === goalFund.id) {
+					return curr.ammount + prev
+				}
+				else return prev
+			}
+			else return prev
+		}, 0))
+		setMoneyboxesBalance(transactions.reduce((prev, curr): number => {
+			if (curr.fundID !== goalFund?.id) {
+				return curr.ammount + prev
+			}
+			else return prev
+		}, 0))
+	}, [transactions])
+	
+	React.useEffect(() => {
+		setGoalsExpected(goalFund?.recurringAmmount || 0)
+	}, [goalFund])
+
+	React.useEffect(() => {
+		setMoneyboxesExpected(moneyboxes.reduce((prev, curr) => {
+			if (curr.id !== goalFund?.id) {
+				return (curr.recurringAmmount || 0) + prev
+			}
+			else return prev
+		}, 0))
+	}, [moneyboxes])
 
 	const divColor = useThemeColor({colors: {light: "#5B6BC0", dark: "#3E3E3F"}})
 
@@ -40,7 +106,7 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 				<View style={styles.left}>
 					<Text style={styles.balanceLabel}>{i18n.t("Total Balance")}</Text>
 					<Text style={styles.balance}>
-						{formatNumber(totalBalance, {prefix: "$", delimiter: ",", separator: ".", precision: 2})}
+						{formatNumber(totalBalance || 0, {prefix: "$", delimiter: ",", separator: ".", precision: 2})}
 					</Text>
 				</View>
 				<TouchableOpacity
@@ -74,9 +140,9 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 							<Text style={styles.progressLabel}>{i18n.t("Towards")} {i18n.t("Goals")}</Text>
 						</View>
 						<View style={styles.progressDataContainer}>
-							<Text style={styles.progressAccum}>$2,500<Text style={styles.progressGoal}>/5,000</Text></Text>
+							<Text style={styles.progressAccum}>{goalsProgress}<Text style={styles.progressGoal}>/{goalsExpected}</Text></Text>
 							<Bar 
-								progress={0.5} 
+								progress={goalsProgress / goalsExpected} 
 								width={null} 
 								height={8} 
 								color={grayscale.offWhite} 
@@ -100,9 +166,9 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 							<Text style={styles.progressLabel}>{i18n.t("Towards")} {i18n.t("Moneybox")}</Text>
 						</View>
 						<View style={styles.progressDataContainer}>
-							<Text style={styles.progressAccum}>$2,500<Text style={styles.progressGoal}>/5,000</Text></Text>
+							<Text style={styles.progressAccum}>{moneyboxesBalance}<Text style={styles.progressGoal}>/{moneyboxesExpected}</Text></Text>
 							<Bar 
-								progress={0.5} 
+								progress={moneyboxesBalance / moneyboxesExpected } 
 								width={null} 
 								height={8} 
 								color={grayscale.offWhite} 

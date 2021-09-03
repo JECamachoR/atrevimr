@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
- export type RootStackParamList = {
+export type RootStackParamList = {
      Main: undefined;
      Auth: undefined
      NotFound: undefined;
@@ -18,16 +18,17 @@ export type BottomTabBarParamList = {
     SavingsStack: undefined
 }
 
- export type HomeStackParamList = {
+export type HomeStackParamList = {
     Home: undefined
     CreateGoal: undefined
 }
  
- export type SettingsStackParamList = {
+export type SettingsStackParamList = {
      Settings: undefined
  }
  
- export type AuthParamList = {
+export type AuthParamList = {
+     WelcomeScreen: undefined;
      SignInScreen: undefined;
      SignUpScreen: undefined;
      PhoneVerificationScreen: {
@@ -38,8 +39,8 @@ export type BottomTabBarParamList = {
      } | undefined;
  };
  
- export type NavParamList = RootStackParamList & HomeStackParamList
+export type NavParamList = RootStackParamList & HomeStackParamList
  
- export type frequencies = "1day" | "7day" | "14day" | "28day"
- export type daysOfTheWeek = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"
- export type plan = {rate: number, endDate: Date}
+export type frequencies = "1day" | "7day" | "14day" | "28day"
+export type daysOfTheWeek = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"
+export type plan = {rate: number, endDate: Date}

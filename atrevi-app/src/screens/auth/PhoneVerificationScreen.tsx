@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack"
-import { API, Auth, graphqlOperation } from "aws-amplify"
+import { Auth } from "aws-amplify"
 import { Formik } from "formik"
 import * as React from "react"
 import { StyleSheet } from "react-native"
@@ -11,8 +11,6 @@ import Submitting from "../../components/Submitting"
 import { Text, View } from "../../components/Themed"
 import { AuthParamList } from "../../../types"
 import { CountryCode } from "react-native-country-picker-modal"
-import { createFund, createUser } from "../../graphql/mutations"
-import { CreateFundInput, CreateUserInput } from "../../API"
 
 type Props = StackScreenProps<AuthParamList, "PhoneVerificationScreen">;
 
