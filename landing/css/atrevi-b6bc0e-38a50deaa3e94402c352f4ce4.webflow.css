@@ -79,7 +79,7 @@
 
 .body {
   background-color: #fc0;
-  background-image: url('../images/Pattern.svg');
+  background-image: url('../images/PatternNew.svg');
   background-position: 50% 50%;
   background-size: auto;
   background-repeat: repeat;
@@ -543,6 +543,14 @@
   margin-bottom: -300px;
 }
 
+.paragraph-7 {
+  font-family: Poppins, sans-serif;
+}
+
+.container-3 {
+  margin-top: 20px;
+}
+
 @media screen and (max-width: 991px) {
   .container {
     margin-top: 10px;
@@ -767,6 +775,10 @@
     grid-template-columns: 1fr;
   }
 
+  .heading-2 {
+    margin-bottom: -50px;
+  }
+
   .gallery {
     padding-top: 0px;
   }
@@ -782,6 +794,10 @@
 
   .heading-3 {
     font-size: 24px;
+  }
+
+  .subscribe-form {
+    margin-bottom: -30px;
   }
 
   .subscribe-form-flex {
@@ -830,11 +846,12 @@
   }
 
   .heading-5 {
-    margin-right: 0px;
+    margin-right: 10px;
     margin-left: 10px;
   }
 
   .paragraph-6 {
+    margin-bottom: 0px;
     font-size: 14px;
   }
 
