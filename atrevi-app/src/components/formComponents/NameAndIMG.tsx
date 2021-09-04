@@ -75,7 +75,7 @@ const NameAndIMG = ({ unsplashIMG, name, changeIMG, handleTextChange, handleBlur
 				}
 				<View style={[styles.cardTitleContainer, {borderColor: border}]}>
 					<TextInput
-						placeholder={t("Name your goal")}
+						placeholder={t(variant === "goals" ? "Name your goal" : "Name your moneybox")}
 						placeholderTextColor={ph}
 						value={name || ""}
 						onChangeText={handleTextChange}

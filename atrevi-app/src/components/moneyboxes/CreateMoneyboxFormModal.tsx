@@ -74,7 +74,7 @@ const CreateMoneyboxFormModal = ({ visible, hideModal, moneybox, handleSubmit }:
 
 							<View>
 								<Text style={styles.subtitle}>{i18n.t("Savings")}</Text>
-								<Text style={styles.label}>{i18n.t("How much do you need?")}</Text>
+								<Text style={styles.label}>{i18n.t("How much do you want to save periodically?")}</Text>
 								<NeededAmmountInput
 									handleBlur={handleBlur("recurringAmmount")}
 									handleChange={(v) => setFieldValue("recurringAmmount", v)}
