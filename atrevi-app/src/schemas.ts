@@ -60,7 +60,7 @@ export const TransactionSchema = yup.object().shape({
 		.nullable(false)
 		.required("Required"),
     ammount: yup.number()
-		.min(1)
+		.notOneOf([0])
 		.required("Required"),
     concept: yup.string()
 		.min(1)

@@ -30,7 +30,7 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 	const moneyboxes = React.useContext(MoneyboxesContext)
 	const goalFund = React.useContext(GoalFundContext)
 
-	const [totalBalance, setTotalBalance] = React.useState<number | null | undefined>(0)
+	const [totalBalance, setTotalBalance] = React.useState<number>(0)
 	const [goalsProgress, setGoalsProgress] = React.useState<number>(0)
 	const [goalsExpected,setGoalsExpected] = React.useState<number>(0)
 	const [moneyboxesBalance, setMoneyboxesBalance] = React.useState<number>(0)
@@ -39,15 +39,17 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 	React.useEffect(() => {
 		const load = async () => {
 			const u = await API.graphql(graphqlOperation(getUser, {id: username})) as GraphQLResult<GetUserQuery>
-			setTotalBalance(u.data?.getUser?.balance)
+			console.log(u)
+			setTotalBalance(u.data?.getUser?.balance || 0)
 		}
 		load()
-		// eslint-disable-next-line @typescript-eslint/ban-types
+
 		const sus = (API.graphql(graphqlOperation(onUpdateUser, {
 			id: username
 		})) as Observable<object>).subscribe({
-			next: ({value}: {value: OnUpdateUserSubscription}) => {
-				setTotalBalance(value.onUpdateUser?.balance)
+			next: ({value}: {value: GraphQLResult<OnUpdateUserSubscription>}) => {
+				console.log("\n\nvalue: \n\n", value)
+				setTotalBalance(value.data?.onUpdateUser?.balance || 0)
 			},
 			error: (err) => console.error(err)
 		})

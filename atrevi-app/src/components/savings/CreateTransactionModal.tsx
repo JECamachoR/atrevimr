@@ -10,11 +10,13 @@ import { Row } from "../Layout"
 import { MaterialIcons } from "@expo/vector-icons"
 import { t } from "i18n-js"
 import FundPickerModal from "./FundPickerModal"
-import { CreateTransactionInput, CreateTransactionMutation, Fund, UpdateFundInput } from "../../API"
+import { CreateTransactionInput, CreateTransactionMutation, Fund, GetUserQuery, UpdateFundInput, UpdateUserInput } from "../../API"
 import { TransactionSchema } from "../../schemas"
 import API, { GraphQLResult } from "@aws-amplify/api"
-import { createTransaction, updateFund } from "../../graphql/mutations"
+import { createTransaction, updateFund, updateUser } from "../../graphql/mutations"
 import { graphqlOperation } from "aws-amplify"
+import AuthContext from "../../auth/AuthContext"
+import { getUser } from "../../graphql/queries"
 
 type Props = {
     hideModal: () => void,
@@ -24,7 +26,7 @@ type Props = {
 const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement => {
 
 	const [nRendered, setNRendered] = React.useState(0)
-
+	const { username } = React.useContext(AuthContext)
 	return (
 		<Formik
 			initialValues={{
@@ -41,13 +43,26 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 							fundID: fund?.id
 						} as CreateTransactionInput})
 					) as GraphQLResult<CreateTransactionMutation>
-					if (c.data?.createTransaction?.id) {
-						const u = await API.graphql(
+					if (c.data?.createTransaction?.ammount) {
+						await API.graphql(
 							graphqlOperation(updateFund, {input: {
 								id: fund?.id,
-								balance: (fund?.balance || 0) + trans.ammount
+								balance: (fund?.balance || 0) + c.data.createTransaction.ammount
 							} as UpdateFundInput})
 						)
+					}
+					if (c.data?.createTransaction?.ammount) {
+						const b = await API.graphql(
+							graphqlOperation(getUser, {id: username})
+						) as GraphQLResult<GetUserQuery>
+						if (b.data?.getUser?.id) {
+							await API.graphql(graphqlOperation(updateUser, {input: 
+								{
+									id: username,
+									balance: (b.data.getUser.balance || 0) + c.data.createTransaction.ammount
+								} as UpdateUserInput
+							}))
+						}
 					}
 					hideModal()
 					setNRendered(v => v+1)
