@@ -2,6 +2,8 @@ import { t } from "i18n-js"
 import * as React from "react"
 import { SectionList, StyleSheet, TouchableOpacity } from "react-native"
 import { darkMode, grayscale } from "../../constants/Colors"
+import GoalFundContext from "../../contexts/GoalFundContext"
+import MoneyboxesContext from "../../contexts/MoneyboxesContext"
 import Modal from "../Modal"
 import { Text, View } from "../Themed"
 
@@ -11,15 +13,15 @@ type Props = {
     pickFund: (fund: {name: string, id: string}) => void,
 }
 
-const sections = [
-	{title: "Goals", data: [], item: {name: "goals", id: "goals"}},
-	{title: "Moneyboxes", data: [
-		{name: "emergencias", id: "mb1"},
-		{name: "pan", id: "mb2"}
-	]}
-]
-
 const FundPickerModal = ({ visible, hideModal, pickFund }: Props): React.ReactElement => {
+
+	const mbs = React.useContext(MoneyboxesContext)
+	const gf = React.useContext(GoalFundContext)
+
+	const data = [
+		{title: "Goals", "data": [], item: gf },
+		{title: "Moneyboxes", data: mbs}
+	]
 
 	return (
 		<Modal
@@ -28,7 +30,7 @@ const FundPickerModal = ({ visible, hideModal, pickFund }: Props): React.ReactEl
 			title={t("Choose Fund")}
 		>
 			<SectionList
-				sections={sections}
+				sections={data}
 				renderSectionHeader={(v) => (
 					<TouchableOpacity onPress={() => {
 						if (v.section.item) {
