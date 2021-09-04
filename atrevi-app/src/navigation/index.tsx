@@ -15,8 +15,6 @@ import i18n from "i18n-js"
 import * as Localization from "expo-localization"
 import en from "../assets/lang/en.json"
 import es from "../assets/lang/es.json"
-import CreateGoalScreen from "../screens/goal/CreateGoalScreen"
-import CreateMoneyboxScreen from "../screens/moneybox/CreateMoneyboxScreen"
 
 i18n.translations = {
 	en,
@@ -70,20 +68,6 @@ function RootStackNavigator() {
 					user ?
 						<>
 							<Stack.Screen name="Main" component={BottomTabNavigator} />
-							<Stack.Screen
-								name="CreateGoal"
-								component={CreateGoalScreen}
-								options={{
-									headerShown: false,
-								}}
-							/>
-							<Stack.Screen
-								name="CreateMoneybox"
-								component={CreateMoneyboxScreen}
-								options={{
-									headerShown: false,
-								}}
-							/>
 						</>
 						:
 						<Stack.Screen name="Auth" component={AuthStackNavigator} />

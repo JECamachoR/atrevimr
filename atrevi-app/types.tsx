@@ -7,8 +7,6 @@ export type RootStackParamList = {
      Main: undefined;
      Auth: undefined
      NotFound: undefined;
-     CreateGoal: undefined
-     CreateMoneybox: undefined
  };
  
  
@@ -21,6 +19,7 @@ export type BottomTabBarParamList = {
 export type HomeStackParamList = {
     Home: undefined
     CreateGoal: undefined
+    CreateMoneybox: undefined
 }
  
 export type SettingsStackParamList = {

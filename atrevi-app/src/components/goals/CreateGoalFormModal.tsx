@@ -18,6 +18,7 @@ import shortPlan from "../../../functions/shortPlan"
 import getSavingDate from "../../../functions/getSavingDate"
 import GoalFundContext from "../../contexts/GoalFundContext"
 import GoalsContext from "../../contexts/GoalsContext"
+import { formatNumber } from "react-native-currency-input"
 
 type Props = {
     visible: boolean,
@@ -30,15 +31,17 @@ type Props = {
 const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props): React.ReactElement => {
 
 	const goalList = React.useContext(GoalsContext)
-		.map(v => ({...v, date: new Date(v.date)})) as {ammount: number, date: Date}[]
 	const goalFund = React.useContext(GoalFundContext)
     
 	const line = useThemeColor({colorName: "line"})
+	const link = useThemeColor({colorName: "link"})
 	const today = new Date()
-	
+
+	console.log(goalFund)
+
 	return (
 		<Formik
-			initialValues={{...goal, recurringAmmount: 0}}
+			initialValues={goal}
 			onSubmit={handleSubmit}
 			validationSchema={GoalCreationSchema}
 			validateOnChange={false}
@@ -47,10 +50,10 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 				
 				const calculateSavings = () => {
 					if (!values.ammount || !values.date) return
-					console.log("to get ", values.ammount)
-					console.log("by", values.date)
-					const list = [...goalList]
+					const list = goalList
+						.map(v => ({ammount: v.ammount, date: new Date(v.date)})) as {ammount: number, date: Date}[]
 					list.push({ammount: values.ammount, date: values.date})
+					
 					const r = shortPlan(
 						list,
 						"7day", 
@@ -61,6 +64,12 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 				}
 
 				React.useEffect(() => calculateSavings(), [values.ammount, values.date])
+				const f = (n: number) => formatNumber(n, {
+					delimiter: ",",
+					precision: 2,
+					prefix: "$",
+					separator: ".",
+				})
 
 				return (
 					
@@ -122,10 +131,16 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 							<View style={[styles.estimateCard, {borderColor: line}]}>
 								{Boolean(values.recurringAmmount) && 
 								<>
-									<Text>For this goal you will need to save:</Text>
-									<Text>{(values.recurringAmmount - (goalFund?.recurringAmmount || 0) )}</Text>
-									<Text>Adding up your other goals, you will save:</Text>
-									<Text>{values.recurringAmmount}</Text>
+									<Text style={styles.estimateLabel}>For this goal you will need to save:</Text>
+									<Text style={[
+										styles.estimateValue,
+										{color: link}
+									]}>{f(values.recurringAmmount - (goalFund?.recurringAmmount || 0))}</Text>
+									<Text style={styles.estimateLabel}>{"\n"}Adding up your other goals, you will save:</Text>
+									<Text style={[
+										styles.estimateValue,
+										{color: link}
+									]}>{f(values.recurringAmmount)}</Text>
 								</>	
 								}
 							</View>
@@ -173,5 +188,12 @@ const styles = StyleSheet.create({
 		marginVertical: 16,
 		borderRadius: 15,
 		borderWidth: 1,
+		padding: 16,
+	},
+	estimateLabel: {
+
+	},
+	estimateValue: {
+		fontSize: 16,
 	},
 })

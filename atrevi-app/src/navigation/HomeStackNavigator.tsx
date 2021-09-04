@@ -2,6 +2,8 @@ import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
 import HomeScreen from "../screens/home/HomeScreen"
 import { HomeStackParamList } from "../../types"
+import CreateMoneyboxScreen from "../screens/moneybox/CreateMoneyboxScreen"
+import CreateGoalScreen from "../screens/goal/CreateGoalScreen"
 
 const HomeStack = createStackNavigator<HomeStackParamList>()
 
@@ -13,6 +15,20 @@ const HomeStackNavigator = (): React.ReactElement => {
                 component={HomeScreen}
                 options={{
                     headerShown: false
+                }}
+            />
+            <HomeStack.Screen
+                name="CreateGoal"
+                component={CreateGoalScreen}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <HomeStack.Screen
+                name="CreateMoneybox"
+                component={CreateMoneyboxScreen}
+                options={{
+                    headerShown: false,
                 }}
             />
         </HomeStack.Navigator>

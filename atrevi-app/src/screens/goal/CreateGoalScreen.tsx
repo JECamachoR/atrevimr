@@ -9,9 +9,10 @@ import { NavParamList } from "../../../types"
 import CreateGoalFormModal from "../../components/goals/CreateGoalFormModal"
 import { UnsplashPhoto } from "react-native-unsplash"
 import { API, graphqlOperation } from "aws-amplify"
-import { createGoal } from "../../graphql/mutations"
+import { createGoal, updateFund } from "../../graphql/mutations"
 import CreateCustomGoalCard from "../../components/goals/CreateCustomGoalCard"
 import { t } from "i18n-js"
+import GoalFundContext from "../../contexts/GoalFundContext"
 
 export type CreateGoalType = {
     name?: string,
@@ -19,21 +20,30 @@ export type CreateGoalType = {
     date?: Date
     category: string,
     unsplashIMG?: UnsplashPhoto["urls"],
+	recurringAmmount: number
 }
 
 type Props = StackScreenProps<NavParamList, "CreateGoal">
 
 const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 	const [goalFormModalOpen, setGoalFormModalOpen] = React.useState(false)
-	const [goal, setGoal] = React.useState<CreateGoalType>({category: "", date: new Date()})
-
-	const handleSubmit = async (g: CreateGoalType) => {
+	const [goal, setGoal] = React.useState<CreateGoalType>({category: "", date: new Date(), recurringAmmount: 0})
+	const goalFund = React.useContext(GoalFundContext)
+	const handleSubmit = async ({recurringAmmount, ...g}: CreateGoalType) => {
 		try {
 			await API.graphql(graphqlOperation(createGoal, {input: {
 				...g, 
 				date: g.date?.toISOString().split("T")[0],
 				unsplashIMG: JSON.stringify(g.unsplashIMG)
 			}}))
+			if (goalFund) {
+				await API.graphql(graphqlOperation(updateFund, {
+					input: {
+						id: goalFund.id,
+						recurringAmmount
+					}
+				}))
+			}
 			setGoalFormModalOpen(false)
 			navigation.popToTop()
 		} catch (err) {
@@ -76,7 +86,7 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 
 			<CreateCustomGoalCard action={() => {
 				setGoalFormModalOpen(true)
-				setGoal({category: ""})
+				setGoal({category: "", recurringAmmount: 0, date: new Date()})
 			}}
 			/>
 			
