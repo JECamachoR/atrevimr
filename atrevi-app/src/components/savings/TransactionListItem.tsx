@@ -50,7 +50,9 @@ const TransactionListItem = ({ transaction }: Props): React.ReactElement => {
 				<Text style={[styles.subtitle, {color: subtitleColor}]}>{transaction.fund?.name || ""}</Text>
 			</View>
 			<View style={styles.right}>
-				<Text style={transaction.ammount >= 0 ? styles.positive : styles.negative}>{formatNumber(transaction.ammount, {
+				<Text 
+					style={transaction.ammount >= 0 ? styles.positive : styles.negative}
+				>{formatNumber(transaction.ammount, {
 					delimiter: ",",
 					precision: 2,
 					prefix: "$",
@@ -58,7 +60,9 @@ const TransactionListItem = ({ transaction }: Props): React.ReactElement => {
 					showPositiveSign: true,
 					signPosition: "beforePrefix",
 				})}</Text>
-				<Text style={[styles.subtitle, {color: subtitleColor}]}>{transaction.createdAt}</Text>
+				<Text style={[styles.subtitle, {color: subtitleColor}]}>{
+					transaction.createdAt.split("T")[0]
+				}</Text>
 			</View>
 		</Row>
 	)
