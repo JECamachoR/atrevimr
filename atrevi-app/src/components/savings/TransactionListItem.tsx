@@ -13,7 +13,6 @@ export type Props = {
     transaction: Transaction
 }
 
-
 type IconProps = {
     transaction: Transaction
 }
@@ -36,6 +35,7 @@ const TransactionListItem = ({ transaction }: Props): React.ReactElement => {
 	const subtitleColor = useThemeColor({colorName: "placeholderTextColor"})
 	const line = useThemeColor({colorName: "line"})
 	const color = useThemeColor({colorName: "text"})
+
 	return (
 		<Row
 			lightColor={grayscale.offWhite}

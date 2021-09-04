@@ -17,43 +17,12 @@ export const createUser = /* GraphQL */ `
       name
       profileIMG
       goals {
-        items {
-          id
-          owner
-          name
-          ammount
-          date
-          unsplashIMG
-          category
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       funds {
-        items {
-          id
-          owner
-          name
-          balance
-          recurringAmmount
-          category
-          unsplashIMG
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -76,43 +45,12 @@ export const updateUser = /* GraphQL */ `
       name
       profileIMG
       goals {
-        items {
-          id
-          owner
-          name
-          ammount
-          date
-          unsplashIMG
-          category
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       funds {
-        items {
-          id
-          owner
-          name
-          balance
-          recurringAmmount
-          category
-          unsplashIMG
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -135,43 +73,12 @@ export const deleteUser = /* GraphQL */ `
       name
       profileIMG
       goals {
-        items {
-          id
-          owner
-          name
-          ammount
-          date
-          unsplashIMG
-          category
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       funds {
-        items {
-          id
-          owner
-          name
-          balance
-          recurringAmmount
-          category
-          unsplashIMG
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -247,15 +154,6 @@ export const createFund = /* GraphQL */ `
       category
       unsplashIMG
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -277,15 +175,6 @@ export const updateFund = /* GraphQL */ `
       category
       unsplashIMG
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -307,15 +196,6 @@ export const deleteFund = /* GraphQL */ `
       category
       unsplashIMG
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -342,9 +222,6 @@ export const createTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
-        transactions {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -372,9 +249,6 @@ export const updateTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
-        transactions {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -402,9 +276,6 @@ export const deleteTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
-        transactions {
-          nextToken
-        }
         createdAt
         updatedAt
       }

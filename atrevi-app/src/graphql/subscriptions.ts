@@ -14,43 +14,12 @@ export const onCreateUser = /* GraphQL */ `
       name
       profileIMG
       goals {
-        items {
-          id
-          owner
-          name
-          ammount
-          date
-          unsplashIMG
-          category
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       funds {
-        items {
-          id
-          owner
-          name
-          balance
-          recurringAmmount
-          category
-          unsplashIMG
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -70,43 +39,12 @@ export const onUpdateUser = /* GraphQL */ `
       name
       profileIMG
       goals {
-        items {
-          id
-          owner
-          name
-          ammount
-          date
-          unsplashIMG
-          category
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       funds {
-        items {
-          id
-          owner
-          name
-          balance
-          recurringAmmount
-          category
-          unsplashIMG
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -126,43 +64,12 @@ export const onDeleteUser = /* GraphQL */ `
       name
       profileIMG
       goals {
-        items {
-          id
-          owner
-          name
-          ammount
-          date
-          unsplashIMG
-          category
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       funds {
-        items {
-          id
-          owner
-          name
-          balance
-          recurringAmmount
-          category
-          unsplashIMG
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -226,15 +133,6 @@ export const onCreateFund = /* GraphQL */ `
       category
       unsplashIMG
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -253,15 +151,6 @@ export const onUpdateFund = /* GraphQL */ `
       category
       unsplashIMG
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -280,15 +169,6 @@ export const onDeleteFund = /* GraphQL */ `
       category
       unsplashIMG
       transactions {
-        items {
-          id
-          fundID
-          owner
-          ammount
-          concept
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -312,9 +192,6 @@ export const onCreateTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
-        transactions {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -339,9 +216,6 @@ export const onUpdateTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
-        transactions {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -366,9 +240,6 @@ export const onDeleteTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
-        transactions {
-          nextToken
-        }
         createdAt
         updatedAt
       }

@@ -39,7 +39,6 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 	React.useEffect(() => {
 		const load = async () => {
 			const u = await API.graphql(graphqlOperation(getUser, {id: username})) as GraphQLResult<GetUserQuery>
-			console.log(u)
 			setTotalBalance(u.data?.getUser?.balance || 0)
 		}
 		load()
@@ -48,7 +47,6 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 			id: username
 		})) as Observable<object>).subscribe({
 			next: ({value}: {value: GraphQLResult<OnUpdateUserSubscription>}) => {
-				console.log("\n\nvalue: \n\n", value)
 				setTotalBalance(value.data?.onUpdateUser?.balance || 0)
 			},
 			error: (err) => console.error(err)

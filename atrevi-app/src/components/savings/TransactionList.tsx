@@ -1,6 +1,7 @@
 import * as React from "react"
 import { StyleSheet } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
+import MoneyboxesContext from "../../contexts/MoneyboxesContext"
 import TransactionsContext from "../../contexts/TransactionsContext"
 import { useThemeColor, View } from "../Themed"
 import TransactionListHeader from "./TransactionListHeader"
@@ -16,12 +17,18 @@ const Separator = () => {
 const TransactionList = (): React.ReactElement => {
 
 	const transactions = React.useContext(TransactionsContext)
-
+	const mbs = React.useContext(MoneyboxesContext)
 
 	return (
 		<View style={styles.container}>
 			<FlatList
-				data={transactions.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)}
+				data={
+					transactions
+						.map((v) => {
+							return {fund: mbs.find((m) => m.id === v.fundID), ...v}
+						})
+						.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)
+					}
 				renderItem={({item}) => <TransactionListItem transaction={item} />}
 				keyExtractor={(_, index) => "" + index}
 				ListHeaderComponent={TransactionListHeader}
