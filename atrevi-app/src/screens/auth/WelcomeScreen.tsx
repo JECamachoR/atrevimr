@@ -30,6 +30,7 @@ const WelcomeScreen = ({ navigation }: Props): React.ReactElement => {
 					<Button
 						title={t("Create account")}
 						onPress={() => navigation.navigate("SignUpScreen")}
+						darkModeVariant="secondary"
 					/>
 				</View>
                 

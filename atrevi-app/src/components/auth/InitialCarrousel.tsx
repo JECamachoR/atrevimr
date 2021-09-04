@@ -1,6 +1,7 @@
 import * as React from "react"
 import { StyleSheet, useWindowDimensions, View } from "react-native"
 import Carousel, { Pagination } from "react-native-snap-carousel"
+import { secondary } from "../../constants/Colors"
 import { useThemeColor } from "../Themed"
 import CarrouselItem from "./CarrouselItem"
 
@@ -8,7 +9,6 @@ const InitialCarrousel = (): React.ReactElement => {
 
 	const [i, setI] = React.useState(0)
 	const {width} = useWindowDimensions()
-	const link = useThemeColor({colorName: "link"})
 
 	return (
 		<View style={styles.container}>
@@ -30,7 +30,7 @@ const InitialCarrousel = (): React.ReactElement => {
 					containerStyle={styles.pagContainer}
 					dotStyle={[
 						styles.dotStyle,
-						{ backgroundColor: link }
+						{ backgroundColor: secondary.default }
 					]}
 					inactiveDotStyle={styles.inactiveDotStyle}
 					dotContainerStyle={styles.dotContainer}
