@@ -53,10 +53,9 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 
 			{ goals.length || moneyboxes.length ? 
 				<>
-					<View style={{marginBottom: 16}}>
-						<GoalList goals={goals} />
-					</View>
-					<MoneyboxList moneyboxes={moneyboxes} />
+					{ Boolean(goals.length) && <GoalList goals={goals} />}
+					<View style={{height: 16}}/>
+					{ Boolean(moneyboxes.length) && <MoneyboxList moneyboxes={moneyboxes} /> }
 				</>
 				:
 				<>
