@@ -1,4 +1,5 @@
 import * as yup from "yup"
+import { Transaction } from "./API"
 
 const phoneRegEx = /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/
 
@@ -52,4 +53,16 @@ export const GoalCreationSchema = yup.object().shape({
 		.typeError("Please input a number")
 		.required("Required"),
 	date: yup.date()
+})
+
+export const TransactionSchema = yup.object().shape({
+    fund: yup.object()
+		.nullable(false)
+		.required("Required"),
+    ammount: yup.number()
+		.min(1)
+		.required("Required"),
+    concept: yup.string()
+		.min(1)
+		.required("Required"),
 })

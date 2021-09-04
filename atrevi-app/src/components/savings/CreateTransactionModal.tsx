@@ -10,6 +10,11 @@ import { Row } from "../Layout"
 import { MaterialIcons } from "@expo/vector-icons"
 import { t } from "i18n-js"
 import FundPickerModal from "./FundPickerModal"
+import { CreateTransactionInput, CreateTransactionMutation, Fund, UpdateFundInput } from "../../API"
+import { TransactionSchema } from "../../schemas"
+import API, { GraphQLResult } from "@aws-amplify/api"
+import { createTransaction, updateFund } from "../../graphql/mutations"
+import { graphqlOperation } from "aws-amplify"
 
 type Props = {
     hideModal: () => void,
@@ -17,38 +22,63 @@ type Props = {
 }
 
 const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement => {
+
+	const [nRendered, setNRendered] = React.useState(0)
+
 	return (
 		<Formik
 			initialValues={{
 				ammount: 0,
 				concept: "",
-				fund: {name: "goals", id: "goals"}
+				fund: null as Fund | null
 			}}
-			onSubmit={console.log}
+			onSubmit={async v => {
+				try {
+					const {fund, ...trans} = v
+					const c = await API.graphql(
+						graphqlOperation(createTransaction, {input: {
+							...trans,
+							fundID: fund?.id
+						} as CreateTransactionInput})
+					) as GraphQLResult<CreateTransactionMutation>
+					if (c.data?.createTransaction?.id) {
+						const u = await API.graphql(
+							graphqlOperation(updateFund, {input: {
+								id: fund?.id,
+								balance: (fund?.balance || 0) + trans.ammount
+							} as UpdateFundInput})
+						)
+					}
+					hideModal()
+					setNRendered(v => v+1)
+				} catch (err) {
+					console.error(err)
+				}
+			}}
+			validationSchema={TransactionSchema}
+			key={nRendered}
 		>
-			{({values, handleBlur, setFieldValue, handleChange, submitForm, resetForm }) => {
+			{({values, errors, handleBlur, setFieldValue, handleChange, submitForm, resetForm }) => {
 
 				const [pickingFund, setPickingFund] = React.useState(false)
+
 				const color = useThemeColor({colors: {
 					light: grayscale.body,
 					dark: grayscale.offWhite
 				}})
-
 				const placeholder = useThemeColor({colorName: "placeholderTextColor"})
+
 				return (
 					<Modal
 						hideModal={hideModal} 
 						visible={visible}
 						rightComponent={(
-							<TouchableOpacity onPress={() => {
-								submitForm()
-								hideModal()
-								resetForm()
-							}}>
+							<TouchableOpacity onPress={submitForm}>
 								<View><Text style={[styles.save, {color: useThemeColor({colorName: "link"})}]}>{t("Save")}</Text></View>
 							</TouchableOpacity>
 						)}
 						title={t("New Record")}
+						onClose={resetForm}
 					>
 
 						<FundPickerModal
@@ -89,7 +119,10 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 								</Row>
 								<Row style={styles.fundRightSide}>
 									<Text style={[styles.fundLabel, {color: placeholder}]}>{
-										(values.fund.name === "goals" ? t("Goals"): values.fund.name) + " "
+										values.fund ? 
+										((values.fund.name === "goals" ? t("Goals"): values.fund.name) + " ")
+										:
+										"Pick a fund"
 									}</Text>
 									<MaterialIcons name="keyboard-arrow-right" size={30} color={color} />
 								</Row>
