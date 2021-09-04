@@ -25,65 +25,80 @@ type Props = {
 
 const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.ReactElement => {
 
-	const [totalBalance, setTotalBalance] = React.useState<number | null | undefined>(1)
-	const [goalsProgress, setGoalsProgress] = React.useState<number>(1)
-	const [goalsExpected,setGoalsExpected] = React.useState<number>(2)
-	const [moneyboxesBalance, setMoneyboxesBalance] = React.useState<number>(1)
-	const [moneyboxesExpected, setMoneyboxesExpected] = React.useState<number>(2)
-
 	const { username } = React.useContext(AuthContext)
 	const transactions = React.useContext(TransactionsContext)
 	const moneyboxes = React.useContext(MoneyboxesContext)
 	const goalFund = React.useContext(GoalFundContext)
 
-	// React.useEffect(() => {
-	// 	const load = async () => {
-	// 		const u = await API.graphql(graphqlOperation(getUser, {id: username})) as GraphQLResult<GetUserQuery>
-	// 		setTotalBalance(u.data?.getUser?.balance)
-	// 	}
-	// 	load()
-	// 	// eslint-disable-next-line @typescript-eslint/ban-types
-	// 	const sus = (API.graphql(graphqlOperation(onUpdateUser, {owner: username})) as Observable<object>).subscribe({
-	// 		next: ({value}: {value: OnUpdateUserSubscription}) => {
-	// 			setTotalBalance(value.onUpdateUser?.balance)
-	// 		},
-	// 		error: console.error
-	// 	})
-	// 	return () => sus.unsubscribe()
-	// }, [])
+	const [totalBalance, setTotalBalance] = React.useState<number | null | undefined>(0)
+	const [goalsProgress, setGoalsProgress] = React.useState<number>(0)
+	const [goalsExpected,setGoalsExpected] = React.useState<number>(0)
+	const [moneyboxesBalance, setMoneyboxesBalance] = React.useState<number>(0)
+	const [moneyboxesExpected, setMoneyboxesExpected] = React.useState<number>(0)
 
-	// React.useEffect(() => {
-	// 	setGoalsProgress(transactions.reduce((prev, curr): number => {
-	// 		if (goalFund?.id) {
-	// 			if (curr.fundID === goalFund.id) {
-	// 				return curr.ammount + prev
-	// 			}
-	// 			else return prev
-	// 		}
-	// 		else return prev
-	// 	}, 0))
-	// 	setMoneyboxesBalance(transactions.reduce((prev, curr): number => {
-	// 		if (curr.fundID !== goalFund?.id) {
-	// 			return curr.ammount + prev
-	// 		}
-	// 		else return prev
-	// 	}, 0))
-	// }, [transactions])
+	React.useEffect(() => {
+		const load = async () => {
+			const u = await API.graphql(graphqlOperation(getUser, {id: username})) as GraphQLResult<GetUserQuery>
+			setTotalBalance(u.data?.getUser?.balance)
+		}
+		load()
+		// eslint-disable-next-line @typescript-eslint/ban-types
+		const sus = (API.graphql(graphqlOperation(onUpdateUser, {
+			id: username
+		})) as Observable<object>).subscribe({
+			next: ({value}: {value: OnUpdateUserSubscription}) => {
+				setTotalBalance(value.onUpdateUser?.balance)
+			},
+			error: (err) => console.error(err)
+		})
+		return () => sus.unsubscribe()
+	}, [])
+
+	React.useEffect(() => {
+		setGoalsProgress(transactions.reduce((prev, curr): number => {
+			if (goalFund?.id) {
+				if (curr.fundID === goalFund.id) {
+					return curr.ammount + prev
+				}
+				else return prev
+			}
+			else return prev
+		}, 0))
+		setMoneyboxesBalance(transactions.reduce((prev, curr): number => {
+			if (curr.fundID !== goalFund?.id) {
+				return curr.ammount + prev
+			}
+			else return prev
+		}, 0))
+	}, [transactions])
 	
-	// React.useEffect(() => {
-	// 	setGoalsExpected(goalFund?.recurringAmmount || 0)
-	// }, [goalFund])
+	React.useEffect(() => {
+		setGoalsExpected(goalFund?.recurringAmmount || 0)
+	}, [goalFund])
 
-	// React.useEffect(() => {
-	// 	setMoneyboxesExpected(moneyboxes.reduce((prev, curr) => {
-	// 		if (curr.id !== goalFund?.id) {
-	// 			return (curr.recurringAmmount || 0) + prev
-	// 		}
-	// 		else return prev
-	// 	}, 0))
-	// }, [moneyboxes])
+	React.useEffect(() => {
+		setMoneyboxesExpected(moneyboxes.reduce((prev, curr) => {
+			if (curr.id !== goalFund?.id) {
+				return (curr.recurringAmmount || 0) + prev
+			}
+			else return prev
+		}, 0))
+	}, [moneyboxes])
 
 	const divColor = useThemeColor({colors: {light: "#5B6BC0", dark: "#3E3E3F"}})
+	const unfilledColor = useThemeColor({colors: {
+		light: "#7381C9",
+		dark: "#5A5A5B",
+	}})
+	const f = (n: number) => formatNumber(n, {
+		delimiter: ",",
+		precision: 0,
+		separator: ".",
+	})
+
+	const towards = i18n.t("Towards")
+	const goals = i18n.t("Goals")
+	const moneybox = i18n.t("Moneybox")
 
 	return (
 		<View
@@ -131,51 +146,23 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 			<View style={styles.transparent}>
 				<Text style={styles.plannedLabel}>This month planned savings</Text>
 				<Row style={styles.transparent}>
-					<View
-						style={[styles.progress, styles.goals]}
-						lightColor="#5B6BC0"
-						darkColor="#3E3E3F"
-					>
-						<View style={styles.progressLabelContainer}>
-							<Text style={styles.progressLabel}>{i18n.t("Towards")} {i18n.t("Goals")}</Text>
-						</View>
-						<View style={styles.progressDataContainer}>
-							<Text style={styles.progressAccum}>{goalsProgress}<Text style={styles.progressGoal}>/{goalsExpected}</Text></Text>
-							<Bar 
-								progress={goalsProgress / goalsExpected} 
-								width={null} 
-								height={8} 
-								color={grayscale.offWhite} 
-								unfilledColor={useThemeColor({colors: {
-									light: "#7381C9",
-									dark: "#5A5A5B",
-								}})}
-								borderColor={divColor}
-								borderRadius={8}
-								borderWidth={1}
-
-							/>
-						</View>
-					</View>
+					{ Boolean(goalsExpected) && 
 					<View
 						style={styles.progress}
 						lightColor="#5B6BC0"
 						darkColor="#3E3E3F"
 					>
 						<View style={styles.progressLabelContainer}>
-							<Text style={styles.progressLabel}>{i18n.t("Towards")} {i18n.t("Moneybox")}</Text>
+							<Text style={styles.progressLabel}>{towards} {goals}</Text>
 						</View>
 						<View style={styles.progressDataContainer}>
-							<Text style={styles.progressAccum}>{moneyboxesBalance}<Text style={styles.progressGoal}>/{moneyboxesExpected}</Text></Text>
+							<Text style={styles.progressAccum}>${f(goalsProgress)}<Text style={styles.progressGoal}>/{f(goalsExpected)}</Text></Text>
 							<Bar 
-								progress={moneyboxesBalance / moneyboxesExpected } 
+								progress={goalsProgress / goalsExpected} 
 								width={null} 
 								height={8} 
 								color={grayscale.offWhite} 
-								unfilledColor={useThemeColor({colors: {
-									light: "#7381C9",
-									dark: "#5A5A5B",
-								}})}
+								unfilledColor={unfilledColor}
 								borderColor={divColor}
 								borderRadius={8}
 								borderWidth={1}
@@ -183,6 +170,36 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 							/>
 						</View>
 					</View>
+					}
+					{
+						Boolean(moneyboxesExpected) && Boolean(goalsExpected) &&
+						<View style={styles.separator}/>
+					}
+					{ Boolean(moneyboxesExpected) &&
+					<View
+						style={styles.progress}
+						lightColor="#5B6BC0"
+						darkColor="#3E3E3F"
+					>
+						<View style={styles.progressLabelContainer}>
+							<Text style={styles.progressLabel}>{towards} {moneybox}</Text>
+						</View>
+						<View style={styles.progressDataContainer}>
+							<Text style={styles.progressAccum}>${f(moneyboxesBalance)}<Text style={styles.progressGoal}>/{f(moneyboxesExpected)}</Text></Text>
+							<Bar 
+								progress={moneyboxesBalance / moneyboxesExpected } 
+								width={null} 
+								height={8} 
+								color={grayscale.offWhite} 
+								unfilledColor={unfilledColor}
+								borderColor={divColor}
+								borderRadius={8}
+								borderWidth={1}
+
+							/>
+						</View>
+					</View>
+					}
 				</Row>
 			</View>
 		</View>
@@ -290,10 +307,11 @@ const styles = StyleSheet.create({
 		fontWeight: "400",
 		color: grayscale.offWhite,
 	},
-	goals: {
-		marginRight: 16,
+	separator: {
+		width: 16,
+		backgroundColor: "#00000000",
 	},
 	transparent: {
-		backgroundColor: "#00000000"
+		backgroundColor: "#00000000",
 	}
 })

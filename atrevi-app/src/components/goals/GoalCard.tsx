@@ -2,8 +2,12 @@ import { API, graphqlOperation } from "aws-amplify"
 import * as React from "react"
 import { GestureResponderEvent, ImageBackground, StyleSheet, TouchableOpacity, View } from "react-native"
 import { UnsplashPhoto } from "react-native-unsplash"
+import getSavingDate from "../../../functions/getSavingDate"
+import shortPlan from "../../../functions/shortPlan"
 import { DeleteGoalInput, Goal } from "../../API"
-import { deleteGoal } from "../../graphql/mutations"
+import GoalFundContext from "../../contexts/GoalFundContext"
+import GoalsContext from "../../contexts/GoalsContext"
+import { deleteGoal, updateFund } from "../../graphql/mutations"
 import Button from "../Button"
 import Modal from "../Modal"
 import GoalTitle from "./GoalTitle"
@@ -19,6 +23,10 @@ const GoalCard = ({ goal , onPress }: GoalCardProps): React.ReactElement => {
 	const [visible, setVisible] = React.useState(false)
 
 	const photo: UnsplashPhoto["urls"] = JSON.parse(goal.unsplashIMG || "")
+	const goals = React.useContext(GoalsContext)
+	const goalFund = React.useContext(GoalFundContext)
+
+	const today = new Date()
 
 	return (
 		<TouchableOpacity
@@ -36,8 +44,34 @@ const GoalCard = ({ goal , onPress }: GoalCardProps): React.ReactElement => {
 				<Button
 					title="delete"
 					onPress={async () => {
-						await API.graphql(graphqlOperation(deleteGoal, {input: {id: goal.id} as DeleteGoalInput}))
-						setVisible(false)
+						try {
+							await API.graphql(graphqlOperation(deleteGoal, {input: {id: goal.id} as DeleteGoalInput}))
+							if (goalFund) {
+								const list = goals
+									.filter((v) => {
+										if (v.id !== goal.id) return v
+									})
+									.map(v => ({
+										ammount: v.ammount, 
+										date: new Date(v.date)
+									}))
+								await API.graphql(graphqlOperation(updateFund, {input: {
+									id: goalFund.id,
+									recurringAmmount: shortPlan(
+										list,
+										"7day",
+										"monday",
+										{
+											ammount: goalFund.balance,
+											savingDate: getSavingDate(today, "7day", "monday")
+										}
+									)[0]
+								}}))
+							}
+							setVisible(false)
+						} catch (err) {
+							console.error(err)
+						}
 					}}
 					lightVariant={"error"}
 					darkModeVariant={"error"}
