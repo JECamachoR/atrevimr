@@ -16,6 +16,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons"
 import Button from "./Button"
 import StepIndicator from "./StepIndicator"
+import { t } from "i18n-js"
 
 type Props = {
 	type?: string,
@@ -72,7 +73,7 @@ export default function StepperProfile(props: Props): React.ReactElement {
 									letterSpacing: 1.5,
 								}}
 							>
-                You are beautiful
+								{t("You are beautiful")}
 							</Text>
 						</View>
 					</View>
@@ -80,16 +81,17 @@ export default function StepperProfile(props: Props): React.ReactElement {
 						<View style={styles.inputWrapper}>
 							<TextInput
 								style={styles.textInput}
-								placeholder="Your Name"
+								placeholder={t("Your name")}
 								placeholderTextColor="#A0A3BD"
 								onChangeText={(val) => props.onNameChange(val)}
 								value={props.name || undefined}
+								autoCorrect={false}
 							/>
 						</View>
 					</View>
 					<View>
 						<Button
-							title={"Next"}
+							title={t("Next")}
 							active={props.name ? true : false}
 							onPress={() => (props.name ? props.onNextPress() : null)}
 						/>

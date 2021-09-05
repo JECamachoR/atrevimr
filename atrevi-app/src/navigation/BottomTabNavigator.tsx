@@ -29,7 +29,8 @@ import { onCreateFund, onCreateGoal, onCreateTransaction, onCreateUser, onDelete
 import { Observable } from "zen-observable-ts"
 import AuthContext from "../auth/AuthContext"
 import Loading from "../components/Loading"
-import CreateProfileForm from "../screens/profile/CreateProfileForm"
+import CreateProfileForm from "../screens/settings/CreateProfileForm"
+import UserContext from "../contexts/UserContext"
 
 const BottomTab = createBottomTabNavigator()
 
@@ -262,42 +263,44 @@ const BottomTabNavigator = (): React.ReactElement => {
 			<MoneyboxesContext.Provider value={moneyboxes}>
 				<TransactionsContext.Provider value={transactions}>
 					<GoalFundContext.Provider value={goalFund}>
-						<BottomTab.Navigator
-							screenOptions={{
-								headerShown: false,
-								tabBarStyle: [styles.tabBarStyle, {
-									paddingBottom: 8 + insets.bottom,
-									height: 64 + insets.bottom
-								}],
-								tabBarHideOnKeyboard: true,
-								tabBarLabelPosition: "below-icon"
-							}}
-						>
-							<BottomTab.Screen
-								name="HomeStack"
-								component={HomeStackNavigator}
-								options={{
-									tabBarIcon: HomeTabBarIcon,
-									tabBarLabel: HomeTabBarLabel,
+						<UserContext.Provider value={user} >
+							<BottomTab.Navigator
+								screenOptions={{
+									headerShown: false,
+									tabBarStyle: [styles.tabBarStyle, {
+										paddingBottom: 8 + insets.bottom,
+										height: 64 + insets.bottom
+									}],
+									tabBarHideOnKeyboard: true,
+									tabBarLabelPosition: "below-icon"
 								}}
-							/>
-							<BottomTab.Screen
-								name="SavingsStack"
-								component={SavingsStackNavigator}
-								options={{
-									tabBarIcon: SavingsTabBarIcon,
-									tabBarLabel: SavingsTabBarLabel,
-								}}
-							/>
-							<BottomTab.Screen
-								name="SettingsStack"
-								component={SettingsStackNavigator}
-								options={{
-									tabBarIcon: SettingsTabBarIcon,
-									tabBarLabel:  SettingsTabBarLabel,
-								}}
-							/>
-						</BottomTab.Navigator>
+							>
+								<BottomTab.Screen
+									name="HomeStack"
+									component={HomeStackNavigator}
+									options={{
+										tabBarIcon: HomeTabBarIcon,
+										tabBarLabel: HomeTabBarLabel,
+									}}
+								/>
+								<BottomTab.Screen
+									name="SavingsStack"
+									component={SavingsStackNavigator}
+									options={{
+										tabBarIcon: SavingsTabBarIcon,
+										tabBarLabel: SavingsTabBarLabel,
+									}}
+								/>
+								<BottomTab.Screen
+									name="SettingsStack"
+									component={SettingsStackNavigator}
+									options={{
+										tabBarIcon: SettingsTabBarIcon,
+										tabBarLabel:  SettingsTabBarLabel,
+									}}
+								/>
+							</BottomTab.Navigator>
+						</UserContext.Provider>
 					</GoalFundContext.Provider>
 				</TransactionsContext.Provider>
 			</MoneyboxesContext.Provider>

@@ -24,6 +24,7 @@ import API from "@aws-amplify/api"
 import { graphqlOperation } from "aws-amplify"
 import { createFund, createUser } from "../../graphql/mutations"
 import { CreateFundInput } from "../../API"
+import { t } from "i18n-js"
 
 export default function CreateProfileForm(): React.ReactElement {
 
@@ -145,15 +146,15 @@ export default function CreateProfileForm(): React.ReactElement {
 
 				return (
 					<View style={styles.container}>
-						<Text style={styles.headTitle}>A few more steps:</Text>
+						<Text style={styles.headTitle}>{t("A few more steps")}:</Text>
 						<View style={styles.stepperMainWrapper}>
 							<View style={{ overflow: "hidden" }}>
 								<StepperProfile
 
 									title={
 										position > 1
-											? "Done, what a beautiful human"
-											: "Customize your profile"
+											? t("Done, what a beautiful human")
+											: t("Customize your profile")
 									}
 									onNameChange={(val: string) => setFieldValue("name", val)}
 									name={values.name}
@@ -167,7 +168,7 @@ export default function CreateProfileForm(): React.ReactElement {
 									selectedImg={values.img}
 								/>
 								<StepperFrequency
-									title={position > 2 ? "Great choice" : "Choose a saving frequency"}
+									title={position > 2 ? t("Great choice") : t("Choose a saving frequency")}
 									activeDay={values.DOTW}
 									onWeekDayPress={(val) => setFieldValue("DOTW", val)}
 									onRadioPress={(val) => setFieldValue("frequency", val)}
@@ -184,7 +185,7 @@ export default function CreateProfileForm(): React.ReactElement {
 									height={height2}
 								/>
 								<StepperNotification
-									title={position > 3 ? "Lorem ipsum" : "Customize notifications"}
+									title={position > 3 ? "Lorem ipsum" : t("Customize notifications")}
 									onPreviousPress={() => {
 										setPosition(2)
 										showContent(2)
@@ -198,7 +199,7 @@ export default function CreateProfileForm(): React.ReactElement {
 								/>
 								<StepperSuccess
                     
-									title={"Success!"}
+									title={t("Success!")}
 									onPreviousPress={() => {
 										setPosition(3)
 										showContent(3)

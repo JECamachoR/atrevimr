@@ -1,3 +1,4 @@
+import { t } from "i18n-js"
 import React from "react"
 import {
 	StyleSheet,
@@ -109,43 +110,43 @@ export default function StepperFrequency(props: Props): React.ReactElement {
 						<Text
 							style={[styles.dowText, { fontWeight: "300", lineHeight: 20 }]}
 						>
-							<Text style={styles.dowText}>Day of the week</Text>: Aut
+							<Text style={styles.dowText}>{t("Day of the week")}</Text>: Aut
               laboriosam quos eius dolorum. Aut ero eligendi quI beatae.
 						</Text>
 					</View>
 					<View style={styles.weekDaysWrapper}>
 						<WeekDay
-							title="M"
+							title={t("DOTWinitialMonday")}
 							type="monday"
 							onPress={() => props.onWeekDayPress("monday")}
 						/>
 						<WeekDay
-							title="T"
+							title={t("DOTWinitialTuesday")}
 							type="tuesday"
 							onPress={() => props.onWeekDayPress("tuesday")}
 						/>
 						<WeekDay
-							title="W"
+							title={t("DOTWinitialWednesday")}
 							type="wednesday"
 							onPress={() => props.onWeekDayPress("wednesday")}
 						/>
 						<WeekDay
-							title="T"
+							title={t("DOTWinitialThursday")}
 							type="thursday"
 							onPress={() => props.onWeekDayPress("thursday")}
 						/>
 						<WeekDay
-							title="F"
+							title={t("DOTWinitialFriday")}
 							type="friday"
 							onPress={() => props.onWeekDayPress("friday")}
 						/>
 						<WeekDay
-							title="S"
+							title={t("DOTWinitialSaturday")}
 							type="saturday"
 							onPress={() => props.onWeekDayPress("saturday")}
 						/>
 						<WeekDay
-							title="S"
+							title={t("DOTWinitialSunday")}
 							type="sunday"
 							onPress={() => props.onWeekDayPress("sunday")}
 						/>
@@ -154,23 +155,23 @@ export default function StepperFrequency(props: Props): React.ReactElement {
 						<Text
 							style={[styles.dowText, { fontWeight: "300", lineHeight: 20 }]}
 						>
-							<Text style={styles.dowText}>Frequency</Text>: Aut laboriosam quos
+							<Text style={styles.dowText}>{t("Frequency")}</Text>: Aut laboriosam quos
               eius dolorum. Aut ero eligendi quI beatae.
 						</Text>
 					</View>
 
 					<FrequencyType
-						title="Monthly"
+						title={t("Monthly")}
 						type="28day"
 						onPress={() => props.onRadioPress("28day")}
 					/>
 					<FrequencyType
-						title="BiWeekly"
+						title={t("BiWeekly")}
 						type="14day"
 						onPress={() => props.onRadioPress("14day")}
 					/>
 					<FrequencyType
-						title="Weekly"
+						title={t("Weekly")}
 						type="7day"
 						onPress={() => props.onRadioPress("7day")}
 					/>
@@ -184,12 +185,12 @@ export default function StepperFrequency(props: Props): React.ReactElement {
 					</View>
 					<View style={styles.btnWrapper}>
 						<Button
-							title={"Previous"}
+							title={t("Previous")}
 							active={true}
 							onPress={() => props.onPreviousPress()}
 						/>
 						<Button
-							title={"Next"}
+							title={t("Next")}
 							active={true}
 							onPress={() => props.onNextPress()}
 						/>

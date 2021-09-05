@@ -23,7 +23,8 @@ export type HomeStackParamList = {
 }
  
 export type SettingsStackParamList = {
-    Settings: undefined
+    Settings: undefined,
+    
 }
  
 export type AuthParamList = {

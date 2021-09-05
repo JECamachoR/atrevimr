@@ -1,3 +1,4 @@
+import { t } from "i18n-js"
 import * as React from "react"
 import { StyleSheet, Text, Animated, Switch, View } from "react-native"
 import { RFValue as rf } from "react-native-responsive-fontsize"
@@ -49,7 +50,7 @@ export default function StepperNotification(props: Props): React.ReactElement {
 				>
 					<View style={styles.cont1}>
 						<View style={styles.textWrapper}>
-							<Text style={styles.text1}>Essential</Text>
+							<Text style={styles.text1}>{t("Essential")}</Text>
 							<Text style={styles.text2}>
                 Deserunt et debitis, ut, labori,{"\n"}quos eius dolorum.{" "}
 							</Text>
@@ -66,7 +67,7 @@ export default function StepperNotification(props: Props): React.ReactElement {
 					</View>
 					<View style={styles.cont1}>
 						<View style={styles.textWrapper}>
-							<Text style={styles.text1}>Motivational</Text>
+							<Text style={styles.text1}>{t("Motivational")}</Text>
 							<Text style={styles.text2}>
                 Deserunt et debitis, ut, labori,{"\n"}quos eius dolorum.{" "}
 							</Text>
@@ -84,12 +85,12 @@ export default function StepperNotification(props: Props): React.ReactElement {
 
 					<View style={styles.btnWrapper}>
 						<Button
-							title={"Previous"}
+							title={t("Previous")}
 							active={false}
 							onPress={() => props.onPreviousPress()}
 						/>
 						<Button
-							title={"Next"}
+							title={t("Next")}
 							active={true}
 							onPress={() => props.onNextPress()}
 						/>

@@ -1,3 +1,4 @@
+import { t } from "i18n-js"
 import React from "react"
 import { Image, StyleSheet, Text, Animated, View } from "react-native"
 import { RFValue as rf } from "react-native-responsive-fontsize"
@@ -53,12 +54,12 @@ export default function StepperSuccess(props: Props): React.ReactElement {
 
 					<View style={styles.btnWrapper}>
 						<Button
-							title={"Previous"}
+							title={t("Previous")}
 							active={false}
 							onPress={() => props.onPreviousPress()}
 						/>
 						<Button
-							title={"Continue"}
+							title={t("Submit")}
 							active={true}
 							onPress={() => props.onNextPress()}
 						/>

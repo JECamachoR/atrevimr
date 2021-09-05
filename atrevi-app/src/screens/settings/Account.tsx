@@ -1,41 +1,37 @@
 import * as React from "react"
 import { StyleSheet } from "react-native"
-import { Screen, View, Text } from "../../components/Themed"
+import AuthContext from "../../auth/AuthContext"
+import { Screen, View } from "../../components/Themed"
 import { S3Image } from "aws-amplify-react-native"
 import Button from "../../components/Button"
 import Auth from "@aws-amplify/auth"
 import Tab from "../../components/settings/Tab"
-import { t } from "i18n-js"
-import UserContext from "../../contexts/UserContext"
 
-const Profile = (): React.ReactElement => {
+const Account = (): React.ReactElement => {
 
-	const user = React.useContext(UserContext)
+	const auth = React.useContext(AuthContext)
 
 	return (
 		<Screen>
 			<View style={styles.head}>
 				<View style={styles.imgContainer}>
-					<S3Image imgKey={user.phone} style={{
+					<S3Image imgKey={auth.username} style={{
 						height: "100%",
 						width: "100%",
 					}} />
 				</View>
-				<Text style={styles.name}>{user.name}</Text>
-				<Text style={styles.phone}>{user.phone}</Text>
 			</View>
 
 			<View style={styles.buttonsContainer}>
-				<Tab onPress={() => null} title={t("About Atrevi")} top />
-				<Tab onPress={() => null} title={t("Support")} />
-				<Tab onPress={() => null} title={t("Feedback")} bottom />
+				<Tab onPress={() => null} title="Name" top />
+				<Tab onPress={() => null} title="Pass" bottom />
 			</View>
 			<Button title="Log Out" onPress={() => Auth.signOut()}/>
 		</Screen>
 	)
 }
 
-export default Profile
+export default Account
 
 const styles = StyleSheet.create({
 	head: {
@@ -44,9 +40,9 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	imgContainer: {
-		height: 160,
-		width: 160,
-		borderRadius: 80,
+		height: 120,
+		width: 120,
+		borderRadius: 60,
 		overflow: "hidden",
 	},
 	buttonsContainer: {
@@ -54,13 +50,6 @@ const styles = StyleSheet.create({
 		marginHorizontal: 16,
 		alignItems: "center",
 		justifyContent: "flex-start"
-	},
-	name: {
-		marginTop: 8,
-		fontSize: 32,
-	},
-	phone: {
-		fontSize: 12,
 	},
 })
 
