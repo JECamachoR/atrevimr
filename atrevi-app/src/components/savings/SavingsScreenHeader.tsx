@@ -64,11 +64,8 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 			}
 			else return prev
 		}, 0))
-		setMoneyboxesBalance(transactions.reduce((prev, curr): number => {
-			if (curr.fundID !== goalFund?.id) {
-				return curr.ammount + prev
-			}
-			else return prev
+		setMoneyboxesBalance(moneyboxes.reduce((prev, curr): number => {
+			return prev + (curr.balance || 0)
 		}, 0))
 	}, [transactions])
 	
