@@ -1,4 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack"
+import { StatusBar } from "expo-status-bar"
 import { t } from "i18n-js"
 import * as React from "react"
 import { StyleSheet } from "react-native"
@@ -19,6 +20,7 @@ const WelcomeScreen = ({ navigation }: Props): React.ReactElement => {
 
 	return (
 		<Screen style={styles.screen}>
+			<StatusBar style="dark" />
 			<View style={styles.title}>
 				<WelcomeLogo/>
 			</View>
@@ -40,8 +42,12 @@ const WelcomeScreen = ({ navigation }: Props): React.ReactElement => {
 						navigation.navigate("SignInScreen")
 					}}
 				>
-					<Text style={{color: grayscale.label}}>¿Ya tienes cuenta?</Text>
-					<Text style={{color: secondary.default}}> Inicia Sesión</Text>
+					<Text 
+						style={{color: grayscale.label}}
+					>{t("Already signed up?")}</Text>
+					<Text 
+						style={{color: secondary.default}}
+					> {t("Sign In")}</Text>
 				</TouchableOpacity>
 			</View>
 		</Screen>

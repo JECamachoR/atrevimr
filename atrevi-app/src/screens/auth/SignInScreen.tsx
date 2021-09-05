@@ -12,6 +12,7 @@ import { SignInSchema } from "../../schemas"
 import { Auth } from "aws-amplify"
 import Submitting from "../../components/Submitting"
 import FormView from "../../components/formComponents/FormView"
+import { t } from "i18n-js"
 
 type Props = StackScreenProps<AuthParamList, "SignUpScreen">;
 
@@ -35,7 +36,7 @@ const SignInScreen = ({ navigation } : Props): React.ReactElement => {
 								username: v.phoneNumber,
 								password: v.pass
 							})
-						} catch (err) {
+						} catch (err: any) {
 							Alert.alert(
 								"Error",
 								err.message === "Incorrect username or password." ? "Número o contraseña incorrecta." : err.message
@@ -58,19 +59,19 @@ const SignInScreen = ({ navigation } : Props): React.ReactElement => {
 										darkColor={primary.default}
 										lightColor={secondary.default}
 									>
-                                    bienvenido,
+                                    {t("welcome")},
 									</Text>
 									<Text
 										style={styles.title}
 										darkColor={primary.default}
 										lightColor={secondary.default}
 									>
-                                    te extrañamos
+                                    {t("we've missed you")}
 									</Text>
 								</View>
 								<PhoneNumberInput
 									value={values.phoneNumberWithoutCode}
-									placeholder="Teléfono"
+									placeholder={t("Phone")}
 									error={
 										touched.phoneNumber && errors.phoneNumber ? 
 											errors.phoneNumber
@@ -89,7 +90,7 @@ const SignInScreen = ({ navigation } : Props): React.ReactElement => {
 									onChangeText={handleChange("pass")}
 									onBlur={handleBlur("pass")}
 									value={values.pass}
-									placeholder="Contraseña"
+									placeholder={t("Password")}
 									error={
 										touched.pass && errors.pass ? 
 											errors.pass
@@ -112,11 +113,11 @@ const SignInScreen = ({ navigation } : Props): React.ReactElement => {
 										darkColor={grayscale.offWhite}
 										lightColor={grayscale.label}
 									>
-                                Olvidé mi contraseña
+										{t("Forgot your password?")}
 									</Text>
 								</TouchableOpacity>
 
-								<Button onPress={submitForm} title="Entrar" />
+								<Button onPress={submitForm} title={t("Submit")} />
 
 								<TouchableOpacity
 									onPress={() => {
@@ -124,8 +125,14 @@ const SignInScreen = ({ navigation } : Props): React.ReactElement => {
 									} }
 									style={styles.registrar}
 								>
-									<Text darkColor={grayscale.offWhite} lightColor={grayscale.label}>¿Aún no tienes cuenta?</Text>
-									<Text darkColor={primary.default} lightColor={secondary.default}> Regístrate</Text>
+									<Text 
+										darkColor={grayscale.offWhite} 
+										lightColor={grayscale.label}
+									>{t("Not signed up yet?")}</Text>
+									<Text
+										darkColor={primary.default} 
+										lightColor={secondary.default}
+									> {t("Sign Up")}</Text>
 								</TouchableOpacity>
 							</>
 						)

@@ -55,6 +55,15 @@
 	"Password": "Password",
 	"Submit": "Submit",
 	"Sign In": "Sign In",
+	"Sign Up": "Sign Up",
+	"or": "or",
+	"Or": "Or",
 	"Already signed up?": "Already signed up?",
-	"Enter your code": "Enter your code"
+	"Enter your code": "Enter your code",
+	"Welcome": "Welcome",
+	"We've missed you": "We've missed you",
+	"welcome": "welcome",
+	"we've missed you": "we've missed you",
+	"Not signed up yet?": "Not signed up yet?",
+	"Forgot your password?": "Forgot your password?"
 }

@@ -55,6 +55,16 @@
 	"Password": "Contraseña",
 	"Submit": "Enviar",
 	"Sign In": "Inicia Sesión",
+	"Sign Up": "Registro",
+	"or": "o",
+	"Or": "O",
 	"Already signed up?": "¿Ya te registraste?",
-	"Enter your code": "Ingresa tu código"
+	"Enter your code": "Ingresa tu código",
+	"Welcome": "Bienvenido",
+	"We've missed you": "Te extrañamos",
+	"welcome": "bienvenido",
+	"we've missed you": "te extrañamos",
+	"Not signed up yet?": "¿Aún no te has registrado?",
+	"Forgot your password?": "¿Olvidaste tu contraseña?"
+
 }

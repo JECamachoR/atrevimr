@@ -11,6 +11,7 @@ import { grayscale, primary, secondary } from "../../constants/Colors"
 import { SignUpSchema } from "../../schemas"
 import { Auth } from "aws-amplify"
 import FormView from "../../components/formComponents/FormView"
+import { t } from "i18n-js"
 
 type Props = StackScreenProps<AuthParamList, "SignUpScreen">;
 
@@ -38,8 +39,8 @@ const SignUpScreen = ({navigation} : Props): React.ReactElement => {
 						}
 					})
 					navigation.navigate("PhoneVerificationScreen", v)
-				} catch (err) {
-					console.error("Error Signing Up:", err)
+				} catch (err: any) {
+					console.error(err)
 					Alert.alert("Error", err.message)
 				}
                 
@@ -51,12 +52,12 @@ const SignUpScreen = ({navigation} : Props): React.ReactElement => {
 					<FormView>
 						<View style={styles.titleContainer}>
 							<Text style={{...styles.title, color: colorScheme === "dark" ? primary.default : secondary.default}}>
-                            Crea tu cuenta
+                            {t("Sign Up")}
 							</Text>
 						</View>
 						<PhoneNumberInput 
 							value={values.phoneNumberWithoutCode}
-							placeholder="Teléfono"
+							placeholder={t("Phone")}
 							error={
 								touched.phoneNumberWithoutCode && errors.phoneNumberWithoutCode ? 
 									errors.phoneNumberWithoutCode
@@ -75,7 +76,7 @@ const SignUpScreen = ({navigation} : Props): React.ReactElement => {
 							onChangeText={handleChange("pass")}
 							onBlur={handleBlur("pass")}
 							value={values.pass}
-							placeholder="Contraseña"
+							placeholder={t("Password")}
 							error={
 								touched.pass && errors.pass ? 
 									errors.pass
@@ -86,7 +87,7 @@ const SignUpScreen = ({navigation} : Props): React.ReactElement => {
 							textContentType="newPassword"
 							returnKeyType="next"
 						/>
-						<Button onPress={handleSubmit} title="Entrar" />
+						<Button onPress={handleSubmit} title={t("Submit")} />
 
 						<TouchableOpacity 
 							style={styles.navOptions}
@@ -94,8 +95,18 @@ const SignUpScreen = ({navigation} : Props): React.ReactElement => {
 								navigation.navigate("SignInScreen")
 							}}
 						>
-							<Text style={{color: colorScheme === "dark" ? grayscale.offWhite : grayscale.label}}>¿Ya tienes cuenta?</Text>
-							<Text style={{color: colorScheme === "dark" ? primary.default : secondary.default}}> Inicia Sesión</Text>
+							<Text 
+								style={{
+									color: colorScheme === "dark" ? 
+									grayscale.offWhite : grayscale.label
+								}}
+							>{t("Already signed up?")}</Text>
+							<Text 
+								style={{
+									color: colorScheme === "dark" ? 
+									primary.default : secondary.default
+								}}
+							> {t("Sign In")}</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity 
@@ -104,8 +115,18 @@ const SignUpScreen = ({navigation} : Props): React.ReactElement => {
 								navigation.navigate("PhoneVerificationScreen")
 							}}
 						>
-							<Text style={{color: colorScheme === "dark" ? grayscale.offWhite : grayscale.label}}>¿Ya te registraste pero cuenta?</Text>
-							<Text style={{color: colorScheme === "dark" ? primary.default : secondary.default}}> Ingresa tu código</Text>
+							<Text 
+								style={{
+									color: colorScheme === "dark" ? 
+									grayscale.offWhite : grayscale.label
+								}}
+							>{t("Or")}</Text>						
+							<Text 
+								style={{
+									color: colorScheme === "dark" ? 
+									primary.default : secondary.default
+								}}
+							> {t("Enter your code")}</Text>
 						</TouchableOpacity>
 
 					</FormView>
