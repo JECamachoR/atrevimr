@@ -110,6 +110,19 @@ export type Goal = {
   date: string,
   unsplashIMG?: string | null,
   category: string,
+  premadeGoalID?: string | null,
+  PremadeGoal?: PremadeGoal | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type PremadeGoal = {
+  __typename: "PremadeGoal",
+  id: string,
+  name: string,
+  ammount: number,
+  unsplashIMG?: string | null,
+  category: string,
   createdAt: string,
   updatedAt: string,
 };
@@ -175,6 +188,8 @@ export type CreateGoalInput = {
   date: string,
   unsplashIMG?: string | null,
   category: string,
+  premadeGoalID?: string | null,
+  goalPremadeGoalId?: string | null,
 };
 
 export type ModelGoalConditionInput = {
@@ -183,9 +198,26 @@ export type ModelGoalConditionInput = {
   date?: ModelStringInput | null,
   unsplashIMG?: ModelStringInput | null,
   category?: ModelStringInput | null,
+  premadeGoalID?: ModelIDInput | null,
   and?: Array< ModelGoalConditionInput | null > | null,
   or?: Array< ModelGoalConditionInput | null > | null,
   not?: ModelGoalConditionInput | null,
+};
+
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
 };
 
 export type UpdateGoalInput = {
@@ -196,9 +228,41 @@ export type UpdateGoalInput = {
   date?: string | null,
   unsplashIMG?: string | null,
   category?: string | null,
+  premadeGoalID?: string | null,
+  goalPremadeGoalId?: string | null,
 };
 
 export type DeleteGoalInput = {
+  id: string,
+};
+
+export type CreatePremadeGoalInput = {
+  id?: string | null,
+  name: string,
+  ammount: number,
+  unsplashIMG?: string | null,
+  category: string,
+};
+
+export type ModelPremadeGoalConditionInput = {
+  name?: ModelStringInput | null,
+  ammount?: ModelFloatInput | null,
+  unsplashIMG?: ModelStringInput | null,
+  category?: ModelStringInput | null,
+  and?: Array< ModelPremadeGoalConditionInput | null > | null,
+  or?: Array< ModelPremadeGoalConditionInput | null > | null,
+  not?: ModelPremadeGoalConditionInput | null,
+};
+
+export type UpdatePremadeGoalInput = {
+  id: string,
+  name?: string | null,
+  ammount?: number | null,
+  unsplashIMG?: string | null,
+  category?: string | null,
+};
+
+export type DeletePremadeGoalInput = {
   id: string,
 };
 
@@ -253,22 +317,6 @@ export type ModelTransactionConditionInput = {
   and?: Array< ModelTransactionConditionInput | null > | null,
   or?: Array< ModelTransactionConditionInput | null > | null,
   not?: ModelTransactionConditionInput | null,
-};
-
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
 };
 
 export type UpdateTransactionInput = {
@@ -393,9 +441,27 @@ export type ModelGoalFilterInput = {
   date?: ModelStringInput | null,
   unsplashIMG?: ModelStringInput | null,
   category?: ModelStringInput | null,
+  premadeGoalID?: ModelIDInput | null,
   and?: Array< ModelGoalFilterInput | null > | null,
   or?: Array< ModelGoalFilterInput | null > | null,
   not?: ModelGoalFilterInput | null,
+};
+
+export type ModelPremadeGoalFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  ammount?: ModelFloatInput | null,
+  unsplashIMG?: ModelStringInput | null,
+  category?: ModelStringInput | null,
+  and?: Array< ModelPremadeGoalFilterInput | null > | null,
+  or?: Array< ModelPremadeGoalFilterInput | null > | null,
+  not?: ModelPremadeGoalFilterInput | null,
+};
+
+export type ModelPremadeGoalConnection = {
+  __typename: "ModelPremadeGoalConnection",
+  items?:  Array<PremadeGoal | null > | null,
+  nextToken?: string | null,
 };
 
 export type ModelFundFilterInput = {
@@ -560,6 +626,17 @@ export type CreateGoalMutation = {
     date: string,
     unsplashIMG?: string | null,
     category: string,
+    premadeGoalID?: string | null,
+    PremadeGoal?:  {
+      __typename: "PremadeGoal",
+      id: string,
+      name: string,
+      ammount: number,
+      unsplashIMG?: string | null,
+      category: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -580,6 +657,17 @@ export type UpdateGoalMutation = {
     date: string,
     unsplashIMG?: string | null,
     category: string,
+    premadeGoalID?: string | null,
+    PremadeGoal?:  {
+      __typename: "PremadeGoal",
+      id: string,
+      name: string,
+      ammount: number,
+      unsplashIMG?: string | null,
+      category: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -598,6 +686,71 @@ export type DeleteGoalMutation = {
     name: string,
     ammount: number,
     date: string,
+    unsplashIMG?: string | null,
+    category: string,
+    premadeGoalID?: string | null,
+    PremadeGoal?:  {
+      __typename: "PremadeGoal",
+      id: string,
+      name: string,
+      ammount: number,
+      unsplashIMG?: string | null,
+      category: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreatePremadeGoalMutationVariables = {
+  input: CreatePremadeGoalInput,
+  condition?: ModelPremadeGoalConditionInput | null,
+};
+
+export type CreatePremadeGoalMutation = {
+  createPremadeGoal?:  {
+    __typename: "PremadeGoal",
+    id: string,
+    name: string,
+    ammount: number,
+    unsplashIMG?: string | null,
+    category: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdatePremadeGoalMutationVariables = {
+  input: UpdatePremadeGoalInput,
+  condition?: ModelPremadeGoalConditionInput | null,
+};
+
+export type UpdatePremadeGoalMutation = {
+  updatePremadeGoal?:  {
+    __typename: "PremadeGoal",
+    id: string,
+    name: string,
+    ammount: number,
+    unsplashIMG?: string | null,
+    category: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeletePremadeGoalMutationVariables = {
+  input: DeletePremadeGoalInput,
+  condition?: ModelPremadeGoalConditionInput | null,
+};
+
+export type DeletePremadeGoalMutation = {
+  deletePremadeGoal?:  {
+    __typename: "PremadeGoal",
+    id: string,
+    name: string,
+    ammount: number,
     unsplashIMG?: string | null,
     category: string,
     createdAt: string,
@@ -914,6 +1067,17 @@ export type GetGoalQuery = {
     date: string,
     unsplashIMG?: string | null,
     category: string,
+    premadeGoalID?: string | null,
+    PremadeGoal?:  {
+      __typename: "PremadeGoal",
+      id: string,
+      name: string,
+      ammount: number,
+      unsplashIMG?: string | null,
+      category: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -935,6 +1099,47 @@ export type ListGoalsQuery = {
       name: string,
       ammount: number,
       date: string,
+      unsplashIMG?: string | null,
+      category: string,
+      premadeGoalID?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetPremadeGoalQueryVariables = {
+  id: string,
+};
+
+export type GetPremadeGoalQuery = {
+  getPremadeGoal?:  {
+    __typename: "PremadeGoal",
+    id: string,
+    name: string,
+    ammount: number,
+    unsplashIMG?: string | null,
+    category: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListPremadeGoalsQueryVariables = {
+  filter?: ModelPremadeGoalFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListPremadeGoalsQuery = {
+  listPremadeGoals?:  {
+    __typename: "ModelPremadeGoalConnection",
+    items?:  Array< {
+      __typename: "PremadeGoal",
+      id: string,
+      name: string,
+      ammount: number,
       unsplashIMG?: string | null,
       category: string,
       createdAt: string,
@@ -1208,6 +1413,17 @@ export type OnCreateGoalSubscription = {
     date: string,
     unsplashIMG?: string | null,
     category: string,
+    premadeGoalID?: string | null,
+    PremadeGoal?:  {
+      __typename: "PremadeGoal",
+      id: string,
+      name: string,
+      ammount: number,
+      unsplashIMG?: string | null,
+      category: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1227,6 +1443,17 @@ export type OnUpdateGoalSubscription = {
     date: string,
     unsplashIMG?: string | null,
     category: string,
+    premadeGoalID?: string | null,
+    PremadeGoal?:  {
+      __typename: "PremadeGoal",
+      id: string,
+      name: string,
+      ammount: number,
+      unsplashIMG?: string | null,
+      category: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1244,6 +1471,56 @@ export type OnDeleteGoalSubscription = {
     name: string,
     ammount: number,
     date: string,
+    unsplashIMG?: string | null,
+    category: string,
+    premadeGoalID?: string | null,
+    PremadeGoal?:  {
+      __typename: "PremadeGoal",
+      id: string,
+      name: string,
+      ammount: number,
+      unsplashIMG?: string | null,
+      category: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreatePremadeGoalSubscription = {
+  onCreatePremadeGoal?:  {
+    __typename: "PremadeGoal",
+    id: string,
+    name: string,
+    ammount: number,
+    unsplashIMG?: string | null,
+    category: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdatePremadeGoalSubscription = {
+  onUpdatePremadeGoal?:  {
+    __typename: "PremadeGoal",
+    id: string,
+    name: string,
+    ammount: number,
+    unsplashIMG?: string | null,
+    category: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeletePremadeGoalSubscription = {
+  onDeletePremadeGoal?:  {
+    __typename: "PremadeGoal",
+    id: string,
+    name: string,
+    ammount: number,
     unsplashIMG?: string | null,
     category: string,
     createdAt: string,

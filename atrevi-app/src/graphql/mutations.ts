@@ -99,6 +99,16 @@ export const createGoal = /* GraphQL */ `
       date
       unsplashIMG
       category
+      premadeGoalID
+      PremadeGoal {
+        id
+        name
+        ammount
+        unsplashIMG
+        category
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -117,6 +127,16 @@ export const updateGoal = /* GraphQL */ `
       date
       unsplashIMG
       category
+      premadeGoalID
+      PremadeGoal {
+        id
+        name
+        ammount
+        unsplashIMG
+        category
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -133,6 +153,64 @@ export const deleteGoal = /* GraphQL */ `
       name
       ammount
       date
+      unsplashIMG
+      category
+      premadeGoalID
+      PremadeGoal {
+        id
+        name
+        ammount
+        unsplashIMG
+        category
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createPremadeGoal = /* GraphQL */ `
+  mutation CreatePremadeGoal(
+    $input: CreatePremadeGoalInput!
+    $condition: ModelPremadeGoalConditionInput
+  ) {
+    createPremadeGoal(input: $input, condition: $condition) {
+      id
+      name
+      ammount
+      unsplashIMG
+      category
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updatePremadeGoal = /* GraphQL */ `
+  mutation UpdatePremadeGoal(
+    $input: UpdatePremadeGoalInput!
+    $condition: ModelPremadeGoalConditionInput
+  ) {
+    updatePremadeGoal(input: $input, condition: $condition) {
+      id
+      name
+      ammount
+      unsplashIMG
+      category
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deletePremadeGoal = /* GraphQL */ `
+  mutation DeletePremadeGoal(
+    $input: DeletePremadeGoalInput!
+    $condition: ModelPremadeGoalConditionInput
+  ) {
+    deletePremadeGoal(input: $input, condition: $condition) {
+      id
+      name
+      ammount
       unsplashIMG
       category
       createdAt

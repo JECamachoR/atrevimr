@@ -87,6 +87,16 @@ export const onCreateGoal = /* GraphQL */ `
       date
       unsplashIMG
       category
+      premadeGoalID
+      PremadeGoal {
+        id
+        name
+        ammount
+        unsplashIMG
+        category
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -102,6 +112,16 @@ export const onUpdateGoal = /* GraphQL */ `
       date
       unsplashIMG
       category
+      premadeGoalID
+      PremadeGoal {
+        id
+        name
+        ammount
+        unsplashIMG
+        category
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -115,6 +135,55 @@ export const onDeleteGoal = /* GraphQL */ `
       name
       ammount
       date
+      unsplashIMG
+      category
+      premadeGoalID
+      PremadeGoal {
+        id
+        name
+        ammount
+        unsplashIMG
+        category
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreatePremadeGoal = /* GraphQL */ `
+  subscription OnCreatePremadeGoal {
+    onCreatePremadeGoal {
+      id
+      name
+      ammount
+      unsplashIMG
+      category
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdatePremadeGoal = /* GraphQL */ `
+  subscription OnUpdatePremadeGoal {
+    onUpdatePremadeGoal {
+      id
+      name
+      ammount
+      unsplashIMG
+      category
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeletePremadeGoal = /* GraphQL */ `
+  subscription OnDeletePremadeGoal {
+    onDeletePremadeGoal {
+      id
+      name
+      ammount
       unsplashIMG
       category
       createdAt

@@ -24,6 +24,16 @@ type Goal @model
     date: AWSDate!
     unsplashIMG: AWSJSON
     category: String!
+    premadeGoalID: ID
+    PremadeGoal: PremadeGoal @connection
+}
+
+type PremadeGoal @model {
+    id: ID!
+    name: String!
+    ammount: Float!
+    unsplashIMG: AWSJSON
+    category: String!
 }
 
 type Fund @model

@@ -60,6 +60,16 @@ export const getGoal = /* GraphQL */ `
       date
       unsplashIMG
       category
+      premadeGoalID
+      PremadeGoal {
+        id
+        name
+        ammount
+        unsplashIMG
+        category
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -78,6 +88,40 @@ export const listGoals = /* GraphQL */ `
         name
         ammount
         date
+        unsplashIMG
+        category
+        premadeGoalID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getPremadeGoal = /* GraphQL */ `
+  query GetPremadeGoal($id: ID!) {
+    getPremadeGoal(id: $id) {
+      id
+      name
+      ammount
+      unsplashIMG
+      category
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPremadeGoals = /* GraphQL */ `
+  query ListPremadeGoals(
+    $filter: ModelPremadeGoalFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPremadeGoals(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        ammount
         unsplashIMG
         category
         createdAt
