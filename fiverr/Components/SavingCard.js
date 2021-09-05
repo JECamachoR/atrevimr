@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import * as React from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableOpacity,
-  TextInput,
 } from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import { RFPercentage, RFValue as rf } from "react-native-responsive-fontsize";
+import { RFValue as rf } from "react-native-responsive-fontsize";
 
 export default function SavingCard(props) {
   return (

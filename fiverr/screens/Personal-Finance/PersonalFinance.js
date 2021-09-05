@@ -1,23 +1,21 @@
-import React, { useState } from "react";
+import * as React from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Image,
-  TouchableOpacity,
   ScrollView,
 } from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import { RFPercentage, RFValue as rf } from "react-native-responsive-fontsize";
+import { RFValue as rf } from "react-native-responsive-fontsize";
 import SavingCard from "../../Components/SavingCard";
 import Buttons from "../../Components/Buttons";
 
 export default function PersonalFinance({ navigation }) {
 
-    const [selectedMoneyMethod, setSelectedMoneyMethod] = useState("Monthly");
+    const [selectedMoneyMethod, setSelectedMoneyMethod] = React.useState("Monthly");
 
   return (
     <View style={styles.container}>

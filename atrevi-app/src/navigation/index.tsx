@@ -16,8 +16,10 @@ import en from "../assets/lang/en.json"
 import es from "../assets/lang/es.json"
 import { getQuestions } from "../graphql/queries"
 import { GraphQLResult } from "@aws-amplify/api-graphql"
-import { GetQuestionsQuery } from "../API"
+import { GetQuestionsQuery, OnCreateQuestionsSubscription } from "../API"
 import InitialFormStackNavigator from "./InitialFormStackNavigator"
+import { onCreateQuestions } from "../graphql/subscriptions"
+import { Observable } from "zen-observable-ts"
 
 i18n.translations = {
 	en,
@@ -64,6 +66,20 @@ function RootStackNavigator() {
 				}
 			}
 		})()
+		if (user) {
+			const r = (API.graphql(graphqlOperation(
+				onCreateQuestions,
+				{id: user?.username}
+			)) as Observable<object>).subscribe({
+				next: ({value}: {value: GraphQLResult<OnCreateQuestionsSubscription>}) => {
+					if (value.data?.onCreateQuestions?.id) {
+						setInitialForm(true)
+					}
+				},
+				error: (e) => console.error(e)
+			})
+
+		}
 	}, [user])
 
 	React.useEffect(() => {

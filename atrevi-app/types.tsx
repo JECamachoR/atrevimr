@@ -42,6 +42,8 @@ export type InitialFormParamList = {
     ForewordScreen: undefined;
     TheBasics: undefined;
     Spending: undefined;
+    Savings: undefined;
+    PersonalFinance: undefined;
 }
  
 export type NavParamList = RootStackParamList & HomeStackParamList

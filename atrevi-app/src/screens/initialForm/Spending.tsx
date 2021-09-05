@@ -9,7 +9,7 @@ import { InitialFormParamList } from '../../../types';
 import InitialFormContext from '../../contexts/InitialFormContext';
 import { StatusBar } from 'expo-status-bar';
 
-type Props = StackScreenProps<InitialFormParamList, "TheBasics">
+type Props = StackScreenProps<InitialFormParamList, "Spending">
 
 export default function Spending({ navigation }: Props): React.ReactElement {
 
