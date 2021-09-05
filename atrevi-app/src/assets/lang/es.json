@@ -70,6 +70,14 @@
 	"Before you try our app": "Ántes de probar nuestra app",
 	"we want to give you a warm welcome": "queremos darte una cálida bienvenida",
 	"and get to know you better": "y conocerte mejor",
+	"First, the basics": "Primero, lo básico",
+	"Birthdate": "Fecha de nacimiento", 
+	"Gender": "Género",
+	"Man": "Hombre",
+	"Woman": "Mujer",
+	"Other": "Otro",
+	"Occupation": "Ocupación",
+	"Student": "Estudiante",
 	"Thanks for being part of our alpha": "Garcias por formar parte de nuestro alpha"
 
 }
