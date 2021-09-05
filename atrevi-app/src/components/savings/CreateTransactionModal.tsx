@@ -27,7 +27,7 @@ type Props = {
 const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement => {
 
 	const [nRendered, setNRendered] = React.useState(0)
-	const { username } = React.useContext(AuthContext)
+	const auth = React.useContext(AuthContext)
 	return (
 		<Formik
 			initialValues={{
@@ -54,12 +54,12 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 					}
 					if (c.data?.createTransaction?.ammount) {
 						const b = await API.graphql(
-							graphqlOperation(getUser, {id: username})
+							graphqlOperation(getUser, {id: auth.username})
 						) as GraphQLResult<GetUserQuery>
 						if (b.data?.getUser?.id) {
 							await API.graphql(graphqlOperation(updateUser, {input: 
 								{
-									id: username,
+									id: auth.username,
 									balance: (b.data.getUser.balance || 0) + c.data.createTransaction.ammount
 								} as UpdateUserInput
 							}))

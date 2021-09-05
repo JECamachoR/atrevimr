@@ -25,7 +25,7 @@ type Props = {
 
 const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.ReactElement => {
 
-	const { username } = React.useContext(AuthContext)
+	const auth = React.useContext(AuthContext)
 	const transactions = React.useContext(TransactionsContext)
 	const moneyboxes = React.useContext(MoneyboxesContext)
 	const goalFund = React.useContext(GoalFundContext)
@@ -38,13 +38,13 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 
 	React.useEffect(() => {
 		const load = async () => {
-			const u = await API.graphql(graphqlOperation(getUser, {id: username})) as GraphQLResult<GetUserQuery>
+			const u = await API.graphql(graphqlOperation(getUser, {id: auth.username})) as GraphQLResult<GetUserQuery>
 			setTotalBalance(u.data?.getUser?.balance || 0)
 		}
 		load()
 
 		const sus = (API.graphql(graphqlOperation(onUpdateUser, {
-			id: username
+			id: auth.username
 		})) as Observable<object>).subscribe({
 			next: ({value}: {value: GraphQLResult<OnUpdateUserSubscription>}) => {
 				setTotalBalance(value.data?.onUpdateUser?.balance || 0)
