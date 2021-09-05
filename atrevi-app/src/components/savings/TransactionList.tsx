@@ -1,6 +1,7 @@
 import * as React from "react"
 import { StyleSheet } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
+import GoalFundContext from "../../contexts/GoalFundContext"
 import MoneyboxesContext from "../../contexts/MoneyboxesContext"
 import TransactionsContext from "../../contexts/TransactionsContext"
 import { useThemeColor, View } from "../Themed"
@@ -18,6 +19,7 @@ const TransactionList = (): React.ReactElement => {
 
 	const transactions = React.useContext(TransactionsContext)
 	const mbs = React.useContext(MoneyboxesContext)
+	const goalFund = React.useContext(GoalFundContext)
 
 	return (
 		<View style={styles.container}>
@@ -25,6 +27,7 @@ const TransactionList = (): React.ReactElement => {
 				data={
 					transactions
 						.map((v) => {
+							if (v.fundID === goalFund?.id) return {fund: goalFund, ...v}
 							return {fund: mbs.find((m) => m.id === v.fundID), ...v}
 						})
 						.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)
