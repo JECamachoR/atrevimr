@@ -86,5 +86,16 @@
 	"Student": "Student",
 	"Previous": "Previous",
 	"Next": "Next",
-	"Thanks for being part of our alpha": "Thanks for being part of our alpha"
+	"How often do you save money?": "How often do you save money?",
+	"Monthly": "Monthly",
+	"Weekly": "Weekly",
+	"Daily": "Daily",
+	"I save irregularly": "I save irregularly",
+	"I don’t save": "I don’t save",
+	"How much do you save in a year?": "How much do you save in a year?",
+	"Thanks for being part of our alpha": "Thanks for being part of our alpha",
+	"Where do you keep your savings?": "Where do you keep your savings?",
+	"Choose one": "Choose one",
+	"Bank": "Bank",
+	"HBL": "HBL"
 }

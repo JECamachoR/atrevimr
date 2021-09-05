@@ -87,6 +87,16 @@
 	"food": "comida",
 	"Previous": "Anterior",
 	"Next": "Siguiente",
-	"Thanks for being part of our alpha": "Garcias por formar parte de nuestro alpha"
-
+	"How often do you save money?": "¿Cada cuánto ahorras?",
+	"Monthly": "Cada mes",
+	"Weekly": "Cada semana",
+	"Daily": "Diario",
+	"I save irregularly": "Ahorro irregularmente",
+	"I don’t save": "Yo no ahorro",
+	"How much do you save in a year?": "¿Cuánto ahorras en un año?",
+	"Thanks for being part of our alpha": "Garcias por formar parte de nuestro alpha",
+	"Where do you keep your savings?": "¿Dónde guardas tus ahorros?",
+	"Choose one": "Elige uno",
+	"Bank": "Banco",
+	"HBL": "HBL"
 }
