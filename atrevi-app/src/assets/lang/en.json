@@ -97,5 +97,16 @@
 	"Where do you keep your savings?": "Where do you keep your savings?",
 	"Choose one": "Choose one",
 	"Bank": "Bank",
-	"HBL": "HBL"
+	"HBL": "HBL",
+	"Personal Finance": "Personal Finance",
+	"Rate your finance management": "Rate your finance management",
+	"In general, how good are you with numbers?": "In general, how good are you with numbers?",
+	"Good: I have a black belt in finance": "Good: I have a black belt in finance",
+	"Bad: I don’t keep a record": "Bad: I don’t keep a record",
+	"Ugly: I keep a record but it’s disorganized": "Ugly: I keep a record but it’s disorganized",
+	"Where do you keep the income and expenses record?": "Where do you keep the income and expenses record?",
+	"Digital tools: Excel or dedicated apps": "Digital tools: Excel or dedicated apps",
+	"Handwritten: Paper or your phone’s notes": "Handwritten: Paper or your phone’s notes",
+	"Ethereal: It’s in my mind": "Ethereal: It’s in my mind",
+	"I don’t keep a record": "I don’t keep a record"
 }

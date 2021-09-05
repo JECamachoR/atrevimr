@@ -98,5 +98,16 @@
 	"Where do you keep your savings?": "¿Dónde guardas tus ahorros?",
 	"Choose one": "Elige uno",
 	"Bank": "Banco",
-	"HBL": "HBL"
+	"HBL": "HBL",
+	"Personal Finance": "Finanzas Personales",
+	"Rate your finance management": "Califica tu manejo financiero",
+	"In general, how good are you with numbers?": "En general, ¿qué tal se te dan los números?",
+	"Good: I have a black belt in finance": "Bien: Soy cinta negra en finanzas",
+	"Bad: I don’t keep a record": "Mal: No tengo ningún registro",
+	"Ugly: I keep a record but it’s disorganized": "Feo: Tengo un registro, pero desorganizado",
+	"Where do you keep the income and expenses record?": "¿Dónde tienes el registro de tus ingresos y egresos?",
+	"Digital tools: Excel or dedicated apps": "Herramientas digitales: Excel u otra app dedicada",
+	"Handwritten: Paper or your phone’s notes": "A mano: Papel o en las notas de tu cel",
+	"Ethereal: It’s in my mind": "Etéro: Tengo todo en mi mente",
+	"I don’t keep a record": "No llevo ningún registro"
 }

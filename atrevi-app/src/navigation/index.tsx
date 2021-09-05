@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import * as React from "react"
@@ -78,7 +79,7 @@ function RootStackNavigator() {
 				},
 				error: (e) => console.error(e)
 			})
-
+			return () => r.unsubscribe()
 		}
 	}, [user])
 
