@@ -89,7 +89,7 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 					dark: darkMode.inputBackground,
 				}})
 				const line = useThemeColor({colorName: "line"})
-				console.log(errors)
+
 				return (
 					<Modal
 						hideModal={hideModal} 
