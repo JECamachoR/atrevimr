@@ -74,9 +74,17 @@
 	"Birthdate": "Birthdate",
 	"Gender": "Gender",
 	"Man": "Man",
-	"Woman": "Woman",
+	"Woman": "Woman",	"Spending": "Spending",
+	"What is your monthly income?": "What is your monthly income?",
+	"How much do you spend in a month?": "How much do you spend in a month?",
+	"Only take into account your fixed expenses": "Only take into account your fixed expenses",	
+	"rent": "rent",
+	"car": "car",
+	"food": "food",
 	"Other": "Other",
 	"Occupation": "Occupation",
 	"Student": "Student",
+	"Previous": "Previous",
+	"Next": "Next",
 	"Thanks for being part of our alpha": "Thanks for being part of our alpha"
 }

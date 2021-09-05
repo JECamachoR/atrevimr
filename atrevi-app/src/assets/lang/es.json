@@ -78,6 +78,15 @@
 	"Other": "Otro",
 	"Occupation": "Ocupación",
 	"Student": "Estudiante",
+	"Spending": "Spending",
+	"What is your monthly income?": "¿Cuánto es tu ingreso mensual?",
+	"How much do you spend in a month?": "¿Cuánto gastas en un més?",
+	"Only take into account your fixed expenses": "Solo toma en cuenta gastos fijos",
+	"rent": "renta",
+	"car": "carro",
+	"food": "comida",
+	"Previous": "Anterior",
+	"Next": "Siguiente",
 	"Thanks for being part of our alpha": "Garcias por formar parte de nuestro alpha"
 
 }
