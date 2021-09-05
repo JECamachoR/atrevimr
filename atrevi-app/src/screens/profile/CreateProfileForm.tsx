@@ -17,154 +17,167 @@ import StepperNotification from "../../components/profileForm/StepperNotificatio
 import StepperProfile from "../../components/profileForm/StepperProfile"
 import StepperSuccess from "../../components/profileForm/StepperSuccess"
 import * as ImagePicker from "expo-image-picker"
+import { Formik } from "formik"
 
 export default function CreateProfileForm(): React.ReactElement {
-	const [name, setName] = React.useState<string | null>()
-	const [position, setPosition] = React.useState(1)
-	const [weekDay, setWeekDay] = React.useState("mon")
-	const [frequency, setFrequency] = React.useState("monthly")
-	const height1 = React.useRef(new Animated.Value(300)).current
-	const height2 = React.useRef(new Animated.Value(550)).current
-	const height3 = React.useRef(new Animated.Value(300)).current
-	const height4 = React.useRef(new Animated.Value(500)).current
-	const opacity = React.useRef(new Animated.Value(1)).current
-	const [image, setImage] = React.useState<string | null>(null)
-
-	React.useEffect(() => {
-		(async () => {
-			if (Platform.OS !== "web") {
-				const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync()
-				if (status !== "granted") {
-					alert("Sorry, we need camera roll permissions to make this work!")
-				}
-			}
-		})()
-	}, [])
-
-	const pickImage = async () => {
-		const result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.Images,
-			allowsEditing: true,
-			aspect: [4, 4],
-			quality: 1,
-		})
-
-		if (!result.cancelled) {
-			setImage(result.uri)
-		}
-	}
-
-	const hideContent = () => {
-		Animated.timing(
-			position == 1
-				? height1
-				: position == 2
-					? height2
-					: position == 3
-						? height3
-						: height4,
-			{
-				toValue: 0,
-				duration: 250,
-				easing: Easing.linear,
-				useNativeDriver: false, // <-- neccessary
-			}
-		).start()
-	}
-	const showContent = (type: number) => {
-		Animated.timing(
-			type == 1 ? height1 : type == 2 ? height2 : type == 3 ? height3 : height4,
-			{
-				toValue:
-          type == 1 ? 280 : type == 2 ? 530 : type == 3 ? 280 : type == 4? 500: 100,
-				duration: 250,
-				easing: Easing.linear,
-				useNativeDriver: false, // <-- neccessary
-			}
-		).start(() => {
-			Animated.timing(opacity, {
-				toValue: 1,
-				duration: 50,
-				easing: Easing.linear,
-				useNativeDriver: false, // <-- neccessary
-			}).start()
-		})
-	}
 
 	return (
-		<View style={styles.container}>
-			<Text style={styles.headTitle}>A few more steps:</Text>
-			<View style={styles.stepperMainWrapper}>
-				<View style={{ overflow: "hidden" }}>
-					<StepperProfile
-
-						title={
-							position > 1
-								? "Done, what a beautiful human"
-								: "Customize your profile"
+		<Formik
+			initialValues={{
+				name: "",
+				img: undefined as string | undefined,
+				DOTW: "monday" as string,
+				frequency: "7day" as string,
+			}}
+			onSubmit={(v) => {
+				console.log(v)
+			}}
+		>
+			{({values, setFieldValue, submitForm}) => {
+				const height1 = React.useRef(new Animated.Value(300)).current
+				const height2 = React.useRef(new Animated.Value(550)).current
+				const height3 = React.useRef(new Animated.Value(300)).current
+				const height4 = React.useRef(new Animated.Value(500)).current
+				const opacity = React.useRef(new Animated.Value(1)).current
+				const [position, setPosition] = React.useState(1)
+				console.log(values)
+				React.useEffect(() => {
+					(async () => {
+						if (Platform.OS !== "web") {
+							const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync()
+							if (status !== "granted") {
+								alert("Sorry, we need camera roll permissions to make this work!")
+							}
 						}
-						onNameChange={(val: string) => setName(val)}
-						name={name}
-						onNextPress={() => {
-							setPosition(2)
-							hideContent()
-						}}
-						height={height1}
-						position={position}
-						onSelectImg={() => {pickImage()}}
-						selectedImg={image ? image : undefined}
-					/>
-					<StepperFrequency
-						title={position > 2 ? "Great choice" : "Choose a saving frequency"}
-						activeDay={weekDay}
-						onWeekDayPress={(val) => setWeekDay(val)}
-						onRadioPress={(val) => setFrequency(val)}
-						frequency={frequency}
-						onPreviousPress={() => {
-							setPosition(1)
-							showContent(1)
-						}}
-						onNextPress={() => {
-							setPosition(3)
-							hideContent()
-						}}
-						position={position}
-						height={height2}
-					/>
-					<StepperNotification
-						title={position > 3 ? "Lorem ipsum" : "Customize notifications"}
-						onPreviousPress={() => {
-							setPosition(2)
-							showContent(2)
-						}}
-						onNextPress={() => {
-							setPosition(4)
-							hideContent()
-						}}
-						position={position}
-						height={height3}
-					/>
-					<StepperSuccess
-                    
-						title={"Success!"}
-						onPreviousPress={() => {
-							setPosition(3)
-							showContent(3)
-						}}
-						onNextPress={() => {
-							console.log("success!")
-						}}
-						position={position}
-						height={height4}
-					/>
+					})()
+				}, [])
 
-					{/* vertical Line */}
-					<View style={styles.divider}></View>
-					{/* vertical Line */}
-				</View>
-			</View>
-		</View>
+				const pickImage = async () => {
+					const result = await ImagePicker.launchImageLibraryAsync({
+						mediaTypes: ImagePicker.MediaTypeOptions.Images,
+						allowsEditing: true,
+						aspect: [4, 4],
+						quality: 1,
+					})
+
+					if (!result.cancelled) {
+						setFieldValue("img", result.uri)
+					}
+				}
+
+				const hideContent = () => {
+					Animated.timing(
+						position == 1
+							? height1
+							: position == 2
+								? height2
+								: position == 3
+									? height3
+									: height4,
+						{
+							toValue: 0,
+							duration: 250,
+							easing: Easing.linear,
+							useNativeDriver: false, // <-- neccessary
+						}
+					).start()
+				}
+				const showContent = (type: number) => {
+					Animated.timing(
+						type == 1 ? height1 : type == 2 ? height2 : type == 3 ? height3 : height4,
+						{
+							toValue:
+          type == 1 ? 280 : type == 2 ? 530 : type == 3 ? 280 : type == 4? 500: 100,
+							duration: 250,
+							easing: Easing.linear,
+							useNativeDriver: false, // <-- neccessary
+						}
+					).start(() => {
+						Animated.timing(opacity, {
+							toValue: 1,
+							duration: 50,
+							easing: Easing.linear,
+							useNativeDriver: false, // <-- neccessary
+						}).start()
+					})
+				}
+
+				return (
+					<View style={styles.container}>
+						<Text style={styles.headTitle}>A few more steps:</Text>
+						<View style={styles.stepperMainWrapper}>
+							<View style={{ overflow: "hidden" }}>
+								<StepperProfile
+
+									title={
+										position > 1
+											? "Done, what a beautiful human"
+											: "Customize your profile"
+									}
+									onNameChange={(val: string) => setFieldValue("name", val)}
+									name={values.name}
+									onNextPress={() => {
+										setPosition(2)
+										hideContent()
+									}}
+									height={height1}
+									position={position}
+									onSelectImg={() => {pickImage()}}
+									selectedImg={values.img}
+								/>
+								<StepperFrequency
+									title={position > 2 ? "Great choice" : "Choose a saving frequency"}
+									activeDay={values.DOTW}
+									onWeekDayPress={(val) => setFieldValue("DOTW", val)}
+									onRadioPress={(val) => setFieldValue("frequency", val)}
+									frequency={values.frequency}
+									onPreviousPress={() => {
+										setPosition(1)
+										showContent(1)
+									}}
+									onNextPress={() => {
+										setPosition(3)
+										hideContent()
+									}}
+									position={position}
+									height={height2}
+								/>
+								<StepperNotification
+									title={position > 3 ? "Lorem ipsum" : "Customize notifications"}
+									onPreviousPress={() => {
+										setPosition(2)
+										showContent(2)
+									}}
+									onNextPress={() => {
+										setPosition(4)
+										hideContent()
+									}}
+									position={position}
+									height={height3}
+								/>
+								<StepperSuccess
+                    
+									title={"Success!"}
+									onPreviousPress={() => {
+										setPosition(3)
+										showContent(3)
+									}}
+									onNextPress={submitForm}
+									position={position}
+									height={height4}
+								/>
+
+								{/* vertical Line */}
+								<View style={styles.divider}></View>
+								{/* vertical Line */}
+							</View>
+						</View>
+					</View>
+				)
+
+			}}
+		</Formik>
 	)
 }
 

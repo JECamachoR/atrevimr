@@ -64,8 +64,11 @@ export default function StepperFrequency(props: Props): React.ReactElement {
 		onPress: ( ) => void
 	}
 	const FrequencyType = ({ type, title, onPress }: FrequencyTypeProps) => (
-		<View style={styles.frequencyTypeWrapper}>
-			<TouchableOpacity
+		<TouchableOpacity
+			style={styles.frequencyTypeWrapper}
+			onPress={onPress}
+		>
+			<View
 				style={[
 					styles.frequencyTypeRadio,
 					{
@@ -73,12 +76,11 @@ export default function StepperFrequency(props: Props): React.ReactElement {
 						borderWidth: props.frequency == type ? 7 : 0,
 					},
 				]}
-				onPress={onPress}
-			></TouchableOpacity>
+			></View>
 			<View>
 				<Text style={styles.frequencyText}>{title}</Text>
 			</View>
-		</View>
+		</TouchableOpacity>
 	)
 
 	return (
@@ -114,38 +116,38 @@ export default function StepperFrequency(props: Props): React.ReactElement {
 					<View style={styles.weekDaysWrapper}>
 						<WeekDay
 							title="M"
-							type="mon"
-							onPress={() => props.onWeekDayPress("mon")}
+							type="monday"
+							onPress={() => props.onWeekDayPress("monday")}
 						/>
 						<WeekDay
 							title="T"
-							type="tue"
-							onPress={() => props.onWeekDayPress("tue")}
+							type="tuesday"
+							onPress={() => props.onWeekDayPress("tuesday")}
 						/>
 						<WeekDay
 							title="W"
-							type="wed"
-							onPress={() => props.onWeekDayPress("wed")}
+							type="wednesday"
+							onPress={() => props.onWeekDayPress("wednesday")}
 						/>
 						<WeekDay
 							title="T"
-							type="thu"
-							onPress={() => props.onWeekDayPress("thu")}
+							type="thursday"
+							onPress={() => props.onWeekDayPress("thursday")}
 						/>
 						<WeekDay
 							title="F"
-							type="fri"
-							onPress={() => props.onWeekDayPress("fri")}
+							type="friday"
+							onPress={() => props.onWeekDayPress("friday")}
 						/>
 						<WeekDay
 							title="S"
-							type="sat"
-							onPress={() => props.onWeekDayPress("sat")}
+							type="saturday"
+							onPress={() => props.onWeekDayPress("saturday")}
 						/>
 						<WeekDay
 							title="S"
-							type="sun"
-							onPress={() => props.onWeekDayPress("sun")}
+							type="sunday"
+							onPress={() => props.onWeekDayPress("sunday")}
 						/>
 					</View>
 					<View style={styles.cont2}>
@@ -159,18 +161,18 @@ export default function StepperFrequency(props: Props): React.ReactElement {
 
 					<FrequencyType
 						title="Monthly"
-						type="monthly"
-						onPress={() => props.onRadioPress("monthly")}
+						type="28day"
+						onPress={() => props.onRadioPress("28day")}
 					/>
 					<FrequencyType
 						title="BiWeekly"
-						type="biWeekly"
-						onPress={() => props.onRadioPress("biWeekly")}
+						type="14day"
+						onPress={() => props.onRadioPress("14day")}
 					/>
 					<FrequencyType
 						title="Weekly"
-						type="weekly"
-						onPress={() => props.onRadioPress("weekly")}
+						type="7day"
+						onPress={() => props.onRadioPress("7day")}
 					/>
 					<View style={styles.cont2}>
 						<Text
