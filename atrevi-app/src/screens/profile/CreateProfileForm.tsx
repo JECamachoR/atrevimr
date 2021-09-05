@@ -22,7 +22,8 @@ import Storage from "@aws-amplify/storage"
 import AuthContext from "../../auth/AuthContext"
 import API from "@aws-amplify/api"
 import { graphqlOperation } from "aws-amplify"
-import { createUser } from "../../graphql/mutations"
+import { createFund, createUser } from "../../graphql/mutations"
+import { CreateFundInput } from "../../API"
 
 export default function CreateProfileForm(): React.ReactElement {
 
@@ -57,6 +58,17 @@ export default function CreateProfileForm(): React.ReactElement {
 							phone: auth.username,
 							...user
 						}
+					}
+				))
+				await API.graphql(graphqlOperation(
+					createFund,
+					{
+						input: {
+							name: "goals",
+							recurringAmmount: 0,
+							balance: 0,
+							category: "goals"
+						} as CreateFundInput
 					}
 				))
 			}}
