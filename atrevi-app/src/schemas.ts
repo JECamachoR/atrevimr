@@ -5,13 +5,13 @@ const phoneRegEx = /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-|
 
 const phoneNumber = yup.string()
 	.matches(phoneRegEx, "teléfono inválido")
-	.required("Requerido")
+	.required("Required")
 
 const pass = yup.string()
 	.min(8, "Too short")
 	.max(20, "Too long")
-	.matches(/.*[A-Z]*.*/, "Uppercase letter required")
-	.matches(/.*[a-z]*.*/, "Lowercase required")
+	.matches(/.*[A-Z].*/, "Uppercase required")
+	.matches(/.*[a-z].*/, "Lowercase required")
 	.required("Required")
 
 export const SignInSchema = yup.object().shape({
@@ -26,7 +26,7 @@ export const SignUpSchema = yup.object().shape({
 
 export const PhoneVerificationSchema = yup.object().shape({
 	phoneNumber,
-	code: yup.string().max(6, "Demasiado Largo").min(6, "Demasiado Corto")
+	code: yup.string().max(6, "Too long").min(6, "Too short")
 })
 
 export const MoneyboxCreationSchema = yup.object().shape({
@@ -57,10 +57,10 @@ export const GoalCreationSchema = yup.object().shape({
 
 export const TransactionSchema = yup.object().shape({
     fund: yup.object()
-		.nullable(false)
+		.typeError("Required")
 		.required("Required"),
     ammount: yup.number()
-		.notOneOf([0])
+		.notOneOf([0], "Can't be 0")
 		.required("Required"),
     concept: yup.string()
 		.min(1)

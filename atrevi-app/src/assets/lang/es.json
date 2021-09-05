@@ -40,5 +40,21 @@
 	"Automatically and tailored to your needs": "Automáticamente y ajustado a tus necesidades",
 	"Create account": "Crea tu cuenta",
 	"Name your moneybox": "Nombra tu alcancía",
-	"How much do you want to save periodically?": "¿Cuánto necesitas ahorrar periódicamente?"
+	"How much do you want to save periodically?": "¿Cuánto necesitas ahorrar periódicamente?",
+	"Required": "Requerido",
+	"Can't be 0": "No puede ser 0",
+	"This name is reserved": "Este nombre es reservado",
+	"Must be at least 1 long": "Debe ser por lo menos 1 letra",	
+	"Must be a positive ammount": "Debe ser una cantidad positiva",
+	"Please input a number": "Por favor, ingresa un número",
+	"Too long": "Demasiado largo",
+	"Too short": "Demasiado corto",
+	"Uppercase required": "Mayúscula requerida",
+	"Lowercase required": "Minúscula requerida",
+	"Phone": "Teléfono",
+	"Password": "Contraseña",
+	"Submit": "Enviar",
+	"Sign In": "Inicia Sesión",
+	"Already signed up?": "¿Ya te registraste?",
+	"Enter your code": "Ingresa tu código"
 }

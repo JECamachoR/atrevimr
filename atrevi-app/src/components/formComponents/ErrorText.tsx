@@ -1,3 +1,4 @@
+import { t } from "i18n-js"
 import * as React from "react"
 import { StyleSheet, Text as DefaultText } from "react-native"
 import { error } from "../../constants/Colors"
@@ -9,7 +10,7 @@ type Props = {
 }
 
 export default function ErrorText({ error, style }: Props): React.ReactElement | null {
-	if (error) return <Text style={[styles.style, style]}>{error}</Text>
+	if (error) return <Text style={[styles.style, style]}>{t(error)}</Text>
 	else return null
 }
 

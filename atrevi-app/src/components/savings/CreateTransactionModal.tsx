@@ -17,6 +17,7 @@ import { createTransaction, updateFund, updateUser } from "../../graphql/mutatio
 import { graphqlOperation } from "aws-amplify"
 import AuthContext from "../../auth/AuthContext"
 import { getUser } from "../../graphql/queries"
+import ErrorText from "../formComponents/ErrorText"
 
 type Props = {
     hideModal: () => void,
@@ -73,7 +74,7 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 			validationSchema={TransactionSchema}
 			key={nRendered}
 		>
-			{({values, errors, handleBlur, setFieldValue, handleChange, submitForm, resetForm }) => {
+			{({values, errors, touched, handleBlur, setFieldValue, handleChange, submitForm, resetForm }) => {
 
 				const [pickingFund, setPickingFund] = React.useState(false)
 
@@ -83,6 +84,12 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 				}})
 				const placeholder = useThemeColor({colorName: "placeholderTextColor"})
 
+				const bg = useThemeColor({colors: {
+					light: grayscale.offWhite,
+					dark: darkMode.inputBackground,
+				}})
+				const line = useThemeColor({colorName: "line"})
+				console.log(errors)
 				return (
 					<Modal
 						hideModal={hideModal} 
@@ -108,6 +115,7 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 							onChange={() => setFieldValue("ammount", values.ammount * -1)}
 							style={styles.segmented}
 						/>
+
 						<View style={styles.ammountContainer}>
 							<CurrencyInput
 								value={values.ammount}
@@ -118,7 +126,14 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 								style={[styles.ammount, {color: (values.ammount >= 0 ? success.dark : error.default)}]}
 								showPositiveSign={true}
 							/>
+							<ErrorText
+								error={
+									errors.ammount && touched.ammount ?
+									errors.ammount : undefined
+								}
+							/>
 						</View>
+
 						<TouchableOpacity
 							style={styles.funds}
 							onPress={() => setPickingFund(true)}
@@ -143,6 +158,14 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 								</Row>
 							</Row>
 						</TouchableOpacity>
+						<ErrorText 
+							error={
+								errors.fund && touched.fund ?
+								errors.fund : undefined
+							}
+							style={{paddingHorizontal: 16, marginTop: 8}}
+						/>
+						
 
 						<View>
 							<Text style={styles.conceptLabel}>
@@ -154,14 +177,19 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 							onChangeText={handleChange("concept")}
 							onBlur={handleBlur("concept")}
 							style={[styles.concept, {
-								backgroundColor: useThemeColor({colors: {
-									light: grayscale.offWhite,
-									dark: darkMode.inputBackground,
-								}}),
-								borderColor: useThemeColor({colorName: "line"})
+								backgroundColor: bg,
+								borderColor: (errors.concept && touched.concept) ? error.default : line,
+								color,
 							}]}
 							placeholder={t("Note")}
 							placeholderTextColor={useThemeColor({colorName: "placeholderTextColor"})}
+						/>
+						<ErrorText 
+							error={
+								errors.concept && touched.concept ?
+								errors.concept : undefined
+							}
+							style={{paddingHorizontal: 16}}
 						/>
 					</Modal>
 				)
@@ -181,7 +209,6 @@ const styles = StyleSheet.create({
 		fontSize: 48,
 	},
 	ammountContainer: {
-		height: 64,
 		margin: 16,
 		alignItems: "flex-end",
 		justifyContent: "center"
@@ -221,17 +248,17 @@ const styles = StyleSheet.create({
 		backgroundColor: "#00000000"
 	},
 	concept: {
-		marginHorizontal: 16,
-		marginVertical: 8,
 		height: 44,
-		paddingVertical: 8,
-		paddingHorizontal: 16,
-		borderRadius: 15,
-		overflow: "hidden",
-		borderWidth: 1,
-		fontFamily: "Poppins_400Regular",
 		fontSize: 16,
-		lineHeight: 28,
+		borderWidth: 1,
+		borderRadius: 15,
+		marginVertical: 8,
+		overflow: "hidden",
+		alignItems: "center",
+		marginHorizontal: 16,
+		paddingHorizontal: 16,
+		justifyContent: "center",
+		fontFamily: "Poppins_400Regular",
 	},
 	conceptLabel: {
 		marginTop: 8,

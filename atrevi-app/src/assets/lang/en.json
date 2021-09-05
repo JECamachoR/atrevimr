@@ -40,5 +40,21 @@
 	"Automatically and tailored to your needs": "Automatically and tailored to your needs",
 	"Create account": "Create account",
 	"Name your moneybox": "Name your moneybox",
-	"How much do you want to save periodically?": "How much do you want to save periodically?"
+	"How much do you want to save periodically?": "How much do you want to save periodically?",
+	"Required": "Required",
+	"Can't be 0": "Can't be 0",
+	"This name is reserved": "This name is reserved",
+	"Must be at least 1 long": "Must be at least 1 long",	
+	"Must be a positive ammount": "Must be a positive ammount",
+	"Please input a number": "Please input a number",
+	"Too long": "Too long",
+	"Too short": "Too short",
+	"Uppercase required": "Uppercase required",
+	"Lowercase required": "Lowercase required",
+	"Phone": "Phone",
+	"Password": "Password",
+	"Submit": "Submit",
+	"Sign In": "Sign In",
+	"Already signed up?": "Already signed up?",
+	"Enter your code": "Enter your code"
 }

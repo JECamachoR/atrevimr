@@ -37,8 +37,6 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 	const link = useThemeColor({colorName: "link"})
 	const today = new Date()
 
-	console.log(goalFund)
-
 	return (
 		<Formik
 			initialValues={goal}
@@ -76,7 +74,7 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 					<Modal
 						hideModal={hideModal}
 						visible={visible}
-						title={i18n.t("Create a Moneybox")}
+						title={i18n.t("Create a Goal")}
 						rightComponent={(
 							<TouchableOpacity onPress={submitForm}>
 								<View>
