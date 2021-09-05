@@ -18,8 +18,25 @@ import StepperProfile from "../../components/profileForm/StepperProfile"
 import StepperSuccess from "../../components/profileForm/StepperSuccess"
 import * as ImagePicker from "expo-image-picker"
 import { Formik } from "formik"
+import Storage from "@aws-amplify/storage"
+import AuthContext from "../../auth/AuthContext"
+import API from "@aws-amplify/api"
+import { graphqlOperation } from "aws-amplify"
+import { createUser } from "../../graphql/mutations"
 
 export default function CreateProfileForm(): React.ReactElement {
+
+	const auth = React.useContext(AuthContext)
+
+	const uploadProfilePic = async (uri: string) => {
+		try {
+			const img = await fetch(uri)
+			const blob = await img.blob()
+			await Storage.put(auth.username, blob)
+		} catch (er) {
+			console.error(er)
+		}
+	} 
 
 	return (
 		<Formik
@@ -29,8 +46,19 @@ export default function CreateProfileForm(): React.ReactElement {
 				DOTW: "monday" as string,
 				frequency: "7day" as string,
 			}}
-			onSubmit={(v) => {
-				console.log(v)
+			onSubmit={async (v) => {
+				const {img, ...user} = v
+				if (img) uploadProfilePic(img)
+				await API.graphql(graphqlOperation(
+					createUser,
+					{
+						input: {
+							id: auth.username,
+							phone: auth.username,
+							...user
+						}
+					}
+				))
 			}}
 		>
 			{({values, setFieldValue, submitForm}) => {
@@ -40,7 +68,7 @@ export default function CreateProfileForm(): React.ReactElement {
 				const height4 = React.useRef(new Animated.Value(500)).current
 				const opacity = React.useRef(new Animated.Value(1)).current
 				const [position, setPosition] = React.useState(1)
-				console.log(values)
+
 				React.useEffect(() => {
 					(async () => {
 						if (Platform.OS !== "web") {

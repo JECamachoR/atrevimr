@@ -15,16 +15,17 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import GoalsContext from "../contexts/GoalsContext"
 import MoneyboxesContext from "../contexts/MoneyboxesContext"
 import TransactionsContext from "../contexts/TransactionsContext"
-import { Fund, Goal, ListFundsQuery, ListGoalsQuery, ListTransactionsQuery, 
+import { Fund, GetUserQuery, Goal, ListFundsQuery, ListGoalsQuery, ListTransactionsQuery, 
 	OnCreateFundSubscription, OnCreateGoalSubscription, OnCreateTransactionSubscription, 
+	OnCreateUserSubscription, 
 	OnDeleteFundSubscription, OnDeleteGoalSubscription, OnUpdateFundSubscription, 
-	OnUpdateGoalSubscription, Transaction } from "../API"
+	OnUpdateGoalSubscription, OnUpdateUserSubscription, Transaction, User } from "../API"
 import GoalFundContext from "../contexts/GoalFundContext"
 import { API, graphqlOperation } from "aws-amplify"
-import { listFunds, listGoals, listTransactions } from "../graphql/queries"
+import { getUser, listFunds, listGoals, listTransactions } from "../graphql/queries"
 import { GraphQLResult } from "@aws-amplify/api-graphql"
-import { onCreateFund, onCreateGoal, onCreateTransaction, onDeleteFund, 
-	onDeleteGoal, onUpdateFund, onUpdateGoal } from "../graphql/subscriptions"
+import { onCreateFund, onCreateGoal, onCreateTransaction, onCreateUser, onDeleteFund, 
+	onDeleteGoal, onUpdateFund, onUpdateGoal, onUpdateUser } from "../graphql/subscriptions"
 import { Observable } from "zen-observable-ts"
 import AuthContext from "../auth/AuthContext"
 import Loading from "../components/Loading"
@@ -41,6 +42,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 	const [transactions, setTransactions] = React.useState<Transaction[]>([])
 	const [goalFund, setGoalFund] = React.useState<Fund | null>(null)
 	const [loading, setLoading] = React.useState(true)
+	const [user, setUser] = React.useState<User | null>(null)
 
 	React.useEffect(() => {
 		const loadGoals = async () => {
@@ -91,10 +93,23 @@ const BottomTabNavigator = (): React.ReactElement => {
 			}
 		}
 
+		const loadUser = async () => {
+			const u = await API.graphql(graphqlOperation(
+				getUser,
+				{
+					id: auth.username
+				}
+			)) as GraphQLResult<GetUserQuery>
+			if (u.data?.getUser?.id) {
+				setUser(u.data.getUser)
+			}
+		}
+
 		const load = async () => {
 			await loadGoals()
 			await loadFunds()
 			await loadTransactions()
+			await loadUser()
 		}
 
 		load().then(() => setLoading(false))
@@ -135,6 +150,30 @@ const BottomTabNavigator = (): React.ReactElement => {
 						if (g.id === ug.id) return ug
 						return g
 					}))
+				}
+			},
+			error: console.error
+		})
+
+		const onUserCreation = (API.graphql(graphqlOperation(onCreateUser, {
+			id: auth.username
+		})) as Observable<object>).subscribe({
+			next: ({value}: {value: GraphQLResult<OnCreateUserSubscription>}) => {
+				if (value.data?.onCreateUser?.id) {
+					const ng = value.data.onCreateUser as User
+					setUser(ng)
+				}
+			},
+			error: e => console.error(e)
+		})
+
+		const onUserUpdate = (API.graphql(graphqlOperation(onUpdateUser, {
+			id: auth.username
+		})) as Observable<object>).subscribe({
+			next: ({value}: {value: GraphQLResult<OnUpdateUserSubscription>}) => {
+				if (value.data?.onUpdateUser){
+					const ug = value.data.onUpdateUser as User
+					setUser(ug)
 				}
 			},
 			error: console.error
@@ -201,6 +240,8 @@ const BottomTabNavigator = (): React.ReactElement => {
 			onGoalCreation.unsubscribe()
 			onGoalDeletion.unsubscribe()
 			onGoalUpdate.unsubscribe()
+			onUserCreation.unsubscribe()
+			onUserUpdate.unsubscribe()
 			onFundCreation.unsubscribe()
 			onFundDeletion.unsubscribe()
 			onFundUpdate.unsubscribe()
@@ -212,7 +253,9 @@ const BottomTabNavigator = (): React.ReactElement => {
 
 	if (loading) return <Loading />
 
-	return <CreateProfileForm />
+	if (!user?.id) {
+		return <CreateProfileForm />
+	}
 
 	return (
 		<GoalsContext.Provider value={goals}>

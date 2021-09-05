@@ -60,5 +60,11 @@
         ]
       }
     }
+  },
+  "storage": {
+    "profilePics": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }
