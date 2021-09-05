@@ -1,7 +1,7 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import * as React from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { RFPercentage, RFValue as rf } from "react-native-responsive-fontsize";
+import { RFValue as rf } from "react-native-responsive-fontsize";
 import IncomeCard from '../../Components/IncomeCard';
 import Buttons from '../../Components/Buttons';
 

@@ -5,6 +5,7 @@ import { InitialFormParamList } from "../../types"
 import TheBasic from "../screens/initialForm/TheBasics"
 import InitialFormContext, { InitialFormGlobalTypes } from "../contexts/InitialFormContext"
 import { Formik } from "formik"
+import Spending from "../screens/initialForm/Spending"
 
 const InitialFormStack = createStackNavigator<InitialFormParamList>()
 
@@ -43,6 +44,10 @@ const InitialFormStackNavigator = (): React.ReactElement => {
                             <InitialFormStack.Screen
                                 name="TheBasics"
                                 component={TheBasic}
+                            />
+                            <InitialFormStack.Screen
+                                name="Spending"
+                                component={Spending}
                             />
                         </InitialFormStack.Navigator>
                     </InitialFormContext.Provider>

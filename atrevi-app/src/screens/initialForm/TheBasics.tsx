@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import {
   heightPercentageToDP as hp,
@@ -96,13 +96,14 @@ export default function TheBasic({ navigation }: Props) {
           style={[
               styles.btn,
               {
+
                   backgroundColor: (!v.values.ocupation || !v.values.gender || !v.values.age) ? "#EFF0F6" : secondary.default
               }
             ]}
           onPress={() => {
               if (!v.values.ocupation || !v.values.gender || !v.values.age) return
               
-            navigation.navigate("AlphaWelcome2")
+            navigation.navigate("Spending")
           }}
         >
           <Text style={{ 
