@@ -40,6 +40,7 @@ export type AuthParamList = {
 
 export type InitialFormParamList = {
     ForewordScreen: undefined,
+    TheBasics: undefined,
 }
  
 export type NavParamList = RootStackParamList & HomeStackParamList

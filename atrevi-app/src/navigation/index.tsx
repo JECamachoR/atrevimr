@@ -58,6 +58,7 @@ function RootStackNavigator() {
 					if (q.data?.getQuestions?.id) {
 						setInitialForm(true)
 					}
+					setLoading(false)
 				} catch (err) {
 					console.error(err)
 				}

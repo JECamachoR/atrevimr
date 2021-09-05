@@ -42,7 +42,7 @@ export default function ForewordScreen({ navigation }: Props) {
       <View style={styles.BtnRow}>
         <TouchableOpacity 
           style={styles.btn} 
-          onPress={() => navigation.navigate('TheBasic')}
+          onPress={() => navigation.navigate('TheBasics')}
         >
           <Text style={{ fontWeight: "600", fontSize: rf(16), color: "#fff" }}>Let's go!</Text>
         </TouchableOpacity>
