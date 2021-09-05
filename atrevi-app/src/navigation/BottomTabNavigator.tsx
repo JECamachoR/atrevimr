@@ -28,6 +28,7 @@ import { onCreateFund, onCreateGoal, onCreateTransaction, onDeleteFund,
 import { Observable } from "zen-observable-ts"
 import AuthContext from "../auth/AuthContext"
 import Loading from "../components/Loading"
+import CreateProfileForm from "../screens/profile/CreateProfileForm"
 
 const BottomTab = createBottomTabNavigator()
 
@@ -210,6 +211,8 @@ const BottomTabNavigator = (): React.ReactElement => {
 	const insets = useSafeAreaInsets()
 
 	if (loading) return <Loading />
+
+	return <CreateProfileForm />
 
 	return (
 		<GoalsContext.Provider value={goals}>

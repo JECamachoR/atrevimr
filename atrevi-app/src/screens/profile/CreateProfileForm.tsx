@@ -12,14 +12,14 @@ import {
 	heightPercentageToDP as hp,
 	widthPercentageToDP as wp,
 } from "react-native-responsive-screen"
-import StepperFrequency from "./components/StepperFrequency"
-import StepperNotification from "./components/StepperNotification"
-import StepperProfile from "./components/StepperProfile"
-import StepperSuccess from "./components/StepperSuccess"
+import StepperFrequency from "../../components/profileForm/StepperFrequency"
+import StepperNotification from "../../components/profileForm/StepperNotification"
+import StepperProfile from "../../components/profileForm/StepperProfile"
+import StepperSuccess from "../../components/profileForm/StepperSuccess"
 import * as ImagePicker from "expo-image-picker"
 
-export default function Stepper(props) {
-	const [name, setName] = React.useState()
+export default function CreateProfileForm(): React.ReactElement {
+	const [name, setName] = React.useState<string | null>()
 	const [position, setPosition] = React.useState(1)
 	const [weekDay, setWeekDay] = React.useState("mon")
 	const [frequency, setFrequency] = React.useState("monthly")
@@ -28,7 +28,7 @@ export default function Stepper(props) {
 	const height3 = React.useRef(new Animated.Value(300)).current
 	const height4 = React.useRef(new Animated.Value(500)).current
 	const opacity = React.useRef(new Animated.Value(1)).current
-	const [image, setImage] = React.useState(null)
+	const [image, setImage] = React.useState<string | null>(null)
 
 	React.useEffect(() => {
 		(async () => {
@@ -43,8 +43,8 @@ export default function Stepper(props) {
 	}, [])
 
 	const pickImage = async () => {
-		let result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.IMAGE,
+		const result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
 			allowsEditing: true,
 			aspect: [4, 4],
 			quality: 1,
@@ -55,7 +55,7 @@ export default function Stepper(props) {
 		}
 	}
 
-	const hideContent = (type) => {
+	const hideContent = () => {
 		Animated.timing(
 			position == 1
 				? height1
@@ -72,20 +72,12 @@ export default function Stepper(props) {
 			}
 		).start()
 	}
-	const showContent = (type) => {
+	const showContent = (type: number) => {
 		Animated.timing(
 			type == 1 ? height1 : type == 2 ? height2 : type == 3 ? height3 : height4,
 			{
 				toValue:
-          type == 1
-          	? 280
-          	: type == 2
-          		? 530
-          		: type == 3
-          			? 280
-          			: type == 4
-          				? 500
-          				: 100,
+          type == 1 ? 280 : type == 2 ? 530 : type == 3 ? 280 : type == 4? 500: 100,
 				duration: 250,
 				easing: Easing.linear,
 				useNativeDriver: false, // <-- neccessary
@@ -106,26 +98,25 @@ export default function Stepper(props) {
 			<View style={styles.stepperMainWrapper}>
 				<View style={{ overflow: "hidden" }}>
 					<StepperProfile
+
 						title={
 							position > 1
 								? "Done, what a beautiful human"
 								: "Customize your profile"
 						}
-						onNameChange={(val) => setName(val)}
+						onNameChange={(val: string) => setName(val)}
 						name={name}
 						onNextPress={() => {
 							setPosition(2)
-							hideContent(1)
+							hideContent()
 						}}
 						height={height1}
 						position={position}
-						onSelectImage={() => pickImage()}
-						selectedImg={image ? image : false}
+						onSelectImg={() => {pickImage()}}
+						selectedImg={image ? image : undefined}
 					/>
 					<StepperFrequency
 						title={position > 2 ? "Great choice" : "Choose a saving frequency"}
-						activated={position == 2 ? true : false}
-						onNextPress={() => setPosition(3)}
 						activeDay={weekDay}
 						onWeekDayPress={(val) => setWeekDay(val)}
 						onRadioPress={(val) => setFrequency(val)}
@@ -136,34 +127,33 @@ export default function Stepper(props) {
 						}}
 						onNextPress={() => {
 							setPosition(3)
-							hideContent(1)
+							hideContent()
 						}}
 						position={position}
 						height={height2}
 					/>
 					<StepperNotification
 						title={position > 3 ? "Lorem ipsum" : "Customize notifications"}
-						activated={position == 3 ? true : false}
 						onPreviousPress={() => {
 							setPosition(2)
 							showContent(2)
 						}}
 						onNextPress={() => {
 							setPosition(4)
-							hideContent(1)
+							hideContent()
 						}}
 						position={position}
 						height={height3}
 					/>
 					<StepperSuccess
+                    
 						title={"Success!"}
-						activated={position == 4 ? true : false}
 						onPreviousPress={() => {
 							setPosition(3)
 							showContent(3)
 						}}
 						onNextPress={() => {
-							props.navigation.navigate("ProfileMenu")
+							console.log("success!")
 						}}
 						position={position}
 						height={height4}

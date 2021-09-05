@@ -17,67 +17,65 @@ const InitialFormStack = createStackNavigator<InitialFormParamList>()
 
 const InitialFormStackNavigator = (): React.ReactElement => {
 
-    const auth = React.useContext(AuthContext)
+	const auth = React.useContext(AuthContext)
 
-    return (
-        <Formik
-            initialValues={{
-                id: auth.username,
-                birthdate: undefined,
-                age: undefined,
-                gender: undefined,
-                ocupation: undefined,
-                monthlyIncome: undefined,
-                monthlySpend: undefined,
-                frequency: undefined,
-                yearlySavings: undefined,
-                keepsSavings: undefined,
-                recordKeepingPlace: undefined,
-                selfRating: undefined,
-            } as InitialFormGlobalTypes}
-            onSubmit={async v => {
-                const r = await API.graphql(graphqlOperation(
-                    createQuestions,
-                    {input: v}
-                ))
-                console.log(r)
-            }}
-        >
-            {(v) => {
-                console.log(v.values)
-                return (
-                    <InitialFormContext.Provider value={v}>
-                        <InitialFormStack.Navigator
-                            screenOptions={{
-                                headerShown: false,
-                            }}
-                        >
-                            <InitialFormStack.Screen
-                                name="ForewordScreen"
-                                component={ForewordScreen}
-                            />
-                            <InitialFormStack.Screen
-                                name="TheBasics"
-                                component={TheBasic}
-                            />
-                            <InitialFormStack.Screen
-                                name="Spending"
-                                component={Spending}
-                            />
-                            <InitialFormStack.Screen
-                                name="Savings"
-                                component={Savings}
-                            />
-                            <InitialFormStack.Screen
-                                name="PersonalFinance"
-                                component={PersonalFinance}
-                            />
-                        </InitialFormStack.Navigator>
-                    </InitialFormContext.Provider>
-                )
-            }}
-        </Formik>
-    )
+	return (
+		<Formik
+			initialValues={{
+				id: auth.username,
+				birthdate: undefined,
+				age: undefined,
+				gender: undefined,
+				ocupation: undefined,
+				monthlyIncome: undefined,
+				monthlySpend: undefined,
+				frequency: undefined,
+				yearlySavings: undefined,
+				keepsSavings: undefined,
+				recordKeepingPlace: undefined,
+				selfRating: undefined,
+			} as InitialFormGlobalTypes}
+			onSubmit={async v => {
+				await API.graphql(graphqlOperation(
+					createQuestions,
+					{input: v}
+				))
+			}}
+		>
+			{(v) => {
+				return (
+					<InitialFormContext.Provider value={v}>
+						<InitialFormStack.Navigator
+							screenOptions={{
+								headerShown: false,
+							}}
+						>
+							<InitialFormStack.Screen
+								name="ForewordScreen"
+								component={ForewordScreen}
+							/>
+							<InitialFormStack.Screen
+								name="TheBasics"
+								component={TheBasic}
+							/>
+							<InitialFormStack.Screen
+								name="Spending"
+								component={Spending}
+							/>
+							<InitialFormStack.Screen
+								name="Savings"
+								component={Savings}
+							/>
+							<InitialFormStack.Screen
+								name="PersonalFinance"
+								component={PersonalFinance}
+							/>
+						</InitialFormStack.Navigator>
+					</InitialFormContext.Provider>
+				)
+			}}
+		</Formik>
+	)
 }
 
 export default InitialFormStackNavigator
