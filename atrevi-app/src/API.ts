@@ -284,18 +284,36 @@ export type DeleteTransactionInput = {
   id: string,
 };
 
-export type CreateCounterInput = {
-  id?: string | null,
-  owner?: string | null,
-  count?: number | null,
+export type CreateQuestionsInput = {
+  id: string,
+  birthdate: string,
+  age: number,
+  gender: string,
+  ocupation: string,
+  monthlyIncome: number,
+  monthlySpend: number,
+  frequency: string,
+  yearlySavings: number,
+  keepsSavings: string,
+  recordKeepingPlace: string,
+  selfRating: string,
 };
 
-export type ModelCounterConditionInput = {
-  owner?: ModelStringInput | null,
-  count?: ModelIntInput | null,
-  and?: Array< ModelCounterConditionInput | null > | null,
-  or?: Array< ModelCounterConditionInput | null > | null,
-  not?: ModelCounterConditionInput | null,
+export type ModelQuestionsConditionInput = {
+  birthdate?: ModelStringInput | null,
+  age?: ModelIntInput | null,
+  gender?: ModelStringInput | null,
+  ocupation?: ModelStringInput | null,
+  monthlyIncome?: ModelFloatInput | null,
+  monthlySpend?: ModelFloatInput | null,
+  frequency?: ModelStringInput | null,
+  yearlySavings?: ModelFloatInput | null,
+  keepsSavings?: ModelStringInput | null,
+  recordKeepingPlace?: ModelStringInput | null,
+  selfRating?: ModelStringInput | null,
+  and?: Array< ModelQuestionsConditionInput | null > | null,
+  or?: Array< ModelQuestionsConditionInput | null > | null,
+  not?: ModelQuestionsConditionInput | null,
 };
 
 export type ModelIntInput = {
@@ -310,51 +328,40 @@ export type ModelIntInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
-export type Counter = {
-  __typename: "Counter",
+export type Questions = {
+  __typename: "Questions",
   id: string,
-  owner?: string | null,
-  count?: number | null,
+  birthdate: string,
+  age: number,
+  gender: string,
+  ocupation: string,
+  monthlyIncome: number,
+  monthlySpend: number,
+  frequency: string,
+  yearlySavings: number,
+  keepsSavings: string,
+  recordKeepingPlace: string,
+  selfRating: string,
   createdAt: string,
   updatedAt: string,
 };
 
-export type UpdateCounterInput = {
+export type UpdateQuestionsInput = {
   id: string,
-  owner?: string | null,
-  count?: number | null,
+  birthdate?: string | null,
+  age?: number | null,
+  gender?: string | null,
+  ocupation?: string | null,
+  monthlyIncome?: number | null,
+  monthlySpend?: number | null,
+  frequency?: string | null,
+  yearlySavings?: number | null,
+  keepsSavings?: string | null,
+  recordKeepingPlace?: string | null,
+  selfRating?: string | null,
 };
 
-export type DeleteCounterInput = {
-  id: string,
-};
-
-export type CreateCountedInput = {
-  id?: string | null,
-  owner?: string | null,
-};
-
-export type ModelCountedConditionInput = {
-  owner?: ModelStringInput | null,
-  and?: Array< ModelCountedConditionInput | null > | null,
-  or?: Array< ModelCountedConditionInput | null > | null,
-  not?: ModelCountedConditionInput | null,
-};
-
-export type Counted = {
-  __typename: "Counted",
-  id: string,
-  owner?: string | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type UpdateCountedInput = {
-  id: string,
-  owner?: string | null,
-};
-
-export type DeleteCountedInput = {
+export type DeleteQuestionsInput = {
   id: string,
 };
 
@@ -415,32 +422,27 @@ export type ModelTransactionFilterInput = {
   not?: ModelTransactionFilterInput | null,
 };
 
-export type ModelCounterFilterInput = {
-  id?: ModelIDInput | null,
-  owner?: ModelStringInput | null,
-  count?: ModelIntInput | null,
-  and?: Array< ModelCounterFilterInput | null > | null,
-  or?: Array< ModelCounterFilterInput | null > | null,
-  not?: ModelCounterFilterInput | null,
+export type ModelQuestionsFilterInput = {
+  id?: ModelStringInput | null,
+  birthdate?: ModelStringInput | null,
+  age?: ModelIntInput | null,
+  gender?: ModelStringInput | null,
+  ocupation?: ModelStringInput | null,
+  monthlyIncome?: ModelFloatInput | null,
+  monthlySpend?: ModelFloatInput | null,
+  frequency?: ModelStringInput | null,
+  yearlySavings?: ModelFloatInput | null,
+  keepsSavings?: ModelStringInput | null,
+  recordKeepingPlace?: ModelStringInput | null,
+  selfRating?: ModelStringInput | null,
+  and?: Array< ModelQuestionsFilterInput | null > | null,
+  or?: Array< ModelQuestionsFilterInput | null > | null,
+  not?: ModelQuestionsFilterInput | null,
 };
 
-export type ModelCounterConnection = {
-  __typename: "ModelCounterConnection",
-  items?:  Array<Counter | null > | null,
-  nextToken?: string | null,
-};
-
-export type ModelCountedFilterInput = {
-  id?: ModelIDInput | null,
-  owner?: ModelStringInput | null,
-  and?: Array< ModelCountedFilterInput | null > | null,
-  or?: Array< ModelCountedFilterInput | null > | null,
-  not?: ModelCountedFilterInput | null,
-};
-
-export type ModelCountedConnection = {
-  __typename: "ModelCountedConnection",
-  items?:  Array<Counted | null > | null,
+export type ModelQuestionsConnection = {
+  __typename: "ModelQuestionsConnection",
+  items?:  Array<Questions | null > | null,
   nextToken?: string | null,
 };
 
@@ -765,94 +767,76 @@ export type DeleteTransactionMutation = {
   } | null,
 };
 
-export type CreateCounterMutationVariables = {
-  input: CreateCounterInput,
-  condition?: ModelCounterConditionInput | null,
+export type CreateQuestionsMutationVariables = {
+  input: CreateQuestionsInput,
+  condition?: ModelQuestionsConditionInput | null,
 };
 
-export type CreateCounterMutation = {
-  createCounter?:  {
-    __typename: "Counter",
+export type CreateQuestionsMutation = {
+  createQuestions?:  {
+    __typename: "Questions",
     id: string,
-    owner?: string | null,
-    count?: number | null,
+    birthdate: string,
+    age: number,
+    gender: string,
+    ocupation: string,
+    monthlyIncome: number,
+    monthlySpend: number,
+    frequency: string,
+    yearlySavings: number,
+    keepsSavings: string,
+    recordKeepingPlace: string,
+    selfRating: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type UpdateCounterMutationVariables = {
-  input: UpdateCounterInput,
-  condition?: ModelCounterConditionInput | null,
+export type UpdateQuestionsMutationVariables = {
+  input: UpdateQuestionsInput,
+  condition?: ModelQuestionsConditionInput | null,
 };
 
-export type UpdateCounterMutation = {
-  updateCounter?:  {
-    __typename: "Counter",
+export type UpdateQuestionsMutation = {
+  updateQuestions?:  {
+    __typename: "Questions",
     id: string,
-    owner?: string | null,
-    count?: number | null,
+    birthdate: string,
+    age: number,
+    gender: string,
+    ocupation: string,
+    monthlyIncome: number,
+    monthlySpend: number,
+    frequency: string,
+    yearlySavings: number,
+    keepsSavings: string,
+    recordKeepingPlace: string,
+    selfRating: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type DeleteCounterMutationVariables = {
-  input: DeleteCounterInput,
-  condition?: ModelCounterConditionInput | null,
+export type DeleteQuestionsMutationVariables = {
+  input: DeleteQuestionsInput,
+  condition?: ModelQuestionsConditionInput | null,
 };
 
-export type DeleteCounterMutation = {
-  deleteCounter?:  {
-    __typename: "Counter",
+export type DeleteQuestionsMutation = {
+  deleteQuestions?:  {
+    __typename: "Questions",
     id: string,
-    owner?: string | null,
-    count?: number | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateCountedMutationVariables = {
-  input: CreateCountedInput,
-  condition?: ModelCountedConditionInput | null,
-};
-
-export type CreateCountedMutation = {
-  createCounted?:  {
-    __typename: "Counted",
-    id: string,
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateCountedMutationVariables = {
-  input: UpdateCountedInput,
-  condition?: ModelCountedConditionInput | null,
-};
-
-export type UpdateCountedMutation = {
-  updateCounted?:  {
-    __typename: "Counted",
-    id: string,
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteCountedMutationVariables = {
-  input: DeleteCountedInput,
-  condition?: ModelCountedConditionInput | null,
-};
-
-export type DeleteCountedMutation = {
-  deleteCounted?:  {
-    __typename: "Counted",
-    id: string,
-    owner?: string | null,
+    birthdate: string,
+    age: number,
+    gender: string,
+    ocupation: string,
+    monthlyIncome: number,
+    monthlySpend: number,
+    frequency: string,
+    yearlySavings: number,
+    keepsSavings: string,
+    recordKeepingPlace: string,
+    selfRating: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1060,69 +1044,53 @@ export type ListTransactionsQuery = {
   } | null,
 };
 
-export type GetCounterQueryVariables = {
+export type GetQuestionsQueryVariables = {
   id: string,
 };
 
-export type GetCounterQuery = {
-  getCounter?:  {
-    __typename: "Counter",
+export type GetQuestionsQuery = {
+  getQuestions?:  {
+    __typename: "Questions",
     id: string,
-    owner?: string | null,
-    count?: number | null,
+    birthdate: string,
+    age: number,
+    gender: string,
+    ocupation: string,
+    monthlyIncome: number,
+    monthlySpend: number,
+    frequency: string,
+    yearlySavings: number,
+    keepsSavings: string,
+    recordKeepingPlace: string,
+    selfRating: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type ListCountersQueryVariables = {
-  filter?: ModelCounterFilterInput | null,
+export type ListQuestionsQueryVariables = {
+  filter?: ModelQuestionsFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListCountersQuery = {
-  listCounters?:  {
-    __typename: "ModelCounterConnection",
+export type ListQuestionsQuery = {
+  listQuestions?:  {
+    __typename: "ModelQuestionsConnection",
     items?:  Array< {
-      __typename: "Counter",
+      __typename: "Questions",
       id: string,
-      owner?: string | null,
-      count?: number | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetCountedQueryVariables = {
-  id: string,
-};
-
-export type GetCountedQuery = {
-  getCounted?:  {
-    __typename: "Counted",
-    id: string,
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListCountedsQueryVariables = {
-  filter?: ModelCountedFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListCountedsQuery = {
-  listCounteds?:  {
-    __typename: "ModelCountedConnection",
-    items?:  Array< {
-      __typename: "Counted",
-      id: string,
-      owner?: string | null,
+      birthdate: string,
+      age: number,
+      gender: string,
+      ocupation: string,
+      monthlyIncome: number,
+      monthlySpend: number,
+      frequency: string,
+      yearlySavings: number,
+      keepsSavings: string,
+      recordKeepingPlace: string,
+      selfRating: string,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -1439,64 +1407,61 @@ export type OnDeleteTransactionSubscription = {
   } | null,
 };
 
-export type OnCreateCounterSubscription = {
-  onCreateCounter?:  {
-    __typename: "Counter",
+export type OnCreateQuestionsSubscription = {
+  onCreateQuestions?:  {
+    __typename: "Questions",
     id: string,
-    owner?: string | null,
-    count?: number | null,
+    birthdate: string,
+    age: number,
+    gender: string,
+    ocupation: string,
+    monthlyIncome: number,
+    monthlySpend: number,
+    frequency: string,
+    yearlySavings: number,
+    keepsSavings: string,
+    recordKeepingPlace: string,
+    selfRating: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnUpdateCounterSubscription = {
-  onUpdateCounter?:  {
-    __typename: "Counter",
+export type OnUpdateQuestionsSubscription = {
+  onUpdateQuestions?:  {
+    __typename: "Questions",
     id: string,
-    owner?: string | null,
-    count?: number | null,
+    birthdate: string,
+    age: number,
+    gender: string,
+    ocupation: string,
+    monthlyIncome: number,
+    monthlySpend: number,
+    frequency: string,
+    yearlySavings: number,
+    keepsSavings: string,
+    recordKeepingPlace: string,
+    selfRating: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnDeleteCounterSubscription = {
-  onDeleteCounter?:  {
-    __typename: "Counter",
+export type OnDeleteQuestionsSubscription = {
+  onDeleteQuestions?:  {
+    __typename: "Questions",
     id: string,
-    owner?: string | null,
-    count?: number | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateCountedSubscription = {
-  onCreateCounted?:  {
-    __typename: "Counted",
-    id: string,
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateCountedSubscription = {
-  onUpdateCounted?:  {
-    __typename: "Counted",
-    id: string,
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteCountedSubscription = {
-  onDeleteCounted?:  {
-    __typename: "Counted",
-    id: string,
-    owner?: string | null,
+    birthdate: string,
+    age: number,
+    gender: string,
+    ocupation: string,
+    monthlyIncome: number,
+    monthlySpend: number,
+    frequency: string,
+    yearlySavings: number,
+    keepsSavings: string,
+    recordKeepingPlace: string,
+    selfRating: string,
     createdAt: string,
     updatedAt: string,
   } | null,

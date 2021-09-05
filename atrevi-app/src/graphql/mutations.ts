@@ -284,82 +284,70 @@ export const deleteTransaction = /* GraphQL */ `
     }
   }
 `;
-export const createCounter = /* GraphQL */ `
-  mutation CreateCounter(
-    $input: CreateCounterInput!
-    $condition: ModelCounterConditionInput
+export const createQuestions = /* GraphQL */ `
+  mutation CreateQuestions(
+    $input: CreateQuestionsInput!
+    $condition: ModelQuestionsConditionInput
   ) {
-    createCounter(input: $input, condition: $condition) {
+    createQuestions(input: $input, condition: $condition) {
       id
-      owner
-      count
+      birthdate
+      age
+      gender
+      ocupation
+      monthlyIncome
+      monthlySpend
+      frequency
+      yearlySavings
+      keepsSavings
+      recordKeepingPlace
+      selfRating
       createdAt
       updatedAt
     }
   }
 `;
-export const updateCounter = /* GraphQL */ `
-  mutation UpdateCounter(
-    $input: UpdateCounterInput!
-    $condition: ModelCounterConditionInput
+export const updateQuestions = /* GraphQL */ `
+  mutation UpdateQuestions(
+    $input: UpdateQuestionsInput!
+    $condition: ModelQuestionsConditionInput
   ) {
-    updateCounter(input: $input, condition: $condition) {
+    updateQuestions(input: $input, condition: $condition) {
       id
-      owner
-      count
+      birthdate
+      age
+      gender
+      ocupation
+      monthlyIncome
+      monthlySpend
+      frequency
+      yearlySavings
+      keepsSavings
+      recordKeepingPlace
+      selfRating
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteCounter = /* GraphQL */ `
-  mutation DeleteCounter(
-    $input: DeleteCounterInput!
-    $condition: ModelCounterConditionInput
+export const deleteQuestions = /* GraphQL */ `
+  mutation DeleteQuestions(
+    $input: DeleteQuestionsInput!
+    $condition: ModelQuestionsConditionInput
   ) {
-    deleteCounter(input: $input, condition: $condition) {
+    deleteQuestions(input: $input, condition: $condition) {
       id
-      owner
-      count
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createCounted = /* GraphQL */ `
-  mutation CreateCounted(
-    $input: CreateCountedInput!
-    $condition: ModelCountedConditionInput
-  ) {
-    createCounted(input: $input, condition: $condition) {
-      id
-      owner
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateCounted = /* GraphQL */ `
-  mutation UpdateCounted(
-    $input: UpdateCountedInput!
-    $condition: ModelCountedConditionInput
-  ) {
-    updateCounted(input: $input, condition: $condition) {
-      id
-      owner
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteCounted = /* GraphQL */ `
-  mutation DeleteCounted(
-    $input: DeleteCountedInput!
-    $condition: ModelCountedConditionInput
-  ) {
-    deleteCounted(input: $input, condition: $condition) {
-      id
-      owner
+      birthdate
+      age
+      gender
+      ocupation
+      monthlyIncome
+      monthlySpend
+      frequency
+      yearlySavings
+      keepsSavings
+      recordKeepingPlace
+      selfRating
       createdAt
       updatedAt
     }

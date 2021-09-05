@@ -171,55 +171,46 @@ export const listTransactions = /* GraphQL */ `
     }
   }
 `;
-export const getCounter = /* GraphQL */ `
-  query GetCounter($id: ID!) {
-    getCounter(id: $id) {
+export const getQuestions = /* GraphQL */ `
+  query GetQuestions($id: ID!) {
+    getQuestions(id: $id) {
       id
-      owner
-      count
+      birthdate
+      age
+      gender
+      ocupation
+      monthlyIncome
+      monthlySpend
+      frequency
+      yearlySavings
+      keepsSavings
+      recordKeepingPlace
+      selfRating
       createdAt
       updatedAt
     }
   }
 `;
-export const listCounters = /* GraphQL */ `
-  query ListCounters(
-    $filter: ModelCounterFilterInput
+export const listQuestions = /* GraphQL */ `
+  query ListQuestions(
+    $filter: ModelQuestionsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listCounters(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listQuestions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        owner
-        count
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getCounted = /* GraphQL */ `
-  query GetCounted($id: ID!) {
-    getCounted(id: $id) {
-      id
-      owner
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listCounteds = /* GraphQL */ `
-  query ListCounteds(
-    $filter: ModelCountedFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCounteds(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        owner
+        birthdate
+        age
+        gender
+        ocupation
+        monthlyIncome
+        monthlySpend
+        frequency
+        yearlySavings
+        keepsSavings
+        recordKeepingPlace
+        selfRating
         createdAt
         updatedAt
       }

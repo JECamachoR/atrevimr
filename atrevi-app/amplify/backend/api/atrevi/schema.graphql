@@ -51,15 +51,18 @@ type Transaction @model
     fund: Fund @connection
 }
 
-type Counter @model
-@key(name: "byUser", fields: ["owner"]) {
-    id: ID!
-    owner: String
-    count: Int
-}
-
-type Counted @model
-@key(name: "byUser", fields: ["owner"]) {
-    id: ID!
-    owner: String
+type Questions @model
+@auth(rules: [{allow: owner, ownerField: "id" operations: [create]}]) {
+    id: String!
+    birthdate: AWSDate!
+    age: Int!
+    gender: String!
+    ocupation: String!
+    monthlyIncome: Float!
+    monthlySpend: Float!
+    frequency: String!
+    yearlySavings: Float!
+    keepsSavings: String!
+    recordKeepingPlace: String!
+    selfRating: String!
 }

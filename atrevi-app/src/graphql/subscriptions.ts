@@ -248,64 +248,61 @@ export const onDeleteTransaction = /* GraphQL */ `
     }
   }
 `;
-export const onCreateCounter = /* GraphQL */ `
-  subscription OnCreateCounter {
-    onCreateCounter {
+export const onCreateQuestions = /* GraphQL */ `
+  subscription OnCreateQuestions {
+    onCreateQuestions {
       id
-      owner
-      count
+      birthdate
+      age
+      gender
+      ocupation
+      monthlyIncome
+      monthlySpend
+      frequency
+      yearlySavings
+      keepsSavings
+      recordKeepingPlace
+      selfRating
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateCounter = /* GraphQL */ `
-  subscription OnUpdateCounter {
-    onUpdateCounter {
+export const onUpdateQuestions = /* GraphQL */ `
+  subscription OnUpdateQuestions {
+    onUpdateQuestions {
       id
-      owner
-      count
+      birthdate
+      age
+      gender
+      ocupation
+      monthlyIncome
+      monthlySpend
+      frequency
+      yearlySavings
+      keepsSavings
+      recordKeepingPlace
+      selfRating
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteCounter = /* GraphQL */ `
-  subscription OnDeleteCounter {
-    onDeleteCounter {
+export const onDeleteQuestions = /* GraphQL */ `
+  subscription OnDeleteQuestions {
+    onDeleteQuestions {
       id
-      owner
-      count
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateCounted = /* GraphQL */ `
-  subscription OnCreateCounted {
-    onCreateCounted {
-      id
-      owner
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateCounted = /* GraphQL */ `
-  subscription OnUpdateCounted {
-    onUpdateCounted {
-      id
-      owner
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteCounted = /* GraphQL */ `
-  subscription OnDeleteCounted {
-    onDeleteCounted {
-      id
-      owner
+      birthdate
+      age
+      gender
+      ocupation
+      monthlyIncome
+      monthlySpend
+      frequency
+      yearlySavings
+      keepsSavings
+      recordKeepingPlace
+      selfRating
       createdAt
       updatedAt
     }
