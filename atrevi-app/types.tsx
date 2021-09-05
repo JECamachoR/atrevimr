@@ -4,11 +4,11 @@
  */
 
 export type RootStackParamList = {
-     Main: undefined;
-     Auth: undefined
-     NotFound: undefined;
- };
- 
+    Main: undefined;
+    Auth: undefined
+    InitialForm: undefined;
+    NotFound: undefined;
+};
  
 export type BottomTabBarParamList = {
     HomeStack: undefined
@@ -23,20 +23,24 @@ export type HomeStackParamList = {
 }
  
 export type SettingsStackParamList = {
-     Settings: undefined
- }
+    Settings: undefined
+}
  
 export type AuthParamList = {
-     WelcomeScreen: undefined;
-     SignInScreen: undefined;
-     SignUpScreen: undefined;
-     PhoneVerificationScreen: {
-         phoneNumber?: string, 
-         countryCode?: string, 
-         phoneNumberWithoutCode?: string,
-         pass?: string
-     } | undefined;
- };
+    WelcomeScreen: undefined;
+    SignInScreen: undefined;
+    SignUpScreen: undefined;
+    PhoneVerificationScreen: {
+        phoneNumber?: string, 
+        countryCode?: string, 
+        phoneNumberWithoutCode?: string,
+        pass?: string
+    } | undefined;
+};
+
+export type InitialFormParamList = {
+    ForewordScreen: undefined,
+}
  
 export type NavParamList = RootStackParamList & HomeStackParamList
  

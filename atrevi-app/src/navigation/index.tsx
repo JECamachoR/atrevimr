@@ -7,14 +7,17 @@ import AuthContext, { AuthContextType } from "../auth/AuthContext"
 import NotFoundScreen from "../screens/NotFoundScreen"
 import { RootStackParamList } from "../../types"
 import AuthStackNavigator from "./AuthStackNavigator"
-import { useEffect, useState } from "react"
-import { Auth, Hub } from "aws-amplify"
+import { API, Auth, graphqlOperation, Hub } from "aws-amplify"
 import Loading from "../components/Loading"
 import BottomTabNavigator from "./BottomTabNavigator"
 import i18n from "i18n-js"
 import * as Localization from "expo-localization"
 import en from "../assets/lang/en.json"
 import es from "../assets/lang/es.json"
+import { getQuestions } from "../graphql/queries"
+import { GraphQLResult } from "@aws-amplify/api-graphql"
+import { GetQuestionsQuery } from "../API"
+import InitialFormStackNavigator from "./InitialFormStackNavigator"
 
 i18n.translations = {
 	en,
@@ -38,15 +41,35 @@ const Stack = createStackNavigator<RootStackParamList>()
 
 function RootStackNavigator() {
 
-	const [user, setUser] = useState<AuthContextType>(null)
-	const [loading, setLoading] = useState(true)
-    
-	useEffect(() => {
+	const [user, setUser] = React.useState<AuthContextType | null>(null)
+	const [loading, setLoading] = React.useState(true)
+	const [initialForm, setInitialForm] = React.useState<boolean>(false)
+
+	React.useEffect(() => {
+		(async () => {
+			if (user && user?.username) {
+				try {
+					const q = await API.graphql(graphqlOperation(
+						getQuestions,
+						{
+							id: user.username
+						}
+					)) as GraphQLResult<GetQuestionsQuery>
+					if (q.data?.getQuestions?.id) {
+						setInitialForm(true)
+					}
+				} catch (err) {
+					console.error(err)
+				}
+			}
+		})()
+	}, [user])
+
+	React.useEffect(() => {
 		const updateUser = async () => {
 			try {
 				const user = await Auth.currentAuthenticatedUser()
 				setUser(user)
-				setLoading(false)
 			} catch {
 				setUser(null)
 				setLoading(false)
@@ -62,13 +85,14 @@ function RootStackNavigator() {
 	}
 
 	return (
-		<AuthContext.Provider value={user}>
+		<AuthContext.Provider value={user || {username: ""}}>
 			<Stack.Navigator screenOptions={{ headerShown: false }}>
 				{
 					user ?
-						<>
+						initialForm ? 
 							<Stack.Screen name="Main" component={BottomTabNavigator} />
-						</>
+							:
+							<Stack.Screen name="InitialForm" component={InitialFormStackNavigator} />
 						:
 						<Stack.Screen name="Auth" component={AuthStackNavigator} />
 				}
