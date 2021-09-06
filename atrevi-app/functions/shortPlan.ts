@@ -10,9 +10,9 @@ export default function shortPlan(
 	DOTW: daysOfTheWeek,
 	startingPoint: {ammount: number, savingDate: string}
 ): [number, string] {
-	const s0 = filterPreviousDates(goals, new Date(startingPoint.savingDate))
+	const s0 = accumulateBySavingDates(goals, frequency, DOTW)
 	// console.log("s0", s0)
-	const s1 = accumulateBySavingDates(s0, frequency, DOTW)
+	const s1 = filterPreviousDates(s0, startingPoint.savingDate)
 	// console.log("s1", s1)
 	const s2 = cumSumReq(s1)
 	// console.log("s2", s2)

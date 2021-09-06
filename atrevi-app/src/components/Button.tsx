@@ -1,19 +1,27 @@
 import * as React from "react"
 import { StyleSheet, Text, TouchableOpacity, View, useColorScheme } from "react-native"
 import { error, grayscale, primary, secondary, success } from "../constants/Colors"
+import { useThemeColor } from "./Themed"
 
 interface ButtonProps {
     title: string;
     lightVariant?: "primary" | "secondary" | "error" | "success" | "successDark" //| "info" | "default";
     darkModeVariant?: ButtonProps["lightVariant"]
     onPress: () => void;
+	inactive?: boolean,
 }
 
-const Button = ({onPress, title, lightVariant, darkModeVariant} : ButtonProps): React.ReactElement => {
+const Button = ({onPress, title, lightVariant, darkModeVariant, inactive} : ButtonProps): React.ReactElement => {
 
 	const colorScheme = useColorScheme()
-
+	const inactiveColors = {
+		backgroundColor: useThemeColor({colorName: "inputBackground"}),
+		color: useThemeColor({colorName: "background"})
+	}
 	const colorsForVariant = () => {
+		if (inactive) {
+			return inactiveColors
+		}
 		if (lightVariant && colorScheme === "light") {
 			return styles[lightVariant]
 		} else if (colorScheme === "dark" && darkModeVariant) {
@@ -34,6 +42,7 @@ const Button = ({onPress, title, lightVariant, darkModeVariant} : ButtonProps): 
 		<TouchableOpacity
 			onPress={onPress}
 			style={styles.container}
+			activeOpacity={!inactive ? 0.2 : 1}
 		>
 			<View 
 				style={[styles.row, colors]}>

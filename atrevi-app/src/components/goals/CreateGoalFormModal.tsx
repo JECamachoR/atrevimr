@@ -21,6 +21,7 @@ import GoalsContext from "../../contexts/GoalsContext"
 import { formatNumber } from "react-native-currency-input"
 import UserContext from "../../contexts/UserContext"
 import { daysOfTheWeek, frequencies } from "../../../types"
+import getNextSavingDate from "../../../functions/getNextSavingDate"
 
 type Props = {
     visible: boolean,
@@ -41,7 +42,11 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 	const DOTW = (user.DOTW as daysOfTheWeek) || "thursday" as daysOfTheWeek
 	const frequency = (user.frequency as frequencies) || "7day"
 	const savingDate = getSavingDate(today, frequency, DOTW)
-
+	const minDate = new Date(getNextSavingDate(
+		new Date(),
+		user.frequency as frequencies,
+		user.DOTW as daysOfTheWeek
+	))
 	return (
 		<Formik
 			initialValues={goal}
@@ -76,6 +81,8 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 					prefix: "$",
 					separator: ".",
 				})
+
+				console.log(values.recurringAmmount)
 
 				return (
 					
@@ -132,6 +139,7 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 									field={"date"}
 									setDate={setFieldValue}
 									variant="secondary"
+									minDate={minDate}
 								/>
 							</View>
 							<View style={[styles.estimateCard, {borderColor: line}]}>

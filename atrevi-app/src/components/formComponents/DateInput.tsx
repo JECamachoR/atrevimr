@@ -12,11 +12,12 @@ interface DateInputProps {
     date: Date | string | null | undefined;
     text?: string;
     maxDate?: Date;
+	minDate?: Date;
 	error?: string | undefined,
 	variant?: "secondary" | "successDark"
 }
 
-const DateInput = ({ date: passedDate, setDate, field, text, maxDate, error, variant } : DateInputProps): React.ReactElement => {
+const DateInput = ({ date: passedDate, setDate, field, text, maxDate, minDate, error, variant } : DateInputProps): React.ReactElement => {
     
 	const [show, setShow] = React.useState<boolean>(false)
 
@@ -59,7 +60,7 @@ const DateInput = ({ date: passedDate, setDate, field, text, maxDate, error, var
 				value={date instanceof Date ? date : today}
 				mode={"date"}
 				display={Platform.OS === "ios" ? "spinner" : "calendar"}
-				minimumDate={today}
+				minimumDate={minDate || today}
 				onChange={(_: unknown, d: Date | undefined) => {
 					hideDatePicker()
 					setDate(field, d || date)
