@@ -9,7 +9,6 @@ export default function getSlope(
 	const startingDate = new Date(startingPoint.savingDate)
 	return r.reduce((prev, curr) => {
 		const countP = countPeriods(startingDate,new Date(curr.savingDate), frequency)
-		console.log(countP)
 		const m = (curr.ammount - startingPoint.ammount) / (countP)
 		return m < prev[0] ? prev : [m, curr.savingDate]
 	}, [0, ""])

@@ -8,7 +8,6 @@ export default function accumulateBySavingDates(
 ): {ammount: number, savingDate: string}[] {
 	const r = goals.reduce((pv, curr) => {
 		const d = {ammount: curr.ammount, savingDate: getSavingDate(curr.date, frequency, DOTW)}
-		console.log("calculated sd:", d.savingDate)
 		const n = {...pv}
 		n[d.savingDate] = d.ammount + (n[d.savingDate] || 0)
 		return n

@@ -41,7 +41,7 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 	const DOTW = (user.DOTW as daysOfTheWeek) || "thursday" as daysOfTheWeek
 	const frequency = (user.frequency as frequencies) || "7day"
 	const savingDate = getSavingDate(today, frequency, DOTW)
-	
+
 	return (
 		<Formik
 			initialValues={goal}
@@ -66,7 +66,6 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 							savingDate
 						}
 					)
-					console.log("plan", r)
 					setFieldValue("recurringAmmount", r[0])
 				}
 
