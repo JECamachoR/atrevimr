@@ -24,7 +24,10 @@ export type HomeStackParamList = {
  
 export type SettingsStackParamList = {
     Settings: undefined,
-    
+    ReportIssue: undefined,
+    Support: undefined,
+    About: undefined,
+    PrivacyNotice: undefined,
 }
  
 export type AuthParamList = {

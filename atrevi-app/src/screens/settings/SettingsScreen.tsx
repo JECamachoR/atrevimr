@@ -7,13 +7,19 @@ import Auth from "@aws-amplify/auth"
 import Tab from "../../components/settings/Tab"
 import { t } from "i18n-js"
 import UserContext from "../../contexts/UserContext"
+import { StackScreenProps } from "@react-navigation/stack"
+import { SettingsStackParamList } from "../../../types"
+import { StatusBar } from "expo-status-bar"
 
-const Profile = (): React.ReactElement => {
+type Props = StackScreenProps<SettingsStackParamList, "Settings">
+
+const SettingsScreen = ({ navigation }: Props): React.ReactElement => {
 
 	const user = React.useContext(UserContext)
 
 	return (
-		<Screen>
+		<Screen style={styles.screen}>
+			<StatusBar style="dark" />
 			<View style={styles.head}>
 				<View style={styles.imgContainer}>
 					<S3Image imgKey={user.phone} style={{
@@ -26,8 +32,9 @@ const Profile = (): React.ReactElement => {
 			</View>
 
 			<View style={styles.buttonsContainer}>
-				<Tab onPress={() => null} title={t("About Atrevi")} top />
-				<Tab onPress={() => null} title={t("Support")} />
+				<Tab onPress={() => navigation.navigate("About")} title={t("About Atrevi")} top />
+				<Tab onPress={() => navigation.navigate("Support")} title={t("Support")} />
+				<Tab onPress={() => navigation.navigate("ReportIssue")} title={t("Report an issue")} />
 				<Tab onPress={() => null} title={t("Feedback")} bottom />
 			</View>
 			<Button title="Log Out" onPress={() => Auth.signOut()}/>
@@ -35,9 +42,12 @@ const Profile = (): React.ReactElement => {
 	)
 }
 
-export default Profile
+export default SettingsScreen
 
 const styles = StyleSheet.create({
+	screen: {
+		paddingBottom: 8,
+	},
 	head: {
 		marginVertical: 16,
 		alignItems: "center",
