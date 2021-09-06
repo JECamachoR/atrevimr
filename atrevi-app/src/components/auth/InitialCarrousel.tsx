@@ -2,7 +2,6 @@ import * as React from "react"
 import { StyleSheet, useWindowDimensions, View } from "react-native"
 import Carousel, { Pagination } from "react-native-snap-carousel"
 import { secondary } from "../../constants/Colors"
-import { useThemeColor } from "../Themed"
 import CarrouselItem from "./CarrouselItem"
 
 const InitialCarrousel = (): React.ReactElement => {

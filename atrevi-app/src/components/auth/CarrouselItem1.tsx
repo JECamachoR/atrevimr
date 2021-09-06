@@ -18,7 +18,7 @@ export default function CarrouselItem1(): React.ReactElement {
 			</View>
 			<View style={styles.TextWrapper}>
 				<Text style={styles.title}>{t("Reach your goals")}</Text>
-				<Text style={styles.subtitle}>{t("Lorem ipsum dolor")}</Text>
+				<Text style={styles.subtitle}>{t("Everything you can imagine!")}</Text>
 			</View>
 		</View>
 	)
