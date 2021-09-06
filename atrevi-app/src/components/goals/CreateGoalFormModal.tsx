@@ -170,7 +170,8 @@ const styles = StyleSheet.create({
 	},
 	formView: {
 		marginTop: 16,
-		marginHorizontal: 24,
+		paddingHorizontal: 24,
+		paddingBottom: 128,
 	},
 	subtitle: {
 		fontFamily: "Poppins_600SemiBold",
@@ -183,7 +184,8 @@ const styles = StyleSheet.create({
 	estimateCard: {
 		height: 132,
 		flex: 1,
-		marginVertical: 16,
+		marginTop: 16,
+		marginBottom: 128,
 		borderRadius: 15,
 		borderWidth: 1,
 		padding: 16,

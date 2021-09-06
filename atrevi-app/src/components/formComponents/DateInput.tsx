@@ -1,7 +1,6 @@
 import * as React from "react"
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import DateTimePicker from "@react-native-community/datetimepicker"
-import InputLabel from "./InputLabel"
 import { useThemeColor } from "../Themed"
 import { t } from "i18n-js"
 import ErrorText from "./ErrorText"
@@ -11,14 +10,13 @@ interface DateInputProps {
     field: string;
     setDate: (field: string, value: Date | null | undefined, shouldValidate?: boolean | undefined) => void;
     date: Date | string | null | undefined;
-    label?: string;
     text?: string;
     maxDate?: Date;
 	error?: string | undefined,
 	variant?: "secondary" | "successDark"
 }
 
-const DateInput = ({ date: passedDate, setDate, field, label, text, maxDate, error, variant } : DateInputProps): React.ReactElement => {
+const DateInput = ({ date: passedDate, setDate, field, text, maxDate, error, variant } : DateInputProps): React.ReactElement => {
     
 	const [show, setShow] = React.useState<boolean>(false)
 
@@ -45,7 +43,6 @@ const DateInput = ({ date: passedDate, setDate, field, label, text, maxDate, err
 
 	return (
 		<>
-			<InputLabel label={label} />
 			<TouchableOpacity style={[styles.dateButton, {backgroundColor}]}
 				onPress={showDatePicker}
 			>
@@ -57,11 +54,11 @@ const DateInput = ({ date: passedDate, setDate, field, label, text, maxDate, err
 				</View>
 			</TouchableOpacity>
 			<ErrorText error={error} />
-			{show && <DateTimePicker
+			{(show || Platform.OS === "ios") && <DateTimePicker
 				testID="dateTimePicker"
 				value={date instanceof Date ? date : today}
 				mode={"date"}
-				display="default"
+				display={Platform.OS === "ios" ? "spinner" : "calendar"}
 				minimumDate={today}
 				onChange={(_: unknown, d: Date | undefined) => {
 					hideDatePicker()
