@@ -4,6 +4,8 @@ import {
 	Text,
 	View,
 	ScrollView,
+	TouchableOpacity,
+	Keyboard,
 } from "react-native"
 import {
 	heightPercentageToDP as hp,
@@ -26,7 +28,11 @@ export default function Savings({ navigation }: Props): React.ReactElement {
 	const formik = React.useContext(InitialFormContext)
 
 	return (
-		<View style={styles.container}>
+		<TouchableOpacity 
+			style={styles.container}
+			activeOpacity={1}
+			onPress={Keyboard.dismiss}
+		>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				{/* Heading */}
 				<View style={styles.Heading}>
@@ -120,7 +126,7 @@ export default function Savings({ navigation }: Props): React.ReactElement {
 				</View>
 				{/* Buttons */}
 			</ScrollView>
-		</View>
+		</TouchableOpacity>
 	)
 }
 

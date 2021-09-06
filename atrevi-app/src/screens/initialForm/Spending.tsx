@@ -1,5 +1,5 @@
 import * as React from "react"
-import { StyleSheet, Text, View, Image } from "react-native"
+import { StyleSheet, Text, View, Image, TouchableOpacity, Keyboard } from "react-native"
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen"
 import { RFValue as rf } from "react-native-responsive-fontsize"
 import IncomeCard from "../../components/initialForm/IncomeCard"
@@ -17,7 +17,11 @@ export default function Spending({ navigation }: Props): React.ReactElement {
 	const formik = React.useContext(InitialFormContext)
 
 	return (
-		<View style={styles.container}>
+		<TouchableOpacity
+			style={styles.container}
+			activeOpacity={1}
+			onPress={Keyboard.dismiss}
+		>
 			<StatusBar style="light" />
 			{/* Heading */}
 			<View style={styles.Heading}>
@@ -83,7 +87,7 @@ export default function Spending({ navigation }: Props): React.ReactElement {
 			{/* Button */}
 
 
-		</View>
+		</TouchableOpacity>
 	)
 }
 
@@ -91,7 +95,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#3F51B5",
-		alignItems: "center"
+		alignItems: "center",
 	},
 	Heading: {
 		width: wp("90%"),

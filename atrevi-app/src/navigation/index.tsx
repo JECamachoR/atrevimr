@@ -107,7 +107,7 @@ function RootStackNavigator() {
 			<Stack.Navigator screenOptions={{ headerShown: false }}>
 				{
 					user ?
-						initialForm ? 
+						(initialForm) ? 
 							<Stack.Screen name="Main" component={BottomTabNavigator} />
 							:
 							<Stack.Screen name="InitialForm" component={InitialFormStackNavigator} />

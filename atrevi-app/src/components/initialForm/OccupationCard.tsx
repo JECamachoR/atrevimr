@@ -22,7 +22,12 @@ export default function OccupationCard({ value, setValue }: Props): React.ReactE
 				mode="dialog"
 			>
 				<Picker.Item label={t("Occupation")} value={undefined} />
-				<Picker.Item label={t("Student")} value="student" />
+				<Picker.Item label={t("Student")} value="Student" />
+				<Picker.Item label={t("Employee")} value="Employee" />
+				<Picker.Item label={t("Study and work")} value="Study and work" />
+				<Picker.Item label={t("Own business")} value="Own business" />
+				<Picker.Item label={t("Freelance")} value="Freelance" />
+				<Picker.Item label={t("Without Ocupation")} value="Without Ocupation" />
 			</Picker>
 		</View>
 	)

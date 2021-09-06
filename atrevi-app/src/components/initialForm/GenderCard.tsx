@@ -21,9 +21,11 @@ export default function GenderCard({ value, setValue }: Props): React.ReactEleme
 				onValueChange={(itemValue) => setValue(itemValue)}
 			>
 				<Picker.Item label={t("Gender")} value={undefined} />
-				<Picker.Item label={t("Man")} value="man" />
-				<Picker.Item label={t("Woman")} value="woman" />
-				<Picker.Item label={t("Other")} value="other" />
+				<Picker.Item label={t("Female")} value="Female" />
+				<Picker.Item label={t("Male")} value="Male" />
+				<Picker.Item label={t("Non-binary")} value="Non-binary" />
+				<Picker.Item label={t("Transgender")} value="Transgender" />
+				<Picker.Item label={t("I prefer not to say")} value="I prefer not to say" />
 			</Picker>
 		</View>
 	)
