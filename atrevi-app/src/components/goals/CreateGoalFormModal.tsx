@@ -22,6 +22,7 @@ import { formatNumber } from "react-native-currency-input"
 import UserContext from "../../contexts/UserContext"
 import { daysOfTheWeek, frequencies } from "../../../types"
 import getNextSavingDate from "../../../functions/getNextSavingDate"
+import Submitting from "../Submitting"
 
 type Props = {
     visible: boolean,
@@ -54,7 +55,7 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 			validationSchema={GoalCreationSchema}
 			validateOnChange={false}
 		>
-			{({ values, handleChange, handleBlur, setFieldValue, submitForm, resetForm, errors }) => {
+			{({ values, handleChange, handleBlur, setFieldValue, submitForm, resetForm, errors, isSubmitting }) => {
 				
 				const calculateSavings = () => {
 					if (!values.ammount || !values.date) return
@@ -91,7 +92,9 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 						visible={visible}
 						title={i18n.t("Create a Goal")}
 						rightComponent={(
-							<TouchableOpacity onPress={submitForm}>
+							<TouchableOpacity onPress={() => {
+								if (!isSubmitting) submitForm()
+							}}>
 								<View>
 									<Text
 										lightColor={secondary.default}
@@ -103,47 +106,48 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 						)}
 						onClose={resetForm}
 					>
-						<FormView style={styles.formView}>
+						{ isSubmitting ? <Submitting /> :
+							<FormView style={styles.formView}>
 
-							<NameAndIMG
-								changeIMG={(img) => setFieldValue("unsplashIMG", img)}
-								handleBlur={handleBlur("name")}
-								handleTextChange={handleChange("name")}
-								name={values.name}
-								unsplashIMG={values.unsplashIMG}
-								variant={"goals"}
-								nameError={errors.name}
-								imgError={errors.unsplashIMG}
-							/>
-
-							<CategoryPicker
-								category={values.category}
-								selectCategory={(c) => setFieldValue("category", c)}
-								variant="goals"
-								error={errors.category}
-							/>
-
-							<View>
-								<Text style={styles.subtitle}>{i18n.t("Savings")}</Text>
-								<Text style={styles.label}>{i18n.t("How much do you need?")}</Text>
-								<NeededAmmountInput
-									handleBlur={handleBlur("ammount")}
-									handleChange={(v) => setFieldValue("ammount", v)}
-									value={values.ammount}
-									error={errors.ammount}
+								<NameAndIMG
+									changeIMG={(img) => setFieldValue("unsplashIMG", img)}
+									handleBlur={handleBlur("name")}
+									handleTextChange={handleChange("name")}
+									name={values.name}
+									unsplashIMG={values.unsplashIMG}
+									variant={"goals"}
+									nameError={errors.name}
+									imgError={errors.unsplashIMG}
 								/>
-								<ErrorText error={errors.ammount} />
-								<Text style={styles.label}>{i18n.t("When do you need it?")}</Text>
-								<DateInput
-									date={values.date}
-									field={"date"}
-									setDate={setFieldValue}
-									variant="secondary"
-									minDate={minDate}
+
+								<CategoryPicker
+									category={values.category}
+									selectCategory={(c) => setFieldValue("category", c)}
+									variant="goals"
+									error={errors.category}
 								/>
-							</View>
-							<View style={[styles.estimateCard, {borderColor: line}]}>
-								{Boolean(values.recurringAmmount) && 
+
+								<View>
+									<Text style={styles.subtitle}>{i18n.t("Savings")}</Text>
+									<Text style={styles.label}>{i18n.t("How much do you need?")}</Text>
+									<NeededAmmountInput
+										handleBlur={handleBlur("ammount")}
+										handleChange={(v) => setFieldValue("ammount", v)}
+										value={values.ammount}
+										error={errors.ammount}
+									/>
+									<ErrorText error={errors.ammount} />
+									<Text style={styles.label}>{i18n.t("When do you need it?")}</Text>
+									<DateInput
+										date={values.date}
+										field={"date"}
+										setDate={setFieldValue}
+										variant="secondary"
+										minDate={minDate}
+									/>
+								</View>
+								<View style={[styles.estimateCard, {borderColor: line}]}>
+									{Boolean(values.recurringAmmount) && 
 								<>
 									<Text style={styles.estimateLabel}>For this goal you will need to save:</Text>
 									<Text style={[
@@ -156,9 +160,10 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 										{color: link}
 									]}>{f(values.recurringAmmount)}</Text>
 								</>	
-								}
-							</View>
-						</FormView>
+									}
+								</View>
+							</FormView>
+						}
 					</Modal>
 				
 				)

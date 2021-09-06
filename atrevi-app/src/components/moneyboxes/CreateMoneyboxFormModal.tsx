@@ -12,6 +12,7 @@ import NameAndIMG from "../formComponents/NameAndIMG"
 import CategoryPicker from "../formComponents/CategoryPicker"
 import NeededAmmountInput from "../formComponents/NeededAmmountInput"
 import { MoneyboxCreationSchema } from "../../schemas"
+import Submitting from "../Submitting"
 
 type Props = {
     visible: boolean,
@@ -32,7 +33,7 @@ const CreateMoneyboxFormModal = ({ visible, hideModal, moneybox, handleSubmit }:
 			validationSchema={MoneyboxCreationSchema}
 			validateOnChange={false}
 		>
-			{({values, handleChange, handleBlur, setFieldValue, submitForm, resetForm, errors}) => {
+			{({values, handleChange, handleBlur, setFieldValue, submitForm, resetForm, errors, isSubmitting}) => {
 
 				return (
 					<Modal
@@ -52,39 +53,41 @@ const CreateMoneyboxFormModal = ({ visible, hideModal, moneybox, handleSubmit }:
 						)}
 						onClose={resetForm}
 					>
-						<FormView style={styles.formView}>
+						{ isSubmitting ? <Submitting /> :
+							<FormView style={styles.formView}>
 
-							<NameAndIMG
-								changeIMG={(img) => setFieldValue("unsplashIMG", img)}
-								handleBlur={handleBlur("name")}
-								handleTextChange={handleChange("name")}
-								name={values.name}
-								unsplashIMG={values.unsplashIMG}
-								variant={"moneybox"}
-								nameError={errors.name}
-								imgError={errors.unsplashIMG}
-							/>
-
-							<CategoryPicker
-								category={values.category}
-								selectCategory={(c) => setFieldValue("category", c)}
-								variant="moneybox"
-								error={errors.category}
-							/>
-
-							<View>
-								<Text style={styles.subtitle}>{i18n.t("Savings")}</Text>
-								<Text style={styles.label}>{i18n.t("How much do you want to save periodically?")}</Text>
-								<NeededAmmountInput
-									handleBlur={handleBlur("recurringAmmount")}
-									handleChange={(v) => setFieldValue("recurringAmmount", v)}
-									value={values.recurringAmmount}
-									error={errors.recurringAmmount}
+								<NameAndIMG
+									changeIMG={(img) => setFieldValue("unsplashIMG", img)}
+									handleBlur={handleBlur("name")}
+									handleTextChange={handleChange("name")}
+									name={values.name}
+									unsplashIMG={values.unsplashIMG}
+									variant={"moneybox"}
+									nameError={errors.name}
+									imgError={errors.unsplashIMG}
 								/>
-							</View>
 
-							<View style={[styles.estimateCard, {borderColor: line}]}></View>
-						</FormView>
+								<CategoryPicker
+									category={values.category}
+									selectCategory={(c) => setFieldValue("category", c)}
+									variant="moneybox"
+									error={errors.category}
+								/>
+
+								<View>
+									<Text style={styles.subtitle}>{i18n.t("Savings")}</Text>
+									<Text style={styles.label}>{i18n.t("How much do you want to save periodically?")}</Text>
+									<NeededAmmountInput
+										handleBlur={handleBlur("recurringAmmount")}
+										handleChange={(v) => setFieldValue("recurringAmmount", v)}
+										value={values.recurringAmmount}
+										error={errors.recurringAmmount}
+									/>
+								</View>
+
+								<View style={[styles.estimateCard, {borderColor: line}]}></View>
+							</FormView>
+						}
 					</Modal>
 				)
 			}}

@@ -18,6 +18,7 @@ import { graphqlOperation } from "aws-amplify"
 import AuthContext from "../../auth/AuthContext"
 import { getUser } from "../../graphql/queries"
 import ErrorText from "../formComponents/ErrorText"
+import Submitting from "../Submitting"
 
 type Props = {
     hideModal: () => void,
@@ -74,123 +75,130 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 			validationSchema={TransactionSchema}
 			key={nRendered}
 		>
-			{({values, errors, touched, handleBlur, setFieldValue, handleChange, submitForm, resetForm }) => {
-
+			{({values, errors, touched, handleBlur, setFieldValue, handleChange, submitForm, resetForm, isSubmitting }) => {
+				
 				const [pickingFund, setPickingFund] = React.useState(false)
-
+				
 				const color = useThemeColor({colors: {
 					light: grayscale.body,
 					dark: grayscale.offWhite
 				}})
 				const placeholder = useThemeColor({colorName: "placeholderTextColor"})
-
+				
 				const bg = useThemeColor({colors: {
 					light: grayscale.offWhite,
 					dark: darkMode.inputBackground,
 				}})
 				const line = useThemeColor({colorName: "line"})
-
+				const ph = useThemeColor({colorName: "placeholderTextColor"})
+				const link = useThemeColor({colorName: "link"})
+				
 				return (
 					<Modal
 						hideModal={hideModal} 
 						visible={visible}
 						rightComponent={(
-							<TouchableOpacity onPress={submitForm}>
-								<View><Text style={[styles.save, {color: useThemeColor({colorName: "link"})}]}>{t("Save")}</Text></View>
+							<TouchableOpacity onPress={() => {
+								if (!isSubmitting) submitForm()
+							}}>
+								<View><Text style={[styles.save, {color: link}]}>{t("Save")}</Text></View>
 							</TouchableOpacity>
 						)}
 						title={t("New Record")}
 						onClose={resetForm}
 					>
+						{ isSubmitting ? <Submitting /> :
+							<>
+								<FundPickerModal
+									visible={pickingFund}
+									hideModal={() => setPickingFund(false)}
+									pickFund={v => setFieldValue("fund", v)}
+								/>
 
-						<FundPickerModal
-							visible={pickingFund}
-							hideModal={() => setPickingFund(false)}
-							pickFund={v => setFieldValue("fund", v)}
-						/>
+								<SegmentedControl
+									values={["Deposit", "Withdrawal"]}
+									selectedIndex={values.ammount >= 0 ? 0 : 1}
+									onChange={() => setFieldValue("ammount", values.ammount * -1)}
+									style={styles.segmented}
+								/>
 
-						<SegmentedControl
-							values={["Deposit", "Withdrawal"]}
-							selectedIndex={values.ammount >= 0 ? 0 : 1}
-							onChange={() => setFieldValue("ammount", values.ammount * -1)}
-							style={styles.segmented}
-						/>
+								<View style={styles.ammountContainer}>
+									<CurrencyInput
+										value={values.ammount}
+										onChangeValue={v => setFieldValue("ammount", v)}
+										onBlur={handleBlur("ammount")}
+										separator="."
+										delimiter=","
+										style={[styles.ammount, {color: (values.ammount >= 0 ? success.dark : error.default)}]}
+										showPositiveSign={true}
+									/>
+									<ErrorText
+										error={
+											errors.ammount && touched.ammount ?
+												errors.ammount : undefined
+										}
+									/>
+								</View>
 
-						<View style={styles.ammountContainer}>
-							<CurrencyInput
-								value={values.ammount}
-								onChangeValue={v => setFieldValue("ammount", v)}
-								onBlur={handleBlur("ammount")}
-								separator="."
-								delimiter=","
-								style={[styles.ammount, {color: (values.ammount >= 0 ? success.dark : error.default)}]}
-								showPositiveSign={true}
-							/>
-							<ErrorText
-								error={
-									errors.ammount && touched.ammount ?
-									errors.ammount : undefined
-								}
-							/>
-						</View>
-
-						<TouchableOpacity
-							style={styles.funds}
-							onPress={() => setPickingFund(true)}
-						>
-							<Row
-								style={styles.fundRow}
-								lightColor={grayscale.inputBackground}
-								darkColor={darkMode.inputBackground}
-							>
-								<Row style={styles.fundLeftSide}>
-									<MaterialIcons name="account-balance" size={24} color={color} />
-									<Text style={[styles.fundLabel, {color}]}> Fund</Text>
-								</Row>
-								<Row style={styles.fundRightSide}>
-									<Text style={[styles.fundLabel, {color: placeholder}]}>{
-										values.fund ? 
-										((values.fund.name === "goals" ? t("Goals"): values.fund.name) + " ")
-										:
-										"Pick a fund"
-									}</Text>
-									<MaterialIcons name="keyboard-arrow-right" size={30} color={color} />
-								</Row>
-							</Row>
-						</TouchableOpacity>
-						<ErrorText 
-							error={
-								errors.fund && touched.fund ?
-								errors.fund : undefined
-							}
-							style={{paddingHorizontal: 16, marginTop: 8}}
-						/>
+								<TouchableOpacity
+									style={styles.funds}
+									onPress={() => setPickingFund(true)}
+								>
+									<Row
+										style={styles.fundRow}
+										lightColor={grayscale.inputBackground}
+										darkColor={darkMode.inputBackground}
+									>
+										<Row style={styles.fundLeftSide}>
+											<MaterialIcons name="account-balance" size={24} color={color} />
+											<Text style={[styles.fundLabel, {color}]}> Fund</Text>
+										</Row>
+										<Row style={styles.fundRightSide}>
+											<Text style={[styles.fundLabel, {color: placeholder}]}>{
+												values.fund ? 
+													((values.fund.name === "goals" ? t("Goals"): values.fund.name) + " ")
+													:
+													"Pick a fund"
+											}</Text>
+											<MaterialIcons name="keyboard-arrow-right" size={30} color={color} />
+										</Row>
+									</Row>
+								</TouchableOpacity>
+								<ErrorText 
+									error={
+										errors.fund && touched.fund ?
+											errors.fund : undefined
+									}
+									style={{paddingHorizontal: 16, marginTop: 8}}
+								/>
 						
 
-						<View>
-							<Text style={styles.conceptLabel}>
-								{t("Concept")}
-							</Text>
-						</View>
-						<TextInput
-							value={values.concept}
-							onChangeText={handleChange("concept")}
-							onBlur={handleBlur("concept")}
-							style={[styles.concept, {
-								backgroundColor: bg,
-								borderColor: (errors.concept && touched.concept) ? error.default : line,
-								color,
-							}]}
-							placeholder={t("Note")}
-							placeholderTextColor={useThemeColor({colorName: "placeholderTextColor"})}
-						/>
-						<ErrorText 
-							error={
-								errors.concept && touched.concept ?
-								errors.concept : undefined
-							}
-							style={{paddingHorizontal: 16}}
-						/>
+								<View>
+									<Text style={styles.conceptLabel}>
+										{t("Concept")}
+									</Text>
+								</View>
+								<TextInput
+									value={values.concept}
+									onChangeText={handleChange("concept")}
+									onBlur={handleBlur("concept")}
+									style={[styles.concept, {
+										backgroundColor: bg,
+										borderColor: (errors.concept && touched.concept) ? error.default : line,
+										color,
+									}]}
+									placeholder={t("Note")}
+									placeholderTextColor={ph}
+								/>
+								<ErrorText 
+									error={
+										errors.concept && touched.concept ?
+											errors.concept : undefined
+									}
+									style={{paddingHorizontal: 16}}
+								/>
+							</>
+						}
 					</Modal>
 				)
 			}}
