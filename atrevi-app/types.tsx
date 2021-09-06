@@ -21,7 +21,12 @@ export type HomeStackParamList = {
     CreateGoal: undefined
     CreateMoneybox: undefined
 }
- 
+
+export type SavingsStackParamList = {
+    Savings: undefined,
+    UpdateSavings: undefined
+}
+
 export type SettingsStackParamList = {
     Settings: undefined,
     ReportIssue: undefined,

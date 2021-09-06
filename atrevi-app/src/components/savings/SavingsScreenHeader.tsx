@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import * as React from "react"
 import { StyleSheet, TouchableOpacity } from "react-native"
 import { darkMode, grayscale, secondary } from "../../constants/Colors"
@@ -20,10 +21,11 @@ import GoalFundContext from "../../contexts/GoalFundContext"
 import TransactionsContext from "../../contexts/TransactionsContext"
 
 type Props = {
-    openCreateTransactionModal: () => void
+    openCreateTransactionModal: () => void,
+	openConfig: () => void
 }
 
-const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.ReactElement => {
+const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig }: Props): React.ReactElement => {
 
 	const auth = React.useContext(AuthContext)
 	const transactions = React.useContext(TransactionsContext)
@@ -109,7 +111,7 @@ const SavingsScreenHeader = ({ openCreateTransactionModal }: Props): React.React
 					<Text style={styles.title}>{i18n.t("Savings")}</Text>
 				</View>
 				<View style={styles.right}>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={openConfig}>
 						<MaterialIcons name="settings" size={30} color={grayscale.offWhite} />
 					</TouchableOpacity>
 				</View>

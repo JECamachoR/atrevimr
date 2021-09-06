@@ -4,8 +4,12 @@ import { darkMode, secondary } from "../../constants/Colors"
 import SavingsScreenHeader from "../../components/savings/SavingsScreenHeader"
 import TransactionList from "../../components/savings/TransactionList"
 import CreateTransactionModal from "../../components/savings/CreateTransactionModal"
+import { StackScreenProps } from "@react-navigation/stack"
+import { SavingsStackParamList } from "../../../types"
 
-const SavingsScreen = (): React.ReactElement => {
+type Props = StackScreenProps<SavingsStackParamList, "Savings">
+
+const SavingsScreen = ({ navigation }: Props): React.ReactElement => {
 
 	const [createTransactionModalShown, setCreateTransactionModalShown] = React.useState(false)
 
@@ -18,7 +22,10 @@ const SavingsScreen = (): React.ReactElement => {
 				visible={createTransactionModalShown}
 				hideModal={() => setCreateTransactionModalShown(false)}
 			/>
-			<SavingsScreenHeader openCreateTransactionModal={() => setCreateTransactionModalShown(true)} />
+			<SavingsScreenHeader 
+				openCreateTransactionModal={() => setCreateTransactionModalShown(true)}
+				openConfig={() => navigation.navigate("UpdateSavings")}
+			/>
 			<TransactionList />
 		</Screen>
 	)
