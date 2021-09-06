@@ -19,6 +19,8 @@ import getSavingDate from "../../../functions/getSavingDate"
 import GoalFundContext from "../../contexts/GoalFundContext"
 import GoalsContext from "../../contexts/GoalsContext"
 import { formatNumber } from "react-native-currency-input"
+import UserContext from "../../contexts/UserContext"
+import { daysOfTheWeek, frequencies } from "../../../types"
 
 type Props = {
     visible: boolean,
@@ -32,11 +34,14 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 
 	const goalList = React.useContext(GoalsContext)
 	const goalFund = React.useContext(GoalFundContext)
-    
+	const user = React.useContext(UserContext)
 	const line = useThemeColor({colorName: "line"})
 	const link = useThemeColor({colorName: "link"})
 	const today = new Date()
-
+	const DOTW = (user.DOTW as daysOfTheWeek) || "thursday" as daysOfTheWeek
+	const frequency = (user.frequency as frequencies) || "7day"
+	const savingDate = getSavingDate(today, frequency, DOTW)
+	
 	return (
 		<Formik
 			initialValues={goal}
@@ -54,10 +59,14 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 					
 					const r = shortPlan(
 						list,
-						"7day", 
-						"monday", 
-						{ ammount: goalFund?.balance || 0, savingDate: getSavingDate(today, "7day", "monday") }
+						frequency, 
+						DOTW, 
+						{ 
+							ammount: goalFund?.balance || 0, 
+							savingDate
+						}
 					)
+					console.log("plan", r)
 					setFieldValue("recurringAmmount", r[0])
 				}
 
