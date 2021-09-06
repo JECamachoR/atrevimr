@@ -1,0 +1,575 @@
+type User {
+  id: String
+  phone: AWSPhone!
+  email: AWSEmail
+  balance: Float
+  frequency: String
+  DOTW: String
+  name: String
+  profileIMG: String
+  goals(name: ModelStringKeyConditionInput, filter: ModelGoalFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelGoalConnection
+  funds(filter: ModelFundFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelFundConnection
+  transactions(filter: ModelTransactionFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelTransactionConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Goal {
+  id: ID!
+  owner: String
+  name: String!
+  ammount: Float!
+  date: AWSDate!
+  unsplashIMG: AWSJSON
+  category: String!
+  premadeGoalID: ID
+  PremadeGoal: PremadeGoal
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type PremadeGoal {
+  id: ID!
+  name: String!
+  ammount: Float!
+  unsplashIMG: AWSJSON
+  category: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Fund {
+  id: ID!
+  owner: String
+  name: String!
+  balance: Float!
+  recurringAmmount: Float
+  category: String
+  unsplashIMG: AWSJSON
+  transactions(filter: ModelTransactionFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelTransactionConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Transaction {
+  id: ID!
+  fundID: ID!
+  owner: String
+  ammount: Float!
+  concept: String!
+  fund: Fund
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Questions {
+  id: String!
+  birthdate: AWSDate!
+  age: Int!
+  gender: String!
+  ocupation: String!
+  monthlyIncome: Float!
+  monthlySpend: Float!
+  frequency: String!
+  yearlySavings: Float!
+  keepsSavings: String!
+  recordKeepingPlace: String!
+  selfRating: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelUserConnection {
+  items: [User]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelUserFilterInput {
+  id: ModelStringInput
+  phone: ModelStringInput
+  email: ModelStringInput
+  balance: ModelFloatInput
+  frequency: ModelStringInput
+  DOTW: ModelStringInput
+  name: ModelStringInput
+  profileIMG: ModelStringInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+type Query {
+  getUser(id: ID!): User
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection
+  getGoal(id: ID!): Goal
+  listGoals(filter: ModelGoalFilterInput, limit: Int, nextToken: String): ModelGoalConnection
+  getPremadeGoal(id: ID!): PremadeGoal
+  listPremadeGoals(filter: ModelPremadeGoalFilterInput, limit: Int, nextToken: String): ModelPremadeGoalConnection
+  getFund(id: ID!): Fund
+  listFunds(filter: ModelFundFilterInput, limit: Int, nextToken: String): ModelFundConnection
+  getTransaction(id: ID!): Transaction
+  listTransactions(filter: ModelTransactionFilterInput, limit: Int, nextToken: String): ModelTransactionConnection
+  getQuestions(id: ID!): Questions
+  listQuestions(filter: ModelQuestionsFilterInput, limit: Int, nextToken: String): ModelQuestionsConnection
+}
+
+input CreateUserInput {
+  id: String
+  phone: AWSPhone!
+  email: AWSEmail
+  balance: Float
+  frequency: String
+  DOTW: String
+  name: String
+  profileIMG: String
+}
+
+input UpdateUserInput {
+  id: String!
+  phone: AWSPhone
+  email: AWSEmail
+  balance: Float
+  frequency: String
+  DOTW: String
+  name: String
+  profileIMG: String
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User
+  createGoal(input: CreateGoalInput!, condition: ModelGoalConditionInput): Goal
+  updateGoal(input: UpdateGoalInput!, condition: ModelGoalConditionInput): Goal
+  deleteGoal(input: DeleteGoalInput!, condition: ModelGoalConditionInput): Goal
+  createPremadeGoal(input: CreatePremadeGoalInput!, condition: ModelPremadeGoalConditionInput): PremadeGoal
+  updatePremadeGoal(input: UpdatePremadeGoalInput!, condition: ModelPremadeGoalConditionInput): PremadeGoal
+  deletePremadeGoal(input: DeletePremadeGoalInput!, condition: ModelPremadeGoalConditionInput): PremadeGoal
+  createFund(input: CreateFundInput!, condition: ModelFundConditionInput): Fund
+  updateFund(input: UpdateFundInput!, condition: ModelFundConditionInput): Fund
+  deleteFund(input: DeleteFundInput!, condition: ModelFundConditionInput): Fund
+  createTransaction(input: CreateTransactionInput!, condition: ModelTransactionConditionInput): Transaction
+  updateTransaction(input: UpdateTransactionInput!, condition: ModelTransactionConditionInput): Transaction
+  deleteTransaction(input: DeleteTransactionInput!, condition: ModelTransactionConditionInput): Transaction
+  createQuestions(input: CreateQuestionsInput!, condition: ModelQuestionsConditionInput): Questions
+  updateQuestions(input: UpdateQuestionsInput!, condition: ModelQuestionsConditionInput): Questions
+  deleteQuestions(input: DeleteQuestionsInput!, condition: ModelQuestionsConditionInput): Questions
+}
+
+input ModelUserConditionInput {
+  phone: ModelStringInput
+  email: ModelStringInput
+  balance: ModelFloatInput
+  frequency: ModelStringInput
+  DOTW: ModelStringInput
+  name: ModelStringInput
+  profileIMG: ModelStringInput
+  and: [ModelUserConditionInput]
+  or: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+}
+
+type Subscription {
+  onCreateUser(id: String!): User @aws_subscribe(mutations: ["createUser"])
+  onUpdateUser(id: String!): User @aws_subscribe(mutations: ["updateUser"])
+  onDeleteUser(id: String!): User @aws_subscribe(mutations: ["deleteUser"])
+  onCreateGoal(owner: String!): Goal @aws_subscribe(mutations: ["createGoal"])
+  onUpdateGoal(owner: String!): Goal @aws_subscribe(mutations: ["updateGoal"])
+  onDeleteGoal(owner: String!): Goal @aws_subscribe(mutations: ["deleteGoal"])
+  onCreatePremadeGoal: PremadeGoal @aws_subscribe(mutations: ["createPremadeGoal"])
+  onUpdatePremadeGoal: PremadeGoal @aws_subscribe(mutations: ["updatePremadeGoal"])
+  onDeletePremadeGoal: PremadeGoal @aws_subscribe(mutations: ["deletePremadeGoal"])
+  onCreateFund(owner: String!): Fund @aws_subscribe(mutations: ["createFund"])
+  onUpdateFund(owner: String!): Fund @aws_subscribe(mutations: ["updateFund"])
+  onDeleteFund(owner: String!): Fund @aws_subscribe(mutations: ["deleteFund"])
+  onCreateTransaction(owner: String!): Transaction @aws_subscribe(mutations: ["createTransaction"])
+  onUpdateTransaction(owner: String!): Transaction @aws_subscribe(mutations: ["updateTransaction"])
+  onDeleteTransaction(owner: String!): Transaction @aws_subscribe(mutations: ["deleteTransaction"])
+  onCreateQuestions: Questions @aws_subscribe(mutations: ["createQuestions"])
+  onUpdateQuestions: Questions @aws_subscribe(mutations: ["updateQuestions"])
+  onDeleteQuestions: Questions @aws_subscribe(mutations: ["deleteQuestions"])
+}
+
+type ModelGoalConnection {
+  items: [Goal]
+  nextToken: String
+}
+
+input ModelGoalFilterInput {
+  id: ModelIDInput
+  owner: ModelStringInput
+  name: ModelStringInput
+  ammount: ModelFloatInput
+  date: ModelStringInput
+  unsplashIMG: ModelStringInput
+  category: ModelStringInput
+  premadeGoalID: ModelIDInput
+  and: [ModelGoalFilterInput]
+  or: [ModelGoalFilterInput]
+  not: ModelGoalFilterInput
+}
+
+input CreateGoalInput {
+  id: ID
+  owner: String
+  name: String!
+  ammount: Float!
+  date: AWSDate!
+  unsplashIMG: AWSJSON
+  category: String!
+  premadeGoalID: ID
+  goalPremadeGoalId: ID
+}
+
+input UpdateGoalInput {
+  id: ID!
+  owner: String
+  name: String
+  ammount: Float
+  date: AWSDate
+  unsplashIMG: AWSJSON
+  category: String
+  premadeGoalID: ID
+  goalPremadeGoalId: ID
+}
+
+input DeleteGoalInput {
+  id: ID!
+}
+
+input ModelGoalConditionInput {
+  name: ModelStringInput
+  ammount: ModelFloatInput
+  date: ModelStringInput
+  unsplashIMG: ModelStringInput
+  category: ModelStringInput
+  premadeGoalID: ModelIDInput
+  and: [ModelGoalConditionInput]
+  or: [ModelGoalConditionInput]
+  not: ModelGoalConditionInput
+}
+
+type ModelPremadeGoalConnection {
+  items: [PremadeGoal]
+  nextToken: String
+}
+
+input ModelPremadeGoalFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  ammount: ModelFloatInput
+  unsplashIMG: ModelStringInput
+  category: ModelStringInput
+  and: [ModelPremadeGoalFilterInput]
+  or: [ModelPremadeGoalFilterInput]
+  not: ModelPremadeGoalFilterInput
+}
+
+input CreatePremadeGoalInput {
+  id: ID
+  name: String!
+  ammount: Float!
+  unsplashIMG: AWSJSON
+  category: String!
+}
+
+input UpdatePremadeGoalInput {
+  id: ID!
+  name: String
+  ammount: Float
+  unsplashIMG: AWSJSON
+  category: String
+}
+
+input DeletePremadeGoalInput {
+  id: ID!
+}
+
+input ModelPremadeGoalConditionInput {
+  name: ModelStringInput
+  ammount: ModelFloatInput
+  unsplashIMG: ModelStringInput
+  category: ModelStringInput
+  and: [ModelPremadeGoalConditionInput]
+  or: [ModelPremadeGoalConditionInput]
+  not: ModelPremadeGoalConditionInput
+}
+
+type ModelFundConnection {
+  items: [Fund]
+  nextToken: String
+}
+
+input ModelFundFilterInput {
+  id: ModelIDInput
+  owner: ModelStringInput
+  name: ModelStringInput
+  balance: ModelFloatInput
+  recurringAmmount: ModelFloatInput
+  category: ModelStringInput
+  unsplashIMG: ModelStringInput
+  and: [ModelFundFilterInput]
+  or: [ModelFundFilterInput]
+  not: ModelFundFilterInput
+}
+
+input CreateFundInput {
+  id: ID
+  owner: String
+  name: String!
+  balance: Float!
+  recurringAmmount: Float
+  category: String
+  unsplashIMG: AWSJSON
+}
+
+input UpdateFundInput {
+  id: ID!
+  owner: String
+  name: String
+  balance: Float
+  recurringAmmount: Float
+  category: String
+  unsplashIMG: AWSJSON
+}
+
+input DeleteFundInput {
+  id: ID!
+}
+
+input ModelFundConditionInput {
+  name: ModelStringInput
+  balance: ModelFloatInput
+  recurringAmmount: ModelFloatInput
+  category: ModelStringInput
+  unsplashIMG: ModelStringInput
+  and: [ModelFundConditionInput]
+  or: [ModelFundConditionInput]
+  not: ModelFundConditionInput
+}
+
+type ModelTransactionConnection {
+  items: [Transaction]
+  nextToken: String
+}
+
+input ModelTransactionFilterInput {
+  id: ModelIDInput
+  fundID: ModelIDInput
+  owner: ModelStringInput
+  ammount: ModelFloatInput
+  concept: ModelStringInput
+  and: [ModelTransactionFilterInput]
+  or: [ModelTransactionFilterInput]
+  not: ModelTransactionFilterInput
+}
+
+input CreateTransactionInput {
+  id: ID
+  fundID: ID!
+  owner: String
+  ammount: Float!
+  concept: String!
+  transactionFundId: ID
+}
+
+input UpdateTransactionInput {
+  id: ID!
+  fundID: ID
+  owner: String
+  ammount: Float
+  concept: String
+  transactionFundId: ID
+}
+
+input DeleteTransactionInput {
+  id: ID!
+}
+
+input ModelTransactionConditionInput {
+  fundID: ModelIDInput
+  ammount: ModelFloatInput
+  concept: ModelStringInput
+  and: [ModelTransactionConditionInput]
+  or: [ModelTransactionConditionInput]
+  not: ModelTransactionConditionInput
+}
+
+type ModelQuestionsConnection {
+  items: [Questions]
+  nextToken: String
+}
+
+input ModelQuestionsFilterInput {
+  id: ModelStringInput
+  birthdate: ModelStringInput
+  age: ModelIntInput
+  gender: ModelStringInput
+  ocupation: ModelStringInput
+  monthlyIncome: ModelFloatInput
+  monthlySpend: ModelFloatInput
+  frequency: ModelStringInput
+  yearlySavings: ModelFloatInput
+  keepsSavings: ModelStringInput
+  recordKeepingPlace: ModelStringInput
+  selfRating: ModelStringInput
+  and: [ModelQuestionsFilterInput]
+  or: [ModelQuestionsFilterInput]
+  not: ModelQuestionsFilterInput
+}
+
+input CreateQuestionsInput {
+  id: String!
+  birthdate: AWSDate!
+  age: Int!
+  gender: String!
+  ocupation: String!
+  monthlyIncome: Float!
+  monthlySpend: Float!
+  frequency: String!
+  yearlySavings: Float!
+  keepsSavings: String!
+  recordKeepingPlace: String!
+  selfRating: String!
+}
+
+input UpdateQuestionsInput {
+  id: String!
+  birthdate: AWSDate
+  age: Int
+  gender: String
+  ocupation: String
+  monthlyIncome: Float
+  monthlySpend: Float
+  frequency: String
+  yearlySavings: Float
+  keepsSavings: String
+  recordKeepingPlace: String
+  selfRating: String
+}
+
+input DeleteQuestionsInput {
+  id: ID!
+}
+
+input ModelQuestionsConditionInput {
+  birthdate: ModelStringInput
+  age: ModelIntInput
+  gender: ModelStringInput
+  ocupation: ModelStringInput
+  monthlyIncome: ModelFloatInput
+  monthlySpend: ModelFloatInput
+  frequency: ModelStringInput
+  yearlySavings: ModelFloatInput
+  keepsSavings: ModelStringInput
+  recordKeepingPlace: ModelStringInput
+  selfRating: ModelStringInput
+  and: [ModelQuestionsConditionInput]
+  or: [ModelQuestionsConditionInput]
+  not: ModelQuestionsConditionInput
+}
+
+input ModelStringKeyConditionInput {
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  between: [String]
+  beginsWith: String
+}
