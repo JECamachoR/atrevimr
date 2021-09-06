@@ -152,9 +152,9 @@ export const onDeleteGoal = /* GraphQL */ `
     }
   }
 `;
-export const onCreatePremadeGoal = /* GraphQL */ `
-  subscription OnCreatePremadeGoal {
-    onCreatePremadeGoal {
+export const onCreatePrebakedGoal = /* GraphQL */ `
+  subscription OnCreatePrebakedGoal {
+    onCreatePrebakedGoal {
       id
       name
       ammount
@@ -165,9 +165,9 @@ export const onCreatePremadeGoal = /* GraphQL */ `
     }
   }
 `;
-export const onUpdatePremadeGoal = /* GraphQL */ `
-  subscription OnUpdatePremadeGoal {
-    onUpdatePremadeGoal {
+export const onUpdatePrebakedGoal = /* GraphQL */ `
+  subscription OnUpdatePrebakedGoal {
+    onUpdatePrebakedGoal {
       id
       name
       ammount
@@ -178,9 +178,9 @@ export const onUpdatePremadeGoal = /* GraphQL */ `
     }
   }
 `;
-export const onDeletePremadeGoal = /* GraphQL */ `
-  subscription OnDeletePremadeGoal {
-    onDeletePremadeGoal {
+export const onDeletePrebakedGoal = /* GraphQL */ `
+  subscription OnDeletePrebakedGoal {
+    onDeletePrebakedGoal {
       id
       name
       ammount
@@ -201,6 +201,15 @@ export const onCreateFund = /* GraphQL */ `
       recurringAmmount
       category
       unsplashIMG
+      prebakedFundID
+      prebakedFund {
+        id
+        name
+        category
+        unsplashIMG
+        createdAt
+        updatedAt
+      }
       transactions {
         nextToken
       }
@@ -219,6 +228,15 @@ export const onUpdateFund = /* GraphQL */ `
       recurringAmmount
       category
       unsplashIMG
+      prebakedFundID
+      prebakedFund {
+        id
+        name
+        category
+        unsplashIMG
+        createdAt
+        updatedAt
+      }
       transactions {
         nextToken
       }
@@ -237,9 +255,54 @@ export const onDeleteFund = /* GraphQL */ `
       recurringAmmount
       category
       unsplashIMG
+      prebakedFundID
+      prebakedFund {
+        id
+        name
+        category
+        unsplashIMG
+        createdAt
+        updatedAt
+      }
       transactions {
         nextToken
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreatePrebakedFund = /* GraphQL */ `
+  subscription OnCreatePrebakedFund {
+    onCreatePrebakedFund {
+      id
+      name
+      category
+      unsplashIMG
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdatePrebakedFund = /* GraphQL */ `
+  subscription OnUpdatePrebakedFund {
+    onUpdatePrebakedFund {
+      id
+      name
+      category
+      unsplashIMG
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeletePrebakedFund = /* GraphQL */ `
+  subscription OnDeletePrebakedFund {
+    onDeletePrebakedFund {
+      id
+      name
+      category
+      unsplashIMG
       createdAt
       updatedAt
     }
@@ -261,6 +324,7 @@ export const onCreateTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
+        prebakedFundID
         createdAt
         updatedAt
       }
@@ -285,6 +349,7 @@ export const onUpdateTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
+        prebakedFundID
         createdAt
         updatedAt
       }
@@ -309,6 +374,7 @@ export const onDeleteTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
+        prebakedFundID
         createdAt
         updatedAt
       }

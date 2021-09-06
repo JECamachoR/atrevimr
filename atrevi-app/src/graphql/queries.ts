@@ -98,9 +98,9 @@ export const listGoals = /* GraphQL */ `
     }
   }
 `;
-export const getPremadeGoal = /* GraphQL */ `
-  query GetPremadeGoal($id: ID!) {
-    getPremadeGoal(id: $id) {
+export const getPrebakedGoal = /* GraphQL */ `
+  query GetPrebakedGoal($id: ID!) {
+    getPrebakedGoal(id: $id) {
       id
       name
       ammount
@@ -111,13 +111,13 @@ export const getPremadeGoal = /* GraphQL */ `
     }
   }
 `;
-export const listPremadeGoals = /* GraphQL */ `
-  query ListPremadeGoals(
-    $filter: ModelPremadeGoalFilterInput
+export const listPrebakedGoals = /* GraphQL */ `
+  query ListPrebakedGoals(
+    $filter: ModelPrebakedGoalFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPremadeGoals(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listPrebakedGoals(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
@@ -141,6 +141,15 @@ export const getFund = /* GraphQL */ `
       recurringAmmount
       category
       unsplashIMG
+      prebakedFundID
+      prebakedFund {
+        id
+        name
+        category
+        unsplashIMG
+        createdAt
+        updatedAt
+      }
       transactions {
         nextToken
       }
@@ -162,6 +171,38 @@ export const listFunds = /* GraphQL */ `
         name
         balance
         recurringAmmount
+        category
+        unsplashIMG
+        prebakedFundID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getPrebakedFund = /* GraphQL */ `
+  query GetPrebakedFund($id: ID!) {
+    getPrebakedFund(id: $id) {
+      id
+      name
+      category
+      unsplashIMG
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPrebakedFunds = /* GraphQL */ `
+  query ListPrebakedFunds(
+    $filter: ModelPrebakedFundFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPrebakedFunds(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
         category
         unsplashIMG
         createdAt
@@ -187,6 +228,7 @@ export const getTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
+        prebakedFundID
         createdAt
         updatedAt
       }

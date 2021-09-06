@@ -111,13 +111,13 @@ export type Goal = {
   unsplashIMG?: string | null,
   category: string,
   premadeGoalID?: string | null,
-  PremadeGoal?: PremadeGoal | null,
+  PremadeGoal?: PrebakedGoal | null,
   createdAt: string,
   updatedAt: string,
 };
 
-export type PremadeGoal = {
-  __typename: "PremadeGoal",
+export type PrebakedGoal = {
+  __typename: "PrebakedGoal",
   id: string,
   name: string,
   ammount: number,
@@ -142,7 +142,19 @@ export type Fund = {
   recurringAmmount?: number | null,
   category?: string | null,
   unsplashIMG?: string | null,
+  prebakedFundID?: string | null,
+  prebakedFund?: PrebakedFund | null,
   transactions?: ModelTransactionConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type PrebakedFund = {
+  __typename: "PrebakedFund",
+  id: string,
+  name: string,
+  category: string,
+  unsplashIMG?: string | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -236,7 +248,7 @@ export type DeleteGoalInput = {
   id: string,
 };
 
-export type CreatePremadeGoalInput = {
+export type CreatePrebakedGoalInput = {
   id?: string | null,
   name: string,
   ammount: number,
@@ -244,17 +256,17 @@ export type CreatePremadeGoalInput = {
   category: string,
 };
 
-export type ModelPremadeGoalConditionInput = {
+export type ModelPrebakedGoalConditionInput = {
   name?: ModelStringInput | null,
   ammount?: ModelFloatInput | null,
   unsplashIMG?: ModelStringInput | null,
   category?: ModelStringInput | null,
-  and?: Array< ModelPremadeGoalConditionInput | null > | null,
-  or?: Array< ModelPremadeGoalConditionInput | null > | null,
-  not?: ModelPremadeGoalConditionInput | null,
+  and?: Array< ModelPrebakedGoalConditionInput | null > | null,
+  or?: Array< ModelPrebakedGoalConditionInput | null > | null,
+  not?: ModelPrebakedGoalConditionInput | null,
 };
 
-export type UpdatePremadeGoalInput = {
+export type UpdatePrebakedGoalInput = {
   id: string,
   name?: string | null,
   ammount?: number | null,
@@ -262,7 +274,7 @@ export type UpdatePremadeGoalInput = {
   category?: string | null,
 };
 
-export type DeletePremadeGoalInput = {
+export type DeletePrebakedGoalInput = {
   id: string,
 };
 
@@ -274,6 +286,8 @@ export type CreateFundInput = {
   recurringAmmount?: number | null,
   category?: string | null,
   unsplashIMG?: string | null,
+  prebakedFundID?: string | null,
+  fundPrebakedFundId?: string | null,
 };
 
 export type ModelFundConditionInput = {
@@ -282,6 +296,7 @@ export type ModelFundConditionInput = {
   recurringAmmount?: ModelFloatInput | null,
   category?: ModelStringInput | null,
   unsplashIMG?: ModelStringInput | null,
+  prebakedFundID?: ModelIDInput | null,
   and?: Array< ModelFundConditionInput | null > | null,
   or?: Array< ModelFundConditionInput | null > | null,
   not?: ModelFundConditionInput | null,
@@ -295,9 +310,38 @@ export type UpdateFundInput = {
   recurringAmmount?: number | null,
   category?: string | null,
   unsplashIMG?: string | null,
+  prebakedFundID?: string | null,
+  fundPrebakedFundId?: string | null,
 };
 
 export type DeleteFundInput = {
+  id: string,
+};
+
+export type CreatePrebakedFundInput = {
+  id?: string | null,
+  name: string,
+  category: string,
+  unsplashIMG?: string | null,
+};
+
+export type ModelPrebakedFundConditionInput = {
+  name?: ModelStringInput | null,
+  category?: ModelStringInput | null,
+  unsplashIMG?: ModelStringInput | null,
+  and?: Array< ModelPrebakedFundConditionInput | null > | null,
+  or?: Array< ModelPrebakedFundConditionInput | null > | null,
+  not?: ModelPrebakedFundConditionInput | null,
+};
+
+export type UpdatePrebakedFundInput = {
+  id: string,
+  name?: string | null,
+  category?: string | null,
+  unsplashIMG?: string | null,
+};
+
+export type DeletePrebakedFundInput = {
   id: string,
 };
 
@@ -447,20 +491,20 @@ export type ModelGoalFilterInput = {
   not?: ModelGoalFilterInput | null,
 };
 
-export type ModelPremadeGoalFilterInput = {
+export type ModelPrebakedGoalFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
   ammount?: ModelFloatInput | null,
   unsplashIMG?: ModelStringInput | null,
   category?: ModelStringInput | null,
-  and?: Array< ModelPremadeGoalFilterInput | null > | null,
-  or?: Array< ModelPremadeGoalFilterInput | null > | null,
-  not?: ModelPremadeGoalFilterInput | null,
+  and?: Array< ModelPrebakedGoalFilterInput | null > | null,
+  or?: Array< ModelPrebakedGoalFilterInput | null > | null,
+  not?: ModelPrebakedGoalFilterInput | null,
 };
 
-export type ModelPremadeGoalConnection = {
-  __typename: "ModelPremadeGoalConnection",
-  items?:  Array<PremadeGoal | null > | null,
+export type ModelPrebakedGoalConnection = {
+  __typename: "ModelPrebakedGoalConnection",
+  items?:  Array<PrebakedGoal | null > | null,
   nextToken?: string | null,
 };
 
@@ -472,9 +516,26 @@ export type ModelFundFilterInput = {
   recurringAmmount?: ModelFloatInput | null,
   category?: ModelStringInput | null,
   unsplashIMG?: ModelStringInput | null,
+  prebakedFundID?: ModelIDInput | null,
   and?: Array< ModelFundFilterInput | null > | null,
   or?: Array< ModelFundFilterInput | null > | null,
   not?: ModelFundFilterInput | null,
+};
+
+export type ModelPrebakedFundFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  category?: ModelStringInput | null,
+  unsplashIMG?: ModelStringInput | null,
+  and?: Array< ModelPrebakedFundFilterInput | null > | null,
+  or?: Array< ModelPrebakedFundFilterInput | null > | null,
+  not?: ModelPrebakedFundFilterInput | null,
+};
+
+export type ModelPrebakedFundConnection = {
+  __typename: "ModelPrebakedFundConnection",
+  items?:  Array<PrebakedFund | null > | null,
+  nextToken?: string | null,
 };
 
 export type ModelTransactionFilterInput = {
@@ -628,7 +689,7 @@ export type CreateGoalMutation = {
     category: string,
     premadeGoalID?: string | null,
     PremadeGoal?:  {
-      __typename: "PremadeGoal",
+      __typename: "PrebakedGoal",
       id: string,
       name: string,
       ammount: number,
@@ -659,7 +720,7 @@ export type UpdateGoalMutation = {
     category: string,
     premadeGoalID?: string | null,
     PremadeGoal?:  {
-      __typename: "PremadeGoal",
+      __typename: "PrebakedGoal",
       id: string,
       name: string,
       ammount: number,
@@ -690,7 +751,7 @@ export type DeleteGoalMutation = {
     category: string,
     premadeGoalID?: string | null,
     PremadeGoal?:  {
-      __typename: "PremadeGoal",
+      __typename: "PrebakedGoal",
       id: string,
       name: string,
       ammount: number,
@@ -704,14 +765,14 @@ export type DeleteGoalMutation = {
   } | null,
 };
 
-export type CreatePremadeGoalMutationVariables = {
-  input: CreatePremadeGoalInput,
-  condition?: ModelPremadeGoalConditionInput | null,
+export type CreatePrebakedGoalMutationVariables = {
+  input: CreatePrebakedGoalInput,
+  condition?: ModelPrebakedGoalConditionInput | null,
 };
 
-export type CreatePremadeGoalMutation = {
-  createPremadeGoal?:  {
-    __typename: "PremadeGoal",
+export type CreatePrebakedGoalMutation = {
+  createPrebakedGoal?:  {
+    __typename: "PrebakedGoal",
     id: string,
     name: string,
     ammount: number,
@@ -722,14 +783,14 @@ export type CreatePremadeGoalMutation = {
   } | null,
 };
 
-export type UpdatePremadeGoalMutationVariables = {
-  input: UpdatePremadeGoalInput,
-  condition?: ModelPremadeGoalConditionInput | null,
+export type UpdatePrebakedGoalMutationVariables = {
+  input: UpdatePrebakedGoalInput,
+  condition?: ModelPrebakedGoalConditionInput | null,
 };
 
-export type UpdatePremadeGoalMutation = {
-  updatePremadeGoal?:  {
-    __typename: "PremadeGoal",
+export type UpdatePrebakedGoalMutation = {
+  updatePrebakedGoal?:  {
+    __typename: "PrebakedGoal",
     id: string,
     name: string,
     ammount: number,
@@ -740,14 +801,14 @@ export type UpdatePremadeGoalMutation = {
   } | null,
 };
 
-export type DeletePremadeGoalMutationVariables = {
-  input: DeletePremadeGoalInput,
-  condition?: ModelPremadeGoalConditionInput | null,
+export type DeletePrebakedGoalMutationVariables = {
+  input: DeletePrebakedGoalInput,
+  condition?: ModelPrebakedGoalConditionInput | null,
 };
 
-export type DeletePremadeGoalMutation = {
-  deletePremadeGoal?:  {
-    __typename: "PremadeGoal",
+export type DeletePrebakedGoalMutation = {
+  deletePrebakedGoal?:  {
+    __typename: "PrebakedGoal",
     id: string,
     name: string,
     ammount: number,
@@ -773,6 +834,16 @@ export type CreateFundMutation = {
     recurringAmmount?: number | null,
     category?: string | null,
     unsplashIMG?: string | null,
+    prebakedFundID?: string | null,
+    prebakedFund?:  {
+      __typename: "PrebakedFund",
+      id: string,
+      name: string,
+      category: string,
+      unsplashIMG?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     transactions?:  {
       __typename: "ModelTransactionConnection",
       nextToken?: string | null,
@@ -797,6 +868,16 @@ export type UpdateFundMutation = {
     recurringAmmount?: number | null,
     category?: string | null,
     unsplashIMG?: string | null,
+    prebakedFundID?: string | null,
+    prebakedFund?:  {
+      __typename: "PrebakedFund",
+      id: string,
+      name: string,
+      category: string,
+      unsplashIMG?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     transactions?:  {
       __typename: "ModelTransactionConnection",
       nextToken?: string | null,
@@ -821,10 +902,71 @@ export type DeleteFundMutation = {
     recurringAmmount?: number | null,
     category?: string | null,
     unsplashIMG?: string | null,
+    prebakedFundID?: string | null,
+    prebakedFund?:  {
+      __typename: "PrebakedFund",
+      id: string,
+      name: string,
+      category: string,
+      unsplashIMG?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     transactions?:  {
       __typename: "ModelTransactionConnection",
       nextToken?: string | null,
     } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreatePrebakedFundMutationVariables = {
+  input: CreatePrebakedFundInput,
+  condition?: ModelPrebakedFundConditionInput | null,
+};
+
+export type CreatePrebakedFundMutation = {
+  createPrebakedFund?:  {
+    __typename: "PrebakedFund",
+    id: string,
+    name: string,
+    category: string,
+    unsplashIMG?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdatePrebakedFundMutationVariables = {
+  input: UpdatePrebakedFundInput,
+  condition?: ModelPrebakedFundConditionInput | null,
+};
+
+export type UpdatePrebakedFundMutation = {
+  updatePrebakedFund?:  {
+    __typename: "PrebakedFund",
+    id: string,
+    name: string,
+    category: string,
+    unsplashIMG?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeletePrebakedFundMutationVariables = {
+  input: DeletePrebakedFundInput,
+  condition?: ModelPrebakedFundConditionInput | null,
+};
+
+export type DeletePrebakedFundMutation = {
+  deletePrebakedFund?:  {
+    __typename: "PrebakedFund",
+    id: string,
+    name: string,
+    category: string,
+    unsplashIMG?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -852,6 +994,7 @@ export type CreateTransactionMutation = {
       recurringAmmount?: number | null,
       category?: string | null,
       unsplashIMG?: string | null,
+      prebakedFundID?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -882,6 +1025,7 @@ export type UpdateTransactionMutation = {
       recurringAmmount?: number | null,
       category?: string | null,
       unsplashIMG?: string | null,
+      prebakedFundID?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -912,6 +1056,7 @@ export type DeleteTransactionMutation = {
       recurringAmmount?: number | null,
       category?: string | null,
       unsplashIMG?: string | null,
+      prebakedFundID?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1069,7 +1214,7 @@ export type GetGoalQuery = {
     category: string,
     premadeGoalID?: string | null,
     PremadeGoal?:  {
-      __typename: "PremadeGoal",
+      __typename: "PrebakedGoal",
       id: string,
       name: string,
       ammount: number,
@@ -1109,13 +1254,13 @@ export type ListGoalsQuery = {
   } | null,
 };
 
-export type GetPremadeGoalQueryVariables = {
+export type GetPrebakedGoalQueryVariables = {
   id: string,
 };
 
-export type GetPremadeGoalQuery = {
-  getPremadeGoal?:  {
-    __typename: "PremadeGoal",
+export type GetPrebakedGoalQuery = {
+  getPrebakedGoal?:  {
+    __typename: "PrebakedGoal",
     id: string,
     name: string,
     ammount: number,
@@ -1126,17 +1271,17 @@ export type GetPremadeGoalQuery = {
   } | null,
 };
 
-export type ListPremadeGoalsQueryVariables = {
-  filter?: ModelPremadeGoalFilterInput | null,
+export type ListPrebakedGoalsQueryVariables = {
+  filter?: ModelPrebakedGoalFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListPremadeGoalsQuery = {
-  listPremadeGoals?:  {
-    __typename: "ModelPremadeGoalConnection",
+export type ListPrebakedGoalsQuery = {
+  listPrebakedGoals?:  {
+    __typename: "ModelPrebakedGoalConnection",
     items?:  Array< {
-      __typename: "PremadeGoal",
+      __typename: "PrebakedGoal",
       id: string,
       name: string,
       ammount: number,
@@ -1163,6 +1308,16 @@ export type GetFundQuery = {
     recurringAmmount?: number | null,
     category?: string | null,
     unsplashIMG?: string | null,
+    prebakedFundID?: string | null,
+    prebakedFund?:  {
+      __typename: "PrebakedFund",
+      id: string,
+      name: string,
+      category: string,
+      unsplashIMG?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     transactions?:  {
       __typename: "ModelTransactionConnection",
       nextToken?: string | null,
@@ -1189,6 +1344,45 @@ export type ListFundsQuery = {
       balance: number,
       recurringAmmount?: number | null,
       category?: string | null,
+      unsplashIMG?: string | null,
+      prebakedFundID?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetPrebakedFundQueryVariables = {
+  id: string,
+};
+
+export type GetPrebakedFundQuery = {
+  getPrebakedFund?:  {
+    __typename: "PrebakedFund",
+    id: string,
+    name: string,
+    category: string,
+    unsplashIMG?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListPrebakedFundsQueryVariables = {
+  filter?: ModelPrebakedFundFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListPrebakedFundsQuery = {
+  listPrebakedFunds?:  {
+    __typename: "ModelPrebakedFundConnection",
+    items?:  Array< {
+      __typename: "PrebakedFund",
+      id: string,
+      name: string,
+      category: string,
       unsplashIMG?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -1218,6 +1412,7 @@ export type GetTransactionQuery = {
       recurringAmmount?: number | null,
       category?: string | null,
       unsplashIMG?: string | null,
+      prebakedFundID?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1415,7 +1610,7 @@ export type OnCreateGoalSubscription = {
     category: string,
     premadeGoalID?: string | null,
     PremadeGoal?:  {
-      __typename: "PremadeGoal",
+      __typename: "PrebakedGoal",
       id: string,
       name: string,
       ammount: number,
@@ -1445,7 +1640,7 @@ export type OnUpdateGoalSubscription = {
     category: string,
     premadeGoalID?: string | null,
     PremadeGoal?:  {
-      __typename: "PremadeGoal",
+      __typename: "PrebakedGoal",
       id: string,
       name: string,
       ammount: number,
@@ -1475,7 +1670,7 @@ export type OnDeleteGoalSubscription = {
     category: string,
     premadeGoalID?: string | null,
     PremadeGoal?:  {
-      __typename: "PremadeGoal",
+      __typename: "PrebakedGoal",
       id: string,
       name: string,
       ammount: number,
@@ -1489,9 +1684,9 @@ export type OnDeleteGoalSubscription = {
   } | null,
 };
 
-export type OnCreatePremadeGoalSubscription = {
-  onCreatePremadeGoal?:  {
-    __typename: "PremadeGoal",
+export type OnCreatePrebakedGoalSubscription = {
+  onCreatePrebakedGoal?:  {
+    __typename: "PrebakedGoal",
     id: string,
     name: string,
     ammount: number,
@@ -1502,9 +1697,9 @@ export type OnCreatePremadeGoalSubscription = {
   } | null,
 };
 
-export type OnUpdatePremadeGoalSubscription = {
-  onUpdatePremadeGoal?:  {
-    __typename: "PremadeGoal",
+export type OnUpdatePrebakedGoalSubscription = {
+  onUpdatePrebakedGoal?:  {
+    __typename: "PrebakedGoal",
     id: string,
     name: string,
     ammount: number,
@@ -1515,9 +1710,9 @@ export type OnUpdatePremadeGoalSubscription = {
   } | null,
 };
 
-export type OnDeletePremadeGoalSubscription = {
-  onDeletePremadeGoal?:  {
-    __typename: "PremadeGoal",
+export type OnDeletePrebakedGoalSubscription = {
+  onDeletePrebakedGoal?:  {
+    __typename: "PrebakedGoal",
     id: string,
     name: string,
     ammount: number,
@@ -1542,6 +1737,16 @@ export type OnCreateFundSubscription = {
     recurringAmmount?: number | null,
     category?: string | null,
     unsplashIMG?: string | null,
+    prebakedFundID?: string | null,
+    prebakedFund?:  {
+      __typename: "PrebakedFund",
+      id: string,
+      name: string,
+      category: string,
+      unsplashIMG?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     transactions?:  {
       __typename: "ModelTransactionConnection",
       nextToken?: string | null,
@@ -1565,6 +1770,16 @@ export type OnUpdateFundSubscription = {
     recurringAmmount?: number | null,
     category?: string | null,
     unsplashIMG?: string | null,
+    prebakedFundID?: string | null,
+    prebakedFund?:  {
+      __typename: "PrebakedFund",
+      id: string,
+      name: string,
+      category: string,
+      unsplashIMG?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     transactions?:  {
       __typename: "ModelTransactionConnection",
       nextToken?: string | null,
@@ -1588,10 +1803,56 @@ export type OnDeleteFundSubscription = {
     recurringAmmount?: number | null,
     category?: string | null,
     unsplashIMG?: string | null,
+    prebakedFundID?: string | null,
+    prebakedFund?:  {
+      __typename: "PrebakedFund",
+      id: string,
+      name: string,
+      category: string,
+      unsplashIMG?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     transactions?:  {
       __typename: "ModelTransactionConnection",
       nextToken?: string | null,
     } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreatePrebakedFundSubscription = {
+  onCreatePrebakedFund?:  {
+    __typename: "PrebakedFund",
+    id: string,
+    name: string,
+    category: string,
+    unsplashIMG?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdatePrebakedFundSubscription = {
+  onUpdatePrebakedFund?:  {
+    __typename: "PrebakedFund",
+    id: string,
+    name: string,
+    category: string,
+    unsplashIMG?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeletePrebakedFundSubscription = {
+  onDeletePrebakedFund?:  {
+    __typename: "PrebakedFund",
+    id: string,
+    name: string,
+    category: string,
+    unsplashIMG?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1618,6 +1879,7 @@ export type OnCreateTransactionSubscription = {
       recurringAmmount?: number | null,
       category?: string | null,
       unsplashIMG?: string | null,
+      prebakedFundID?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1647,6 +1909,7 @@ export type OnUpdateTransactionSubscription = {
       recurringAmmount?: number | null,
       category?: string | null,
       unsplashIMG?: string | null,
+      prebakedFundID?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1676,6 +1939,7 @@ export type OnDeleteTransactionSubscription = {
       recurringAmmount?: number | null,
       category?: string | null,
       unsplashIMG?: string | null,
+      prebakedFundID?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,

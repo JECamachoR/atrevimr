@@ -25,10 +25,10 @@ type Goal @model
     unsplashIMG: AWSJSON
     category: String!
     premadeGoalID: ID
-    PremadeGoal: PremadeGoal @connection
+    PremadeGoal: PrebakedGoal @connection
 }
 
-type PremadeGoal @model {
+type PrebakedGoal @model {
     id: ID!
     name: String!
     ammount: Float!
@@ -46,7 +46,16 @@ type Fund @model
     recurringAmmount: Float
     category: String
     unsplashIMG: AWSJSON
+    prebakedFundID: ID
+    prebakedFund: PrebakedFund @connection
     transactions: [Transaction]! @connection(keyName: "byFund", fields: ["id"])
+}
+
+type PrebakedFund @model {
+    id: ID!
+    name: String!
+    category: String!
+    unsplashIMG: AWSJSON
 }
 
 type Transaction @model
