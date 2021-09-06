@@ -19,6 +19,9 @@ import { onUpdateUser } from "../../graphql/subscriptions"
 import MoneyboxesContext from "../../contexts/MoneyboxesContext"
 import GoalFundContext from "../../contexts/GoalFundContext"
 import TransactionsContext from "../../contexts/TransactionsContext"
+import getSavingDate from "../../../functions/getSavingDate"
+import UserContext from "../../contexts/UserContext"
+import { daysOfTheWeek, frequencies } from "../../../types"
 
 type Props = {
     openCreateTransactionModal: () => void,
@@ -31,11 +34,12 @@ const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig }: Props):
 	const transactions = React.useContext(TransactionsContext)
 	const moneyboxes = React.useContext(MoneyboxesContext)
 	const goalFund = React.useContext(GoalFundContext)
+	const user = React.useContext(UserContext)
 
 	const [totalBalance, setTotalBalance] = React.useState<number>(0)
 	const [goalsProgress, setGoalsProgress] = React.useState<number>(0)
 	const [goalsExpected,setGoalsExpected] = React.useState<number>(0)
-	const [moneyboxesBalance, setMoneyboxesBalance] = React.useState<number>(0)
+	const [moneyboxesProgress, setMoneyboxesBalance] = React.useState<number>(0)
 	const [moneyboxesExpected, setMoneyboxesExpected] = React.useState<number>(0)
 
 	React.useEffect(() => {
@@ -57,18 +61,20 @@ const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig }: Props):
 	}, [])
 
 	React.useEffect(() => {
-		setGoalsProgress(transactions.reduce((prev, curr): number => {
-			if (goalFund?.id) {
-				if (curr.fundID === goalFund.id) {
-					return curr.ammount + prev
-				}
-				else return prev
-			}
-			else return prev
-		}, 0))
-		setMoneyboxesBalance(moneyboxes.reduce((prev, curr): number => {
-			return prev + (curr.balance || 0)
-		}, 0))
+		const sd = getSavingDate(
+			new Date(),
+			user.frequency as frequencies,
+			user.DOTW as daysOfTheWeek
+		)
+		const {gp, tp} = transactions
+			.filter(v => v.createdAt >= sd)
+			.reduce((prev, curr) => {
+				if (curr.fundID === goalFund?.id) {
+					return {...prev, gp: prev.gp + curr.ammount}
+				} else return {...prev, tp: prev.tp + curr.ammount}
+			}, {gp: 0, tp: 0})
+		setGoalsProgress(gp)
+		setMoneyboxesBalance(tp)
 	}, [transactions])
 	
 	React.useEffect(() => {
@@ -184,9 +190,9 @@ const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig }: Props):
 							<Text style={styles.progressLabel}>{towards} {moneybox}</Text>
 						</View>
 						<View style={styles.progressDataContainer}>
-							<Text style={styles.progressAccum}>${f(moneyboxesBalance)}<Text style={styles.progressGoal}>/{f(moneyboxesExpected)}</Text></Text>
+							<Text style={styles.progressAccum}>${f(moneyboxesProgress)}<Text style={styles.progressGoal}>/{f(moneyboxesExpected)}</Text></Text>
 							<Bar 
-								progress={moneyboxesBalance / moneyboxesExpected } 
+								progress={moneyboxesProgress / moneyboxesExpected } 
 								width={null} 
 								height={8} 
 								color={grayscale.offWhite} 
