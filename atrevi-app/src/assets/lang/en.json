@@ -142,8 +142,20 @@
 	"Male": "Male",
 	"Non-binary": "Non-binary",
 	"Transgender": "Transgender",
+	"Intersex": "Intersex",
 	"I prefer not to say": "I prefer not to say",
 	"Report an issue": "Report an issue",
-	"Privacy notice": "Privacy notice"
-
+	"Privacy notice": "Privacy notice",
+	"Cash": "Cash",
+	"Debit account": "Debit account",
+	"Payroll account": "Payroll account",
+	"Savings account": "Savings account",
+	"Investments": "Investments",
+	"How often do you want to save?": "How often do you want to save?",
+	"We will divide your general saving target between the temporality you choose": "We will divide your general saving target between the temporality you choose",
+	"We will remind you to register your savings on this day": "We will remind you to register your savings on this day",
+	"Reminds you when it’s time to save and how much":"Reminds you when it’s time to save and how much",
+	"We all need encouraging words": "We all need encouraging words",
+	"Let’s get it together": "Let’s get it together",
+	"Everything ready for you to achieve your goals and dreams": "Everything ready for you to achieve your goals and dreams"
 }

@@ -44,8 +44,7 @@ export default function StepperSuccess(props: Props): React.ReactElement {
 				>
 					<View>
 						<Text style={styles.text}>
-              Deserunt et debitis. Aut laboriosam quos{"\n"}eius dolorum. Aut
-              ero eligendi quI beatae.
+							{t("Everything ready for you to achieve your goals and dreams")}.
 						</Text>
 						<View style={styles.successImage}>
 							<Image source={require("../../assets/images/createProfileForm/success.png")} style={styles.img} />

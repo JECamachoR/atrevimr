@@ -2,6 +2,7 @@ import * as React from "react"
 import {
 	Animated,
 	Easing,
+	Keyboard,
 	Platform,
 	StyleSheet,
 	Text,
@@ -82,19 +83,16 @@ export default function CreateProfileForm(): React.ReactElement {
 				const opacity = React.useRef(new Animated.Value(1)).current
 				const [position, setPosition] = React.useState(1)
 
-				React.useEffect(() => {
-					(async () => {
-						if (Platform.OS !== "web") {
-							const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync()
-							if (status !== "granted") {
-								alert("Sorry, we need camera roll permissions to make this work!")
-							}
-						}
-					})()
-				}, [])
+				// React.useEffect(() => {
+				// }, [])
 
 				const pickImage = async () => {
+					if (Platform.OS !== "web") {
+						const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+						if (status !== "granted") {
+							alert("Sorry, we need camera roll permissions to make this work!")
+						}
+					}
 					const result = await ImagePicker.launchImageLibraryAsync({
 						mediaTypes: ImagePicker.MediaTypeOptions.Images,
 						allowsEditing: true,
@@ -159,6 +157,7 @@ export default function CreateProfileForm(): React.ReactElement {
 									onNameChange={(val: string) => setFieldValue("name", val)}
 									name={values.name}
 									onNextPress={() => {
+										Keyboard.dismiss()
 										setPosition(2)
 										hideContent()
 									}}
@@ -185,7 +184,7 @@ export default function CreateProfileForm(): React.ReactElement {
 									height={height2}
 								/>
 								<StepperNotification
-									title={position > 3 ? "Lorem ipsum" : t("Customize notifications")}
+									title={position > 3 ? t("Let’s get it together") : t("Customize notifications")}
 									onPreviousPress={() => {
 										setPosition(2)
 										showContent(2)

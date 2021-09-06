@@ -110,8 +110,10 @@ export default function StepperFrequency(props: Props): React.ReactElement {
 						<Text
 							style={[styles.dowText, { fontWeight: "300", lineHeight: 20 }]}
 						>
-							<Text style={styles.dowText}>{t("Day of the week")}</Text>: Aut
-              laboriosam quos eius dolorum. Aut ero eligendi quI beatae.
+							<Text style={[styles.dowText, {
+								fontFamily: "Poppins_600SemiBold",
+							}]}>{t("Day of the week")}: </Text>
+							{t("We will remind you to register your savings on this day")}.
 						</Text>
 					</View>
 					<View style={styles.weekDaysWrapper}>
@@ -155,8 +157,10 @@ export default function StepperFrequency(props: Props): React.ReactElement {
 						<Text
 							style={[styles.dowText, { fontWeight: "300", lineHeight: 20 }]}
 						>
-							<Text style={styles.dowText}>{t("Frequency")}</Text>: Aut laboriosam quos
-              eius dolorum. Aut ero eligendi quI beatae.
+							<Text style={[styles.dowText, {
+								fontFamily: "Poppins_600SemiBold",
+							}]}>{t("Frequency")}: </Text>
+							{t("How often do you want to save?")} 
 						</Text>
 					</View>
 
@@ -179,8 +183,7 @@ export default function StepperFrequency(props: Props): React.ReactElement {
 						<Text
 							style={[styles.dowText, { fontWeight: "300", lineHeight: 20 }]}
 						>
-              E.g. Lorem ipsum aut laboriosam quos eius dolorum. Aut ero
-              eligendi quI beatae.
+							{t("We will divide your general saving target between the temporality you choose")}
 						</Text>
 					</View>
 					<View style={styles.btnWrapper}>
@@ -246,7 +249,6 @@ const styles = StyleSheet.create({
 	dowText: {
 		color: "#4E4B66",
 		fontSize: rf(12),
-		fontWeight: "600",
 	},
 	weekDaysWrapper: {
 		width: "100%",

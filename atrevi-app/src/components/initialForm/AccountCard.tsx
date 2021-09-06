@@ -25,8 +25,11 @@ export default function AccountCard({ value, handleChange }: Props): React.React
 				onValueChange={(itemValue) => handleChange(itemValue)}
 			>
 				<Picker.Item label={t("Choose one")} value={undefined} />
-				<Picker.Item label={t("Bank")} value="Bank" />
-				<Picker.Item label={t("HBL")} value="HBL" />
+				<Picker.Item label={t("Cash")} value="Cash" />
+				<Picker.Item label={t("Debit account")} value="Debit account" />
+				<Picker.Item label={t("Payroll account")} value="Payroll account" />
+				<Picker.Item label={t("Savings account")} value="Savings account" />
+				<Picker.Item label={t("Investments")} value="Investments" />
 			</Picker>
 		</View>
 	)

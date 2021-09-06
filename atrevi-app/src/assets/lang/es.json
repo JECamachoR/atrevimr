@@ -143,7 +143,20 @@
 	"Male": "Masculino",
 	"Non-binary": "No-binario",
 	"Transgender": "Transgénero",
+	"Intersex": "Intersexual",
 	"I prefer not to say": "Prefiero no decir",
 	"Report an issue": "Reporta un problema",
-	"Privacy notice": "Aviso de privacidad"
+	"Privacy notice": "Aviso de privacidad",
+	"Cash": "Efectivo",
+	"Debit account": "Cuenta de débito",
+	"Payroll account": "Cuenta de nómina",
+	"Savings account": "Cuenta de ahorros",
+	"Investments": "Inversión",
+	"We will remind you to register your savings on this day": "Te recordaremos que registres tu ahorro este día",
+	"How often do you want to save?": "¿Cada cuánto quieres ahorrar?",
+	"We will divide your general saving target between the temporality you choose": "Dividiremos tu objetivo de ahorro general entre la temporalidad que elijas",
+	"Reminds you when it’s time to save and how much": "Te recordamos cuándo hay que ahorrar y cuánto",
+	"We all need encouraging words": "Todos necesitamos palabras de aliento",
+	"Let’s get it together": "Consigámoslo juntos",
+	"Everything ready for you to achieve your goals and dreams": "Todo listo para que logres tus metas y sueños"
 }

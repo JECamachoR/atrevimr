@@ -33,7 +33,6 @@ export default function Savings({ navigation }: Props): React.ReactElement {
 	return (
 		<TouchableOpacity 
 			style={[styles.container,
-				{paddingBottom: bottom}
 			]}
 			activeOpacity={1}
 			onPress={Keyboard.dismiss}
@@ -118,7 +117,7 @@ export default function Savings({ navigation }: Props): React.ReactElement {
 					</View>
 					{/* AccountCard */}
 					{/* Buttons */}
-					<View style={styles.BtnRow}>
+					<View style={[styles.BtnRow, {marginBottom: bottom + 24}]}>
 						<Buttons text="Previous"  onPress={() => navigation.goBack()} />
 						<Buttons
 							text="Next"

@@ -64,13 +64,14 @@ export default function StepperProfile(props: Props): React.ReactElement {
 								<MaterialIcons name="edit" size={wp("3.5%")} color="#fff" />
 							</TouchableOpacity>
 						</View>
-						<View >
+						<View>
 							<Text
 								style={{
 									color: "#A0A3BD",
 									fontSize: rf(17),
 									left: 20,
 									letterSpacing: 1.5,
+									width: 192,
 								}}
 							>
 								{t("You are beautiful")}

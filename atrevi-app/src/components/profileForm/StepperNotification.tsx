@@ -7,6 +7,7 @@ import {
 } from "react-native-responsive-screen"
 import Button from "./Button"
 import StepIndicator from "./StepIndicator"
+import * as Notifications from "expo-notifications"
 
 type Props = {
   position: number,
@@ -19,10 +20,16 @@ type Props = {
 
 export default function StepperNotification(props: Props): React.ReactElement {
 	const [isEnabled, setIsEnabled] = React.useState(false)
-	const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
+
+	const toggleSwitch = async () => {
+		setIsEnabled((previousState) => !previousState)
+		await Notifications.requestPermissionsAsync()
+	}
 
 	const [isEnabled2, setIsEnabled2] = React.useState(false)
-	const toggleSwitch2 = () => setIsEnabled2((previousState) => !previousState)
+	const toggleSwitch2 = async () => {
+		setIsEnabled2((previousState) => !previousState)
+	}
 
 	return (
 		<View style={styles.stepperViewWrapper}>
@@ -52,7 +59,7 @@ export default function StepperNotification(props: Props): React.ReactElement {
 						<View style={styles.textWrapper}>
 							<Text style={styles.text1}>{t("Essential")}</Text>
 							<Text style={styles.text2}>
-                Deserunt et debitis, ut, labori,{"\n"}quos eius dolorum.{" "}
+								{t("Reminds you when it’s time to save and how much")}.
 							</Text>
 						</View>
 						<View>
@@ -69,7 +76,7 @@ export default function StepperNotification(props: Props): React.ReactElement {
 						<View style={styles.textWrapper}>
 							<Text style={styles.text1}>{t("Motivational")}</Text>
 							<Text style={styles.text2}>
-                Deserunt et debitis, ut, labori,{"\n"}quos eius dolorum.{" "}
+								{t("We all need encouraging words")}.
 							</Text>
 						</View>
 						<View>

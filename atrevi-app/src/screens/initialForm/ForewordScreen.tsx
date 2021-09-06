@@ -27,7 +27,7 @@ export default function ForewordScreen({ navigation }: Props): React.ReactElemen
 			{/* Discription */}
 			{/* Alpha */}
 			<View style={styles.Aplha}>
-				<Text style={{ fontSize: rf(12) }}>{t("Thanks for being part of our alpha")} {"\n"}- {t("Atrevi’s Team")}</Text>
+				<Text style={{ fontSize: rf(12) }}>{t("Thanks for being part of our alpha")} &lt;3 {"\n"}- {t("Atrevi’s Team")}</Text>
 			</View>
 			{/* Alpha */}
 			{/* Picture */}
