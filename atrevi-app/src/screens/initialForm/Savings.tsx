@@ -6,6 +6,7 @@ import {
 	ScrollView,
 	TouchableOpacity,
 	Keyboard,
+	KeyboardAvoidingView,
 } from "react-native"
 import {
 	heightPercentageToDP as hp,
@@ -20,112 +21,120 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { InitialFormParamList } from "../../../types"
 import InitialFormContext from "../../contexts/InitialFormContext"
 import { t } from "i18n-js"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 type Props = StackScreenProps<InitialFormParamList, "Spending">
 
 export default function Savings({ navigation }: Props): React.ReactElement {
 
 	const formik = React.useContext(InitialFormContext)
+	const { bottom } = useSafeAreaInsets()
 
 	return (
 		<TouchableOpacity 
-			style={styles.container}
+			style={[styles.container,
+				{paddingBottom: bottom}
+			]}
 			activeOpacity={1}
 			onPress={Keyboard.dismiss}
 		>
-			<ScrollView showsVerticalScrollIndicator={false}>
-				{/* Heading */}
-				<View style={styles.Heading}>
-					<Text style={styles.headingFont}>{t("Savings")}</Text>
-					<Text style={{ fontSize: rf(14), color: "#fff" }}>2/3</Text>
-				</View>
-				{/* Heading */}
-				{/* Detail */}
-				<View style={styles.IncomeDetail}>
-					<Text style={styles.DetailsFont}>{t("How often do you save money?")}</Text>
-				</View>
-				{/* Detail */}
+			<KeyboardAvoidingView
+				style={{flex: 1}}
+			>
+				<ScrollView showsVerticalScrollIndicator={false}>
+					{/* Heading */}
+					<View style={styles.Heading}>
+						<Text style={styles.headingFont}>{t("Savings")}</Text>
+						<Text style={{ fontSize: rf(14), color: "#fff" }}>2/3</Text>
+					</View>
+					{/* Heading */}
+					{/* Detail */}
+					<View style={styles.IncomeDetail}>
+						<Text style={styles.DetailsFont}>{t("How often do you save money?")}</Text>
+					</View>
+					{/* Detail */}
 
-				{/* SavingCards */}
-				<SavingCard
-					title={t("Monthly")}
-					type="monthly"
-					onPress={() => formik.setFieldValue("frequency", "monthly")}
-					selected={formik.values.frequency}
-				/>
-				<SavingCard
-					title={t("Weekly")}
-					type="weekly"
-					onPress={() => formik.setFieldValue("frequency", "weekly")}
-					selected={formik.values.frequency}
-				/>
-				<SavingCard
-					title={t("Daily")}
-					type="daily"
-					onPress={() => formik.setFieldValue("frequency", "daily")}
-					selected={formik.values.frequency}
-				/>
-				<SavingCard
-					title={t("I save irregularly")}
-					type="irregularly"
-					onPress={() => formik.setFieldValue("frequency", "irregularly")}
-					selected={formik.values.frequency}
-				/>
-				<SavingCard
-					title={t("I don’t save")}
-					type="0"
-					onPress={() => formik.setFieldValue("frequency", "0")}
-					selected={formik.values.frequency}
-				/>
-				{/* SavingCards */}
-				{/* Discription */}
-				<View style={styles.Discriptions}>
-					<Text style={styles.DiscriptionsFont}>
-						{t("How much do you save in a year?")}
-					</Text>
-				</View>
-				{/* Discription */}
-				{/* IncomeCard */}
-				<View>
-					<IncomeCard
-						value={formik.values.yearlySavings}
-						handleChange={(v) => formik.setFieldValue("yearlySavings", v || undefined)}
+					{/* SavingCards */}
+					<SavingCard
+						title={t("Monthly")}
+						type="monthly"
+						onPress={() => formik.setFieldValue("frequency", "monthly")}
+						selected={formik.values.frequency}
 					/>
-				</View>
-				{/* IncomeCard */}
-				{/* Discription */}
-				<View style={styles.Discriptions}>
-					<Text style={styles.DiscriptionsFont}>
-						{t("Where do you keep your savings?")}
-					</Text>
-				</View>
-				{/* Discription */}
+					<SavingCard
+						title={t("Weekly")}
+						type="weekly"
+						onPress={() => formik.setFieldValue("frequency", "weekly")}
+						selected={formik.values.frequency}
+					/>
+					<SavingCard
+						title={t("Daily")}
+						type="daily"
+						onPress={() => formik.setFieldValue("frequency", "daily")}
+						selected={formik.values.frequency}
+					/>
+					<SavingCard
+						title={t("I save irregularly")}
+						type="irregularly"
+						onPress={() => formik.setFieldValue("frequency", "irregularly")}
+						selected={formik.values.frequency}
+					/>
+					<SavingCard
+						title={t("I don’t save")}
+						type="0"
+						onPress={() => formik.setFieldValue("frequency", "0")}
+						selected={formik.values.frequency}
+					/>
+					{/* SavingCards */}
+					{/* Discription */}
+					<View style={styles.Discriptions}>
+						<Text style={styles.DiscriptionsFont}>
+							{t("How much do you save in a year?")}
+						</Text>
+					</View>
+					{/* Discription */}
+					{/* IncomeCard */}
+					<View>
+						<IncomeCard
+							value={formik.values.yearlySavings}
+							handleChange={(v) => formik.setFieldValue("yearlySavings", v || undefined)}
+						/>
+					</View>
+					{/* IncomeCard */}
+					{/* Discription */}
+					<View style={styles.Discriptions}>
+						<Text style={styles.DiscriptionsFont}>
+							{t("Where do you keep your savings?")}
+						</Text>
+					</View>
+					{/* Discription */}
 
-				{/* AccountCard */}
-				<View style={{ marginBottom: "7%" }}>
-					<AccountCard
-						value={formik.values.keepsSavings}
-						handleChange={v => formik.setFieldValue("keepsSavings", v)}
-					/>
-				</View>
-				{/* AccountCard */}
-				{/* Buttons */}
-				<View style={styles.BtnRow}>
-					<Buttons text="Previous"  onPress={() => navigation.goBack()} />
-					<Buttons
-						text="Next"
-						onPress={() => {
-							if (
-								!formik.values.frequency ||
+					{/* AccountCard */}
+					<View style={{ marginBottom: "7%" }}>
+						<AccountCard
+							value={formik.values.keepsSavings}
+							handleChange={v => formik.setFieldValue("keepsSavings", v)}
+						/>
+					</View>
+					{/* AccountCard */}
+					{/* Buttons */}
+					<View style={styles.BtnRow}>
+						<Buttons text="Previous"  onPress={() => navigation.goBack()} />
+						<Buttons
+							text="Next"
+							onPress={() => {
+								if (
+									!formik.values.frequency ||
                     !formik.values.keepsSavings || 
                     !formik.values.yearlySavings
-							) return
-							navigation.navigate("PersonalFinance")
-						}}
-					/>
-				</View>
-				{/* Buttons */}
-			</ScrollView>
+								) return
+								navigation.navigate("PersonalFinance")
+							}}
+						/>
+					</View>
+					{/* Buttons */}
+				</ScrollView>
+			</KeyboardAvoidingView>
 		</TouchableOpacity>
 	)
 }

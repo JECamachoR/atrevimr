@@ -138,7 +138,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 					}))
 				}
 			},
-			error: console.error
+			error: e => console.error(e)
 		})
 
 		const onGoalUpdate = (API.graphql(graphqlOperation(onUpdateGoal, {
@@ -153,7 +153,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 					}))
 				}
 			},
-			error: console.error
+			error: e => console.error(e)
 		})
 
 		const onUserCreation = (API.graphql(graphqlOperation(onCreateUser, {
@@ -177,7 +177,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 					setUser(ug)
 				}
 			},
-			error: console.error
+			error: e => console.error(e)
 		})
 
 		const onFundCreation = (API.graphql(graphqlOperation(onCreateFund, {
@@ -185,11 +185,15 @@ const BottomTabNavigator = (): React.ReactElement => {
 		})) as Observable<object>).subscribe({
 			next: ({value}:{value: GraphQLResult<OnCreateFundSubscription>}) => {
 				if (value.data?.onCreateFund?.id) {
-					const nf = value.data.onCreateFund as Fund
-					setMoneyboxes(g => ([...g, nf]))
+					if (value.data.onCreateFund.name === "goals") {
+						setGoalFund(value.data.onCreateFund as Fund)
+					} else {
+						const nf = value.data.onCreateFund as Fund
+						setMoneyboxes(g => ([...g, nf]))
+					}
 				}
 			},
-			error: console.error
+			error: e => console.error(e)
 		})
 
 		const onFundDeletion = (API.graphql(graphqlOperation(onDeleteFund, {
@@ -203,7 +207,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 					}))
 				}
 			},
-			error: console.error
+			error: e => console.error(e)
 		})
    
 		const onFundUpdate = (API.graphql(graphqlOperation(onUpdateFund, {
@@ -222,7 +226,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 					}
 				}
 			},
-			error: console.error
+			error: e => console.error(e)
 		})
 
 		const onTransactionCreation = (API.graphql(graphqlOperation(onCreateTransaction, {
@@ -234,7 +238,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 					setTransactions(t => ([...t, nt]))
 				}
 			},
-			error: console.error
+			error: e => console.error(e)
 		})
 
 		return () => {

@@ -83,8 +83,6 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 					separator: ".",
 				})
 
-				console.log(values.recurringAmmount)
-
 				return (
 					
 					<Modal
