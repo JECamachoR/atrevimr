@@ -1,7 +1,7 @@
 import * as React from "react"
 import { StyleSheet, TouchableOpacity } from "react-native"
 import { Row } from "../../components/Layout"
-import { Screen, Text, useThemeColor, View } from "../../components/Themed"
+import { Screen, ScrollView, Text, useThemeColor, View } from "../../components/Themed"
 import { darkMode, grayscale, primary, secondary } from "../../constants/Colors"
 import { MaterialIcons } from "@expo/vector-icons"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -15,6 +15,7 @@ import { t } from "i18n-js"
 import GoalFundContext from "../../contexts/GoalFundContext"
 import getNextSavingDate from "../../../functions/getNextSavingDate"
 import UserContext from "../../contexts/UserContext"
+import PrebakedList from "../../components/PrebakedList"
 
 export type CreateGoalType = {
     name?: string,
@@ -64,7 +65,7 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 			console.error(err)
 		}
 	}
-
+	console.log(goal)
 	return (
 		<Screen style={styles.screen}
 			lightColor={secondary.default}
@@ -98,12 +99,27 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 				<View style={styles.headRight}></View>
 			</Row>
 
-			<CreateCustomGoalCard action={() => {
-				setGoalFormModalOpen(true)
-				setGoal({category: "", recurringAmmount: 0, date: new Date()})
-			}}
-			/>
+			<ScrollView style={{flex: 1}}>
+
+				<CreateCustomGoalCard action={() => {
+					setGoalFormModalOpen(true)
+					setGoal({category: "", recurringAmmount: 0, date: new Date()})
+				}}
+				/>
+
+				<PrebakedList
+					variant="goals"
+					choose={async (g) => {
+						await setGoal(v => ({
+							...g, 
+							date: v.date,
+							recurringAmmount: 0
+						}) as CreateGoalType)
+						setGoalFormModalOpen(true)
+					}}
+				/>
 			
+			</ScrollView>
 		</Screen>
 	)
 }

@@ -2,7 +2,7 @@ import "react-native-gesture-handler"
 import { StatusBar } from "expo-status-bar"
 import * as React from "react"
 import { LogBox } from "react-native"
-LogBox.ignoreLogs(["Setting a timer"])
+LogBox.ignoreLogs(["Setting a timer", "VirtualizedLists should never be nested inside plain ScrollViews"])
 import useCachedResources from "./hooks/useCachedResources"
 import useColorScheme from "./hooks/useColorScheme"
 import Navigation from "./navigation"

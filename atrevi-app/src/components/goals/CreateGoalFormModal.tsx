@@ -54,6 +54,7 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 			onSubmit={handleSubmit}
 			validationSchema={GoalCreationSchema}
 			validateOnChange={false}
+			enableReinitialize
 		>
 			{({ values, handleChange, handleBlur, 
 				setFieldValue, submitForm, resetForm, errors, 
