@@ -1,8 +1,9 @@
 import * as React from "react"
 import { StyleSheet } from "react-native"
+import { formatNumber } from "react-native-currency-input"
 import { Goal } from "../../API"
 import { Text, View, ViewProps, useThemeColor } from "../../components/Themed"
-
+import { Row } from "../Layout"
 interface GoalTitleProps {
     goal: Goal; 
     containerStyle?: ViewProps["style"];
@@ -21,11 +22,21 @@ const GoalTitle = ({goal, containerStyle}: GoalTitleProps): React.ReactElement =
 					{goal.name}
 				</Text>
 			</View>
-			<View style={styles.transparent}>
-				<Text style={[styles.date, {color: linkColor}]}>
-					{goal.date}
-				</Text>
-			</View>
+			<Row>
+				<View style={[styles.transparent, styles.left]}>
+					<Text style={[styles.date, {color: linkColor}]}>
+						${formatNumber(goal.ammount, {
+							separator: ".",
+							delimiter: ","
+						})}
+					</Text>
+				</View>
+				<View style={[styles.transparent, styles.right]}>
+					<Text style={[styles.date, {color: linkColor}]}>
+						{(new Date(goal.date)).toLocaleDateString()}
+					</Text>
+				</View>
+			</Row>
 		</View>
 	)
 }
@@ -60,4 +71,11 @@ const styles = StyleSheet.create({
 	transparent: {
 		backgroundColor: "#00000000",
 	},
+	left: {
+		flex: 1,
+	},
+	right: {
+		flex: 1,
+		alignItems: "flex-end"
+	}
 })

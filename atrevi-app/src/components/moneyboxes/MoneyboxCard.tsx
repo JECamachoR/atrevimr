@@ -1,12 +1,9 @@
-import { API, graphqlOperation } from "aws-amplify"
 import * as React from "react"
 import { GestureResponderEvent, ImageBackground, StyleSheet, TouchableOpacity, View } from "react-native"
 import { UnsplashPhoto } from "react-native-unsplash"
-import { DeleteFundInput, Fund } from "../../API"
-import { deleteFund } from "../../graphql/mutations"
-import Button from "../Button"
-import Modal from "../Modal"
+import { Fund } from "../../API"
 import MoneyboxCardTitle from "./MoneyboxCardTitle"
+import UpdateMoneyboxFormModal from "./UpdateMoneyboxFormModal"
 
 interface GoalCardProps {
     moneybox: Fund;
@@ -28,20 +25,11 @@ const MoneyboxCard = ({ moneybox , onPress }: GoalCardProps): React.ReactElement
 			style={styles.container}
 		>
 
-			<Modal
-				hideModal={() => setVisible(false)}
+			<UpdateMoneyboxFormModal
 				visible={visible}
-			>
-				<Button
-					title="delete"
-					onPress={async () => {
-						await API.graphql(graphqlOperation(deleteFund, {input: {id: moneybox.id} as DeleteFundInput}))
-						setVisible(false)
-					}}
-					lightVariant={"successDark"}
-					darkModeVariant={"error"}
-				/>
-			</Modal>
+				hideModal={() => setVisible(false)}
+				moneybox={moneybox}
+			/>
 			<View style={styles.card}>
 				<ImageBackground source={{uri: photo.regular}} style={{flex: 1}}>
 					<View style={styles.metaHead}></View>

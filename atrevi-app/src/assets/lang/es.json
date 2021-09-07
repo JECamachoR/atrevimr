@@ -3,6 +3,7 @@
 	"Savings": "Ahorros",
 	"Settings": "Ajustes",
 	"Goals": "Metas",
+	"Goal": "Meta",
 	"Do you have a target date?": "¿Tienes una fecha objetivo?",
 	"Save and": "Ahorra y ",
 	"reach it on time": "alcánzalo a tiempo",
@@ -162,5 +163,11 @@
 	"Delete": "Eliminar",
 	"Cancel": "Cancelar",
 	"Everything you can imagine!": "¡Todo lo que puedas imaginar!",
-	"Delete item": "¿Eliminar %{name}?"
+	"Delete item": "¿Eliminar %{name}?",
+	"7day": "semanalmente",
+	"14day": "cada dos semanas",
+	"28day": "cada cuatro semanas",
+	"For this goal you will need to save": "Para esta meta tendrás que ahorrar",
+	"For this moneybox you will need to save": "Para esta alcancía tendrás que ahorrar",
+	"Adding up your other goals, you will save": "Sumado a tus otras metas serán"
 }

@@ -3,6 +3,7 @@
 	"Savings": "Savings",
 	"Settings": "Settings",
 	"Goals": "Goals",
+	"Goal": "Goal",
 	"Do you have a target date?": "Do you have a target date?",
 	"Save and": "Save and",
 	"reach it on time": "reach it on time",
@@ -161,5 +162,11 @@
 	"Everything you can imagine!": "¡Todo lo que puedas imaginar!",
 	"Delete": "Delete",
 	"Cancel": "Cancel",
-	"Delete item": "Delete %{name}?"
+	"Delete item": "Delete %{name}?",
+	"7day": "per week",
+	"14day": "every two weeks",
+	"28day": "every 4 weeks",
+	"For this goal you will need to save": "For this goal you will need to save",
+	"For this moneybox you will need to save": "For this moneybox you will need to save",
+	"Adding up your other goals, you will save": "Adding up your other goals, you will save"
 }

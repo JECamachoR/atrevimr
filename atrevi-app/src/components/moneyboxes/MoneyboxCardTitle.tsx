@@ -1,7 +1,10 @@
+import { t } from "i18n-js"
 import * as React from "react"
 import { StyleSheet } from "react-native"
+import { formatNumber } from "react-native-currency-input"
 import { Fund } from "../../API"
 import { Text, View, ViewProps, useThemeColor } from "../../components/Themed"
+import UserContext from "../../contexts/UserContext"
 
 interface MoneyboxCardTitleProps {
     moneybox: Fund; 
@@ -13,6 +16,7 @@ const MoneyboxCardTitle = ({moneybox, containerStyle}: MoneyboxCardTitleProps): 
 	const linkColor = useThemeColor({colorName: "link"})
 	const backgroundColor = useThemeColor({colorName: "background"})
 	const borderColor = useThemeColor({colorName: "line"})
+	const user = React.useContext(UserContext)
     
 	return (
 		<View style={[styles.goalText, {backgroundColor, borderColor}, containerStyle]}>
@@ -23,7 +27,11 @@ const MoneyboxCardTitle = ({moneybox, containerStyle}: MoneyboxCardTitleProps): 
 			</View>
 			<View style={styles.transparent}>
 				<Text style={[styles.date, {color: linkColor}]}>
-					{}
+					
+					${formatNumber(moneybox.recurringAmmount || 0, {
+						separator: ".",
+						delimiter: ","
+					})} {t(user.frequency || "weekly")}
 				</Text>
 			</View>
 		</View>

@@ -5,7 +5,6 @@ import { Text, View, useThemeColor } from "../Themed"
 import i18n, { t } from "i18n-js"
 import { primary, secondary } from "../../constants/Colors"
 import FormView from "../formComponents/FormView"
-import DateInput from "../formComponents/DateInput"
 import { Formik } from "formik"
 import Modal from "../Modal"
 import CategoryPicker from "../formComponents/CategoryPicker"
@@ -13,25 +12,20 @@ import NameAndIMG from "../formComponents/NameAndIMG"
 import NeededAmmountInput from "../formComponents/NeededAmmountInput"
 import { GoalCreationSchema } from "../../schemas"
 import ErrorText from "../formComponents/ErrorText"
-import shortPlan from "../../../functions/shortPlan"
-import getSavingDate from "../../../functions/getSavingDate"
 import GoalFundContext from "../../contexts/GoalFundContext"
-import GoalsContext from "../../contexts/GoalsContext"
 import { formatNumber } from "react-native-currency-input"
 import UserContext from "../../contexts/UserContext"
-import { daysOfTheWeek, frequencies } from "../../../types"
-import getNextSavingDate from "../../../functions/getNextSavingDate"
+import { frequencies } from "../../../types"
 import Submitting from "../Submitting"
-import { Goal } from "../../API"
+import { Fund } from "../../API"
 import { UnsplashPhoto } from "react-native-unsplash"
 import Button from "../Button"
-import DeleteGoalModal from "./DeleteGoalModal"
+import DeleteMoneyboxModal from "./DeleteMoneyboxModal"
 import API from "@aws-amplify/api"
 import { updateFund, updateGoal } from "../../graphql/mutations"
 import { graphqlOperation } from "aws-amplify"
 
 type ProcessedGoal = {
-	date: Date;
 	id: string;
 	owner?: string | null | undefined;
 	name: string;
@@ -44,43 +38,31 @@ type ProcessedGoal = {
 type Props = {
     visible: boolean,
     hideModal: () => void,
-    goal: Goal,
+    moneybox: Fund,
 }
 
-const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactElement => {
+const UpdateMoneyboxFormModal = ({ visible, hideModal, moneybox }: Props): React.ReactElement => {
 
-	const processedGoal = {
-		date: new Date(goal.date),
-		id: goal.id,
-		owner: goal.owner,
-		name: goal.name,
-		ammount: goal.ammount,
-		unsplashIMG: JSON.parse(goal.unsplashIMG as string),
-		category: goal.category,
-		recurringAmmount: 0,
+	const processedFund = {
+		id: moneybox.id,
+		owner: moneybox.owner,
+		name: moneybox.name,
+		recurringAmmount: moneybox.recurringAmmount,
+		unsplashIMG: JSON.parse(moneybox.unsplashIMG as string),
+		category: moneybox.category,
 	}
 
-	const goalList = React.useContext(GoalsContext)
 	const goalFund = React.useContext(GoalFundContext)
 	const user = React.useContext(UserContext)
 
 	const line = useThemeColor({colorName: "line"})
 	const link = useThemeColor({colorName: "link"})
 
-	const today = new Date()
-
-	const DOTW = (user.DOTW as daysOfTheWeek) || "thursday" as daysOfTheWeek
 	const frequency = (user.frequency as frequencies) || "7day"
-	const savingDate = getSavingDate(today, frequency, DOTW)
-	const minDate = new Date(getNextSavingDate(
-		new Date(),
-		user.frequency as frequencies,
-		user.DOTW as daysOfTheWeek
-	))
 
 	return (
 		<Formik
-			initialValues={processedGoal as ProcessedGoal}
+			initialValues={processedFund as ProcessedGoal}
 			onSubmit={async v => {
 				try {
 					const {recurringAmmount, ...goal} = v
@@ -88,7 +70,6 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 						updateGoal,
 						{input: {
 							...goal,
-							date: goal.date.toISOString().split("T")[0],
 							unsplashIMG: JSON.stringify(goal.unsplashIMG)
 						}}
 					))
@@ -112,33 +93,6 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 				touched, isSubmitting, setTouched 
 			}) => {
 
-				const calculateSavings = () => {
-					if (!values.ammount || !values.date) return
-					const list = goalList
-						.map(v => {
-							if (v.id === values.id) {
-								return values
-							} else return {
-								ammount: v.ammount, 
-								date: new Date(v.date)
-							} as {ammount: number, date: Date}
-						})
-					
-					const r = shortPlan(
-						list,
-						frequency, 
-						DOTW, 
-						{ 
-							ammount: goalFund?.balance || 0, 
-							savingDate
-						}
-					)
-					setFieldValue("recurringAmmount", r[0])
-				}
-
-				React.useEffect(() => calculateSavings(), 
-					[values.ammount, values.date]
-				)
 				const f = (n: number) => formatNumber(n, {
 					delimiter: ",",
 					precision: 2,
@@ -172,10 +126,10 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 						{ isSubmitting ? <Submitting /> :
 							<FormView style={styles.formView}>
 
-								<DeleteGoalModal
+								<DeleteMoneyboxModal
 									visible={deleteVisible}
 									hideModal={() => setDeleteVisible(false)}
-									goal={goal}
+									moneybox={moneybox}
 								/>
 
 								<NameAndIMG
@@ -209,24 +163,11 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 										error={(touched.ammount || undefined) && errors.ammount}
 									/>
 									<ErrorText error={(touched.ammount || undefined) && errors.ammount} />
-									<Text style={styles.label}>{i18n.t("When do you need it?")}</Text>
-									<DateInput
-										date={values.date}
-										field={"date"}
-										setDate={setFieldValue}
-										variant="secondary"
-										minDate={minDate}
-									/>
 								</View>
 								<View style={[styles.estimateCard, {borderColor: line}]}>
 									{Boolean(values.recurringAmmount) && 
 								<>
-									<Text style={styles.estimateLabel}>{t("For this goal you will need to save")}:</Text>
-									<Text style={[
-										styles.estimateValue,
-										{color: link}
-									]}>{f(values.recurringAmmount - (goalFund?.recurringAmmount || 0))} {t(frequency)}</Text>
-									<Text style={styles.estimateLabel}>{"\n"}{t("Adding up your other goals, you will save")}:</Text>
+									<Text style={styles.estimateLabel}>{t("For this moneybox you will need to save")}:</Text>
 									<Text style={[
 										styles.estimateValue,
 										{color: link}
@@ -251,7 +192,7 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 		</Formik>)
 }
 
-export default UpdateGoalFormModal
+export default UpdateMoneyboxFormModal
 
 const styles = StyleSheet.create({
 	bg: {
@@ -283,7 +224,7 @@ const styles = StyleSheet.create({
 		lineHeight: 28,
 	},
 	estimateCard: {
-		height: 132,
+		height: 78,
 		flex: 1,
 		marginTop: 16,
 		marginBottom: 128,
