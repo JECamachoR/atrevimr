@@ -1,7 +1,7 @@
 {
 	"expo": {
-		"name": "atrevi",
-		"slug": "atrevi",
+		"name": "Atrevi",
+		"slug": "Atrevi",
 		"version": "0.1.0",
 		"orientation": "portrait",
 		"icon": "./src/assets/images/icon.png",

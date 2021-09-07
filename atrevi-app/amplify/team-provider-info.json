@@ -17,5 +17,24 @@
         "userPoolGroups": {}
       }
     }
+  },
+  "prealpha": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-atrevi-prealpha-161058-authRole",
+      "UnauthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-prealpha-161058-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-prealpha-161058-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-atrevi-prealpha-161058-deployment",
+      "UnauthRoleName": "amplify-atrevi-prealpha-161058-unauthRole",
+      "StackName": "amplify-atrevi-prealpha-161058",
+      "StackId": "arn:aws:cloudformation:us-east-1:963673112435:stack/amplify-atrevi-prealpha-161058/1a3fa7e0-1020-11ec-8a81-0e8cca71e1bd",
+      "AmplifyAppId": "d21wrc494k04rr"
+    },
+    "categories": {
+      "auth": {
+        "userPoolGroups": {},
+        "atreviUsers": {}
+      }
+    }
   }
 }
