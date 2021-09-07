@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
 	itemContainer: {
 		flex: 1,
 		alignItems: "center",
+		marginVertical: 8,
 	},
 	itemName: {
 		fontFamily: "Poppins_600SemiBold",

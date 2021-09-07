@@ -65,7 +65,7 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 			console.error(err)
 		}
 	}
-	console.log(goal)
+
 	return (
 		<Screen style={styles.screen}
 			lightColor={secondary.default}

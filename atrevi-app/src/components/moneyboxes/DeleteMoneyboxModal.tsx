@@ -50,7 +50,7 @@ const DeleteMoneyboxModal = ({ visible, moneybox, hideModal }: Props): React.Rea
 										try {
 											await API.graphql(graphqlOperation(
 												deleteFund, 
-												{input: moneybox}
+												{input: {id: moneybox.id}}
 											))
 											
 											hideModal()
