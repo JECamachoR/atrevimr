@@ -1,5 +1,53 @@
 [
 	{
+		"name": "Travel abroad",
+		"ammount": 20000,
+		"category": "Travel",
+		"unsplashIMG": {
+			"regular": "https://images.unsplash.com/photo-1502920514313-52581002a659?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1047&q=80"
+		}
+	},
+	{
+		"name": "Trip to the beach",
+		"ammount": 8000,
+		"category": "Travel",
+		"unsplashIMG": {
+			"regular": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1053&q=80"
+		}
+	},
+	{
+		"name": "Trip with the family",
+		"ammount": 10000,
+		"category": "Travel",
+		"unsplashIMG": {
+			"regular": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MWP22?wid=1144&hei=1144&fmt=jpeg&qlt=80&.v=1591634795000"
+		}
+	},
+	{
+		"name": "Solo Backpacking",
+		"ammount": 50000,
+		"category": "Travel",
+		"unsplashIMG": {
+			"regular": "https://images.unsplash.com/photo-1532339142463-fd0a8979791a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+		}
+	},
+	{
+		"name": "iPhone 12",
+		"ammount": 20000,
+		"category": "Gadgets",
+		"unsplashIMG": {
+			"regular": "https://estaticos-cdn.elperiodico.com/clip/85608ed4-5f31-4cc7-ad97-91f33001b695_alta-libre-aspect-ratio_default_0.jpg"
+		}
+	},
+	{
+		"name": "AirPods",
+		"ammount": 10000,
+		"category": "Gadgets",
+		"unsplashIMG": {
+			"regular": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MWP22?wid=1144&hei=1144&fmt=jpeg&qlt=80&.v=1591634795000"
+		}
+	},
+	{
 		"name": "iPhone 12",
 		"ammount": 20000,
 		"category": "Gadgets",
