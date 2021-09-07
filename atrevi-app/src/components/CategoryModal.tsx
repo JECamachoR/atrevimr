@@ -1,11 +1,10 @@
 import * as React from "react"
 import Constants from "expo-constants"
-import { SectionList, StyleSheet, TouchableOpacity } from "react-native"
+import { FlatList, StyleSheet, TouchableOpacity } from "react-native"
 import { Text, View, useThemeColor } from "./Themed"
 import { Row } from "./Layout"
 import { MaterialIcons } from "@expo/vector-icons"
 import i18n from "i18n-js"
-import { TextInput } from "react-native-gesture-handler"
 import categories from "../assets/goals/categories.json"
 import { IconForCategory } from "./IconForCategory"
 import Modal from "./Modal"
@@ -18,11 +17,10 @@ type Props = {
 
 const CategoryModal = ({ visible, hideModal, selectCategory }: Props): React.ReactElement => {
 
-	const [search, setSearch] = React.useState<string>("")
-	const [selectedSection, setSelectedSection] = React.useState<string>("")
+	// const [search, setSearch] = React.useState<string>("")
 
 	const line = useThemeColor({colorName: "line"})
-
+	const color = useThemeColor({colorName: "text"})
 	return (
 		<Modal
 			hideModal={hideModal}
@@ -30,7 +28,7 @@ const CategoryModal = ({ visible, hideModal, selectCategory }: Props): React.Rea
 			title={i18n.t("Categories")}
 		>
 			<View style={styles.bodyContainer}>
-				<Row style={[styles.searchBar, {backgroundColor: line}]}>
+				{/* <Row style={[styles.searchBar, {backgroundColor: line}]}>
 					<TextInput
 						value={search}
 						onChangeText={setSearch}
@@ -39,61 +37,22 @@ const CategoryModal = ({ visible, hideModal, selectCategory }: Props): React.Rea
 					<View style={[styles.searchLogoContainer, {backgroundColor: line}]}>
 						<MaterialIcons name="search" size={24} color="black" />
 					</View>
-				</Row>
-				<View style={styles.listContainer}>
-					<SectionList
-						sections={categories.map(v => ({
-							title: v.group, 
-							data: v.categories
-						})).filter((val) => {
-							if (!search) return val
-							if (val.title.toLowerCase().indexOf(search) !== -1){
-								return val
-							}
-							let found = false
-							const nVal = {title: val.title, data: []} as typeof val
-							val.data.forEach(v => {
-								if (v.name.toLowerCase().indexOf(search) != -1) {
-									nVal.data.push(v)
-									found = true
-								}
-								if (v.category.toLowerCase().indexOf(search) != -1) {
-									nVal.data.push(v)
-									found = true
-								}
-							})
-							if (found) return nVal
-						})
-						}
-						keyExtractor={({category}) => category}
-						renderSectionHeader={(v) => (
-							<TouchableOpacity onPress={() => setSelectedSection(s => {
-								if (s === v.section.title) return ""
-								else return v.section.title
-							})}>
-								<View style={[styles.sectionHeaderContainer, {backgroundColor: line}]}>
-									<Text style={styles.sectionHeaderText}>{v.section.title}</Text>
-								</View>
-							</TouchableOpacity>
-						)}
-						renderItem={({item, section}) => (
-							<TouchableOpacity onPress={() => {
-								setSelectedSection("")
-								selectCategory(item.category)
-							}}>
-								{
-									Boolean(section.title === selectedSection || search) &&
-									(
-										<Row style={styles.listItem}>
-											<IconForCategory category={item.category} size={24} />
-											<Text>{item.name}</Text>
-										</Row>
-									)
-								}
-							</TouchableOpacity>
-						)}
-					/>
-				</View>
+				</Row> */}
+
+				<FlatList
+					data={categories}
+					renderItem={(v) => (
+						<TouchableOpacity onPress={() => selectCategory(v.item.name)}>
+							<Row style={[styles.listItem, {backgroundColor: line}]}>
+								<IconForCategory category={v.item.name} />
+								<Text style={styles.sectionHeaderText}>   {v.item.name}</Text>
+								<MaterialIcons name="keyboard-arrow-right" size={30} color={color} />
+							</Row>
+						</TouchableOpacity>
+					)}
+					keyExtractor={(_, index) => "" + index}
+					style={styles.listContainer}
+				/>
 			</View>
 		</Modal>
 	)
@@ -150,9 +109,13 @@ const styles = StyleSheet.create({
 	sectionHeaderText: {
 		fontFamily: "Poppins_600SemiBold",
 		fontSize: 16,
+		flex: 1
 	},
 	listItem: {
 		alignItems: "center",
 		margin: 8,
+		padding: 16,
+		borderRadius: 15,
+		overflow: "hidden",
 	},
 })

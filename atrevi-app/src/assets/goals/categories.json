@@ -1,16 +1,11 @@
 [
-    {
-        "group": "Gadgets",
-        "categories": [
-            {"category": "gadget-smartphone", "name": "Smartphone"},
-            {"category": "gadteg-wearable", "name": "Wearable"}
-        ]
-    },
-    {
-        "group": "Clothes",
-        "categories": [
-            {"category": "clothes-jacket", "name": "Jacket"},
-            {"category": "clothes-shoes", "name": "Shoes"}
-        ]
-    }
+	{"name": "Travel"},
+	{"name": "Events"},
+	{"name": "Gadgets"},
+	{"name": "Shopping"},
+	{"name": "Education"},
+	{"name": "Home"},
+	{"name": "Personal Transportation"},
+	{"name": "Investment"},
+	{"name": "Others"}
 ]
