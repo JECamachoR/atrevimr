@@ -30,13 +30,18 @@ type Props = StackScreenProps<NavParamList, "CreateGoal">
 const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 	const user = React.useContext(UserContext)
 	const [goalFormModalOpen, setGoalFormModalOpen] = React.useState(false)
-	const [goal, setGoal] = React.useState<CreateGoalType>({category: "", date: new Date(
-		getNextSavingDate(
-			new Date(),
+	const [goal, setGoal] = React.useState<CreateGoalType>({
+		category: "", 
+		date: new Date(
+			getNextSavingDate(
+				new Date(),
 			user.frequency as frequencies, 
 			user.DOTW as daysOfTheWeek
-		)
-	), recurringAmmount: 0})
+			)
+		), 
+		recurringAmmount: 0,
+		ammount: 0,
+	})
 	const goalFund = React.useContext(GoalFundContext)
 	const handleSubmit = async ({recurringAmmount, ...g}: CreateGoalType) => {
 		try {

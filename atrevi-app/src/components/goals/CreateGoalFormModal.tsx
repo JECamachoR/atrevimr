@@ -55,12 +55,18 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 			validationSchema={GoalCreationSchema}
 			validateOnChange={false}
 		>
-			{({ values, handleChange, handleBlur, setFieldValue, submitForm, resetForm, errors, isSubmitting }) => {
-				
+			{({ values, handleChange, handleBlur, 
+				setFieldValue, submitForm, resetForm, errors, 
+				touched, isSubmitting, setTouched 
+			}) => {
+				console.log(touched)
 				const calculateSavings = () => {
 					if (!values.ammount || !values.date) return
 					const list = goalList
-						.map(v => ({ammount: v.ammount, date: new Date(v.date)})) as {ammount: number, date: Date}[]
+						.map(v => ({
+							ammount: v.ammount, 
+							date: new Date(v.date)
+						})) as {ammount: number, date: Date}[]
 					list.push({ammount: values.ammount, date: values.date})
 					
 					const r = shortPlan(
@@ -75,7 +81,9 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 					setFieldValue("recurringAmmount", r[0])
 				}
 
-				React.useEffect(() => calculateSavings(), [values.ammount, values.date])
+				React.useEffect(() => calculateSavings(), 
+					[values.ammount, values.date]
+				)
 				const f = (n: number) => formatNumber(n, {
 					delimiter: ",",
 					precision: 2,
@@ -108,21 +116,24 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 							<FormView style={styles.formView}>
 
 								<NameAndIMG
-									changeIMG={(img) => setFieldValue("unsplashIMG", img)}
+									changeIMG={(img) => {
+										setFieldValue("unsplashIMG", img)
+										setTouched({unsplashIMG: true, ...touched})
+									}}
 									handleBlur={handleBlur("name")}
 									handleTextChange={handleChange("name")}
 									name={values.name}
 									unsplashIMG={values.unsplashIMG}
 									variant={"goals"}
-									nameError={errors.name}
-									imgError={errors.unsplashIMG}
+									nameError={touched.name ? errors.name : undefined}
+									imgError={touched.unsplashIMG ? errors.unsplashIMG : undefined}
 								/>
 
 								<CategoryPicker
 									category={values.category}
 									selectCategory={(c) => setFieldValue("category", c)}
 									variant="goals"
-									error={errors.category}
+									error={(touched.category || undefined) && errors.category}
 								/>
 
 								<View>
@@ -132,9 +143,9 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 										handleBlur={handleBlur("ammount")}
 										handleChange={(v) => setFieldValue("ammount", v)}
 										value={values.ammount}
-										error={errors.ammount}
+										error={(touched.ammount || undefined) && errors.ammount}
 									/>
-									<ErrorText error={errors.ammount} />
+									<ErrorText error={(touched.ammount || undefined) && errors.ammount} />
 									<Text style={styles.label}>{i18n.t("When do you need it?")}</Text>
 									<DateInput
 										date={values.date}

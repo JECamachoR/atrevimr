@@ -131,6 +131,7 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 										delimiter=","
 										style={[styles.ammount, {color: (values.ammount >= 0 ? success.dark : error.default)}]}
 										showPositiveSign={true}
+										autoFocus={true}
 									/>
 									<ErrorText
 										error={

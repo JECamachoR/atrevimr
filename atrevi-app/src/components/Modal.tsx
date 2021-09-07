@@ -45,35 +45,35 @@ const Modal = ({
 			onDismiss={hideModal}
 			{...modalProps}
 		>
-			<TouchableOpacity 
+			{/* <TouchableOpacity 
 				activeOpacity={1}
 				onPress={hideModal}
 				style={{flex: 1}}
-			>
-				<View style={styles.bg}>
-					<TouchableWithoutFeedback>
-						<View
-							style={styles.container}
-							{...containerProps}
-						>
-							<Row style={[styles.headRow, {borderBottomColor: useThemeColor({colorName: "line"})}]}>
-								<View style={styles.headLeft}>
-									{leftComponent || <TouchableOpacity onPress={hideModal}>
-										<MaterialIcons name="keyboard-arrow-down" size={28} color={useThemeColor({colorName: "link"})} />
-									</TouchableOpacity>}
-								</View>
-								<View style={styles.headCenter}>
-									<Text style={styles.title}>{title}</Text>
-								</View>
-								<View style={styles.headRight}>
-									{rightComponent}
-								</View>
-							</Row>
-							{children}
+			> */}
+			<View style={styles.bg}>
+				{/* <TouchableWithoutFeedback> */}
+				<View
+					style={styles.container}
+					{...containerProps}
+				>
+					<Row style={[styles.headRow, {borderBottomColor: useThemeColor({colorName: "line"})}]}>
+						<View style={styles.headLeft}>
+							{leftComponent || <TouchableOpacity onPress={hideModal}>
+								<MaterialIcons name="keyboard-arrow-down" size={28} color={useThemeColor({colorName: "link"})} />
+							</TouchableOpacity>}
 						</View>
-					</TouchableWithoutFeedback>
+						<View style={styles.headCenter}>
+							<Text style={styles.title}>{title}</Text>
+						</View>
+						<View style={styles.headRight}>
+							{rightComponent}
+						</View>
+					</Row>
+					{children}
 				</View>
-			</TouchableOpacity>
+				{/* </TouchableWithoutFeedback> */}
+			</View>
+			{/* </TouchableOpacity> */}
 		</DefaultModal>
 	)
 }
