@@ -15,16 +15,16 @@ export default function IncomeCard({ value, handleChange }: Props): React.ReactE
 	return (
 		<View style={styles.container}>
 			<CurrencyInput
-				value={value || null}
+				value={typeof value === "number" ? value : null}
 				onChangeValue={handleChange}
 				style={{width:"100%",height:"100%",fontSize:rf(20)}}
-				placeholder={"0$"}
+				placeholder={"$0"}
 				placeholderTextColor={grayscale.placeholder}
 				delimiter=","
 				separator="."
 				prefix="$"
 				suffix=" MXN"
-				precision={0}
+				precision={2}
 			/>
 		</View>
 	)

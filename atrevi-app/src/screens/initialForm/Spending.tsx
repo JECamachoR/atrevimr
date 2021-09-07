@@ -39,7 +39,7 @@ export default function Spending({ navigation }: Props): React.ReactElement {
 				<IncomeCard 
 					value={formik.values.monthlyIncome}
 					handleChange={(v) => {
-						formik.setFieldValue("monthlyIncome", v || undefined)
+						formik.setFieldValue("monthlyIncome", v)
 					}}
 				/>
 			</View>
@@ -58,7 +58,7 @@ export default function Spending({ navigation }: Props): React.ReactElement {
 				<IncomeCard 
 					value={formik.values.monthlySpend} 
 					handleChange={(v) => {
-						formik.setFieldValue("monthlySpend", v || undefined)
+						formik.setFieldValue("monthlySpend", v)
 					}}
 				/>
 			</View>

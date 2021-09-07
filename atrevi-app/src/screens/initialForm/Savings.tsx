@@ -96,7 +96,7 @@ export default function Savings({ navigation }: Props): React.ReactElement {
 					<View>
 						<IncomeCard
 							value={formik.values.yearlySavings}
-							handleChange={(v) => formik.setFieldValue("yearlySavings", v || undefined)}
+							handleChange={(v) => formik.setFieldValue("yearlySavings", v)}
 						/>
 					</View>
 					{/* IncomeCard */}
@@ -125,7 +125,7 @@ export default function Savings({ navigation }: Props): React.ReactElement {
 								if (
 									!formik.values.frequency ||
                     !formik.values.keepsSavings || 
-                    !formik.values.yearlySavings
+                    (!formik.values.yearlySavings && typeof formik.values.yearlySavings !== "number")
 								) return
 								navigation.navigate("PersonalFinance")
 							}}
