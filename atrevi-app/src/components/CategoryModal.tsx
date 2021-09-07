@@ -4,18 +4,20 @@ import { FlatList, StyleSheet, TouchableOpacity } from "react-native"
 import { Text, View, useThemeColor } from "./Themed"
 import { Row } from "./Layout"
 import { MaterialIcons } from "@expo/vector-icons"
-import i18n from "i18n-js"
-import categories from "../assets/goals/categories.json"
+import i18n, { t } from "i18n-js"
+import goalCategories from "../assets/goals/categories.json"
+import mbCategories from "../assets/moneyboxes/categories.json"
 import { IconForCategory } from "./IconForCategory"
 import Modal from "./Modal"
 
 type Props = {
     visible: boolean,
     selectCategory: (c: string) => void,
-    hideModal: () => void
+    hideModal: () => void,
+	variant?: "goals" | "moneyboxes"
 }
 
-const CategoryModal = ({ visible, hideModal, selectCategory }: Props): React.ReactElement => {
+const CategoryModal = ({ visible, variant, hideModal, selectCategory }: Props): React.ReactElement => {
 
 	// const [search, setSearch] = React.useState<string>("")
 
@@ -40,12 +42,14 @@ const CategoryModal = ({ visible, hideModal, selectCategory }: Props): React.Rea
 				</Row> */}
 
 				<FlatList
-					data={categories}
+					data={variant === "moneyboxes" ?  mbCategories : goalCategories}
 					renderItem={(v) => (
 						<TouchableOpacity onPress={() => selectCategory(v.item.name)}>
 							<Row style={[styles.listItem, {backgroundColor: line}]}>
 								<IconForCategory category={v.item.name} />
-								<Text style={styles.sectionHeaderText}>   {v.item.name}</Text>
+								<Text style={styles.sectionHeaderText}>   {
+									t(v.item.name === "Home" ? "Category Home" : v.item.name)
+								}</Text>
 								<MaterialIcons name="keyboard-arrow-right" size={30} color={color} />
 							</Row>
 						</TouchableOpacity>

@@ -1,10 +1,11 @@
 import { AntDesign, FontAwesome, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons"
 import React from "react"
 import categories from "../assets/goals/categories.json"
+import mbCategories from "../assets/moneyboxes/categories.json"
 import { useThemeColor } from "./Themed"
 
 type Props = {
-    category: typeof categories[number]["name"],
+    category: typeof categories[number]["name"] | typeof mbCategories[number]["name"],
     size?: number,
     color?: string,
 }
@@ -28,13 +29,11 @@ export const IconForCategory = ({category, size: givenSize, color: givenColor}: 
 		return <MaterialCommunityIcons name="school-outline" size={24} color={usedColor} />
 	case "Home": 
 		return <Ionicons name="ios-home-outline" size={24} color={usedColor} />
-	case "Personal Transportation": 
+	case "Transportation": 
 		return <MaterialIcons name="emoji-transportation" size={24} color={usedColor} />
 	case "Investment": 
 		return <MaterialCommunityIcons name="trending-up" size={24} color={usedColor} />
-	case "Others": 
-		return <MaterialIcons name="category" size={24} color={usedColor} />
 	default:
-		return <FontAwesome name="question-circle" size={size} color={usedColor} />
+		return <MaterialIcons name="category" size={24} color={usedColor} />
 	}
 }

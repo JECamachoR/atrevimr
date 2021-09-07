@@ -1,7 +1,7 @@
 import * as React from "react"
 import { StyleSheet, TouchableOpacity } from "react-native"
 import { Row } from "../../components/Layout"
-import { Screen, Text, useThemeColor, View } from "../../components/Themed"
+import { Screen, ScrollView, Text, useThemeColor, View } from "../../components/Themed"
 import { darkMode, grayscale, primary, success } from "../../constants/Colors"
 import i18n from "i18n-js"
 import { MaterialIcons } from "@expo/vector-icons"
@@ -16,6 +16,7 @@ import { API, graphqlOperation } from "aws-amplify"
 import { CreateFundInput } from "../../API"
 import { createFund } from "../../graphql/mutations"
 import CreateCustomMoneyboxCard from "../../components/moneyboxes/CreateCustomMoneyboxCard"
+import PrebakedList from "../../components/PrebakedList"
 
 export type CreateMoneyboxType = {
     name?: string,
@@ -78,10 +79,27 @@ const CreateMoneyboxScreen = ({navigation}: Props): React.ReactElement => {
 				<View style={styles.headRight}></View>
 			</Row>
 
-			<CreateCustomMoneyboxCard action={() => {
-				setMoneyboxFormModalOpen(true)
-				setMoneybox({category: "", balance: 0})
-			}}/>
+			<ScrollView>
+
+				<CreateCustomMoneyboxCard action={() => {
+					setMoneyboxFormModalOpen(true)
+					setMoneybox({category: "", balance: 0})
+				}}/>
+
+				<PrebakedList variant="moneyboxes"
+					choose={v => {
+						setMoneybox(({
+							name: v.name,
+							category: v.category,
+							balance: 0,
+							recurringAmmount: 0,
+							unsplashIMG: v.unsplashIMG as UnsplashPhoto["urls"]
+						}))
+						setMoneyboxFormModalOpen(true)
+					}}
+				/>
+
+			</ScrollView>
 		</Screen>
 	)
 }

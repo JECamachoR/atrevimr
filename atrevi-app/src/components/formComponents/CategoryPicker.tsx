@@ -45,7 +45,9 @@ const CategoryPicker = ({ category, selectCategory, variant, error }: Props): Re
 						<Row style={[styles.changeCategory, {backgroundColor: btnColor}]}>
 							<IconForCategory category={category} color={bg} />
 							<View style={styles.chooseCategoryTextContainer}>
-								<Text style={[styles.chooseCategoryText, {color: bg}]}>  {category}</Text>
+								<Text style={[styles.chooseCategoryText, {color: bg}]}>  {
+									t(category === "Home" ? "Category Home" : category)
+								}</Text>
 							</View>
 							<MaterialIcons name="keyboard-arrow-right" size={28} color={bg} />
 						</Row>

@@ -32,6 +32,7 @@ const CreateMoneyboxFormModal = ({ visible, hideModal, moneybox, handleSubmit }:
 			onSubmit={handleSubmit}
 			validationSchema={MoneyboxCreationSchema}
 			validateOnChange={false}
+			enableReinitialize
 		>
 			{({values, handleChange, handleBlur, setFieldValue, submitForm, resetForm, errors, isSubmitting}) => {
 

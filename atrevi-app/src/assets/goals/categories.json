@@ -5,7 +5,7 @@
 	{"name": "Shopping"},
 	{"name": "Education"},
 	{"name": "Home"},
-	{"name": "Personal Transportation"},
+	{"name": "Transportation"},
 	{"name": "Investment"},
-	{"name": "Others"}
+	{"name": "General"}
 ]

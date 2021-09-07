@@ -5,12 +5,13 @@ import { Bullseye } from "../assets/icons/goals"
 import { Piggybank } from "../assets/icons/moneyboxes"
 import { Row } from "./Layout"
 import { Text, useThemeColor, View } from "./Themed"
-import prebaked from "../assets/goals/prebaked.json"
+import prebakedGoals from "../assets/goals/prebaked.json"
+import prebakedMoneyboxes from "../assets/moneyboxes/prebaked.json"
+
 import { t } from "i18n-js"
-import { SafeAreaView } from "react-native-safe-area-context"
 type Props = {
     variant: "goals" | "moneyboxes",
-    choose: (g: typeof prebaked[number]) => void
+    choose: (g: typeof prebakedGoals[number]) => void
 }
 
 type HeaderProps = {
@@ -48,7 +49,7 @@ const HeaderComponent = ({ variant }: HeaderProps) => {
 	)
 }
 
-const PrebakedItem = (props: ListRenderItemInfo<typeof prebaked[number]> & {onPress: Props["choose"]}): React.ReactElement => {
+const PrebakedItem = (props: ListRenderItemInfo<typeof prebakedGoals[number]> & {onPress: Props["choose"]}): React.ReactElement => {
 
 	const {width} = useWindowDimensions()
 	const iWidth = (width - 48) / 2
@@ -76,7 +77,7 @@ const PrebakedList = ({ variant, choose }: Props): React.ReactElement => {
 
 	return (
 		<FlatList
-			data={prebaked}
+			data={variant === "goals" ? prebakedGoals : prebakedMoneyboxes}
 			renderItem={v => <PrebakedItem onPress={choose} {...v} />}
 			ListHeaderComponent={() => <HeaderComponent variant={variant} />}
 			keyExtractor={(_, i) => ""+i}

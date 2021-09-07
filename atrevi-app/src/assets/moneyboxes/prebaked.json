@@ -1,0 +1,16 @@
+[
+	{
+		"name": "iPhone 12",
+		"category": "Gadgets",
+		"unsplashIMG": {
+			"regular": "https://estaticos-cdn.elperiodico.com/clip/85608ed4-5f31-4cc7-ad97-91f33001b695_alta-libre-aspect-ratio_default_0.jpg"
+		}
+	},
+	{
+		"name": "AirPods",
+		"category": "Gadgets",
+		"unsplashIMG": {
+			"regular": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MWP22?wid=1144&hei=1144&fmt=jpeg&qlt=80&.v=1591634795000"
+		}
+	}
+]
