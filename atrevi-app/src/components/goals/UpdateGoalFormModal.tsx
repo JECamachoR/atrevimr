@@ -219,8 +219,7 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 									/>
 								</View>
 								<View style={[styles.estimateCard, {borderColor: line}]}>
-									{Boolean(values.recurringAmmount) && 
-								<>
+
 									<Text style={styles.estimateLabel}>{t("For this goal you will need to save")}:</Text>
 									<Text style={[
 										styles.estimateValue,
@@ -231,8 +230,7 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 										styles.estimateValue,
 										{color: link}
 									]}>{f(values.recurringAmmount)} {t(frequency)}</Text>
-								</>	
-									}
+
 									<View style={{marginVertical: 24,}}>
 										<Button
 											title={t("Delete")+" "+ t("Goal")}

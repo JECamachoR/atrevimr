@@ -79,7 +79,7 @@ const CreateMoneyboxScreen = ({navigation}: Props): React.ReactElement => {
 				<View style={styles.headRight}></View>
 			</Row>
 
-			<ScrollView>
+			<ScrollView style={{flex: 1, backgroundColor: "#00000000"}}>
 
 				<CreateCustomMoneyboxCard action={() => {
 					setMoneyboxFormModalOpen(true)

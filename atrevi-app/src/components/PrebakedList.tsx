@@ -9,6 +9,7 @@ import prebakedGoals from "../assets/goals/prebaked.json"
 import prebakedMoneyboxes from "../assets/moneyboxes/prebaked.json"
 
 import { t } from "i18n-js"
+import { darkMode, grayscale, primary, secondary, success } from "../constants/Colors"
 type Props = {
     variant: "goals" | "moneyboxes",
     choose: (g: typeof prebakedGoals[number]) => void
@@ -20,10 +21,17 @@ type HeaderProps = {
 
 const HeaderComponent = ({ variant }: HeaderProps) => {
 
-	const color = useThemeColor({colorName: "link"})
-	const svgColor = useThemeColor({colorName: "background"})
+	const color = useThemeColor({colors: {
+		dark: primary.default,
+		light: grayscale.offWhite
+	}})
+	const svgColor = useThemeColor({colors: {
+		dark: darkMode.background,
+		light: variant === "goals" ? secondary.default : success.dark
+	}})
+	
 	return (
-		<View>
+		<View style={{backgroundColor: "#00000000"}}>
 			<Row style={styles.headerContainer}>
 				<View style={[styles.headerIconContainer, {backgroundColor: color}]}>
 					<View style={styles.svgTransform}>
@@ -93,10 +101,12 @@ export default PrebakedList
 const styles = StyleSheet.create({
 	container: {
 		marginHorizontal: 16,
+		backgroundColor: "#00000000",
 	},
 	headerContainer: {
 		alignItems: "center",
 		justifyContent: "flex-start",
+		backgroundColor: "#00000000",
 	},
 	headerIconContainer: {
 		width: 32,
@@ -105,6 +115,7 @@ const styles = StyleSheet.create({
 		overflow: "hidden",
 		alignItems: "center",
 		justifyContent: "center",
+		backgroundColor: "#00000000",
 	},
 	svgTransform: {
 		transform: [
@@ -119,16 +130,19 @@ const styles = StyleSheet.create({
 	},
 	subtitle: {
 		fontSize: 16,
-		paddingVertical: 4
+		paddingVertical: 4,
+		color: grayscale.offWhite
 	},
 	itemContainer: {
 		flex: 1,
 		alignItems: "center",
 		marginVertical: 8,
+		backgroundColor: "#00000000",
 	},
 	itemName: {
 		fontFamily: "Poppins_600SemiBold",
 		fontSize: 16,
 		lineHeight: 28,
+		color: grayscale.offWhite
 	}
 })

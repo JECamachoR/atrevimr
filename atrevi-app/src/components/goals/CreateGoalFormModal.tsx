@@ -2,7 +2,7 @@ import * as React from "react"
 import Constants from "expo-constants"
 import { StyleSheet, TouchableOpacity } from "react-native"
 import { Text, View, useThemeColor } from "../Themed"
-import i18n from "i18n-js"
+import i18n, { t } from "i18n-js"
 import { primary, secondary } from "../../constants/Colors"
 import { CreateGoalType } from "../../screens/goal/CreateGoalScreen"
 import FormView from "../formComponents/FormView"
@@ -157,20 +157,18 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 									/>
 								</View>
 								<View style={[styles.estimateCard, {borderColor: line}]}>
-									{Boolean(values.recurringAmmount) && 
-								<>
-									<Text style={styles.estimateLabel}>For this goal you will need to save:</Text>
+									
+									<Text style={styles.estimateLabel}>{t("For this goal you will need to save")}:</Text>
 									<Text style={[
 										styles.estimateValue,
 										{color: link}
-									]}>{f(values.recurringAmmount - (goalFund?.recurringAmmount || 0))}</Text>
-									<Text style={styles.estimateLabel}>{"\n"}Adding up your other goals, you will save:</Text>
+									]}>{f(values.recurringAmmount - (goalFund?.recurringAmmount || 0))} {t(frequency)}</Text>
+									<Text style={styles.estimateLabel}>{"\n"}{t("Adding up your other goals, you will save")}:</Text>
 									<Text style={[
 										styles.estimateValue,
 										{color: link}
-									]}>{f(values.recurringAmmount)}</Text>
-								</>	
-									}
+									]}>{f(values.recurringAmmount)} {t(frequency)}</Text>
+
 								</View>
 							</FormView>
 						}

@@ -99,7 +99,7 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 				<View style={styles.headRight}></View>
 			</Row>
 
-			<ScrollView style={{flex: 1}}>
+			<ScrollView style={{flex: 1, backgroundColor: "#00000000"}}>
 
 				<CreateCustomGoalCard action={() => {
 					setGoalFormModalOpen(true)
