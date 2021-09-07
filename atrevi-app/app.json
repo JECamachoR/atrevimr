@@ -10,7 +10,7 @@
 		"splash": {
 			"image": "./src/assets/images/splash.png",
 			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
+			"backgroundColor": "#FFCC00"
 		},
 		"updates": {
 			"fallbackToCacheTimeout": 0
@@ -25,7 +25,7 @@
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./src/assets/images/icon.png",
-				"backgroundColor": "#ffffff"
+				"backgroundColor": "#FFCC00"
 			},
 			"package": "mx.atrevi.app"
 		},
