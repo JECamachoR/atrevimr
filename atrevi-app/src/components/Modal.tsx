@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons"
 import Constants from "expo-constants"
 import * as React from "react"
-import { Modal as DefaultModal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View as DefaultView } from "react-native"
+import { Modal as DefaultModal, StyleSheet, TouchableOpacity, View as DefaultView } from "react-native"
 import { Row } from "./Layout"
 import { useThemeColor, Text, View, ViewProps } from "./Themed"
 

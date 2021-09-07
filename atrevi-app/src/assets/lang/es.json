@@ -159,5 +159,8 @@
 	"We all need encouraging words": "Todos necesitamos palabras de aliento",
 	"Let’s get it together": "Consigámoslo juntos",
 	"Everything ready for you to achieve your goals and dreams": "Todo listo para que logres tus metas y sueños",
-	"Everything you can imagine!": "¡Todo lo que puedas imaginar!"
+	"Delete": "Eliminar",
+	"Cancel": "Cancelar",
+	"Everything you can imagine!": "¡Todo lo que puedas imaginar!",
+	"Delete item": "¿Eliminar %{name}?"
 }

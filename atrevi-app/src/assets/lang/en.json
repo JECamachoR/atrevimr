@@ -158,5 +158,8 @@
 	"We all need encouraging words": "We all need encouraging words",
 	"Let’s get it together": "Let’s get it together",
 	"Everything ready for you to achieve your goals and dreams": "Everything ready for you to achieve your goals and dreams",
-	"Everything you can imagine!": "¡Todo lo que puedas imaginar!"
+	"Everything you can imagine!": "¡Todo lo que puedas imaginar!",
+	"Delete": "Delete",
+	"Cancel": "Cancel",
+	"Delete item": "Delete %{name}?"
 }
