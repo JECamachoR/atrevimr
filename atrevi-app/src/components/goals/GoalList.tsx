@@ -39,7 +39,7 @@ const GoalList = ({ goals } : GoalListProps): React.ReactElement => {
 					itemWidth={width - 32 || 300}
 					onSnapToItem={(index) => setIndex(index)}
 					pagingEnabled={true}
-				/>
+				/>{ goals.length > 1 &&
 				<View style={styles.pagContainer}>
 					<Pagination
 						dotsLength={goals.length}
@@ -54,7 +54,7 @@ const GoalList = ({ goals } : GoalListProps): React.ReactElement => {
 						inactiveDotOpacity={0.4}
 						inactiveDotScale={0.6}
 					/>
-				</View>
+				</View>}
 			</View>
 		</View>
 	)
@@ -64,8 +64,9 @@ export default GoalList
 
 const styles = StyleSheet.create({
 	container: {
-		height: 232,
-		margin: 16,
+		// height: 232,
+		marginTop: 16,
+		marginHorizontal: 16,
 	},
 	svgBG: {
 		height: 32,
@@ -90,11 +91,10 @@ const styles = StyleSheet.create({
 		fontSize: 28,
 	},
 	carouselContainer: {
-		height: 208,
+		// height: 208,
 	},
 	pagContainer: {
 		height: 32,
-		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
 	},

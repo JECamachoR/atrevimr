@@ -38,7 +38,7 @@ const MoneyboxList = ({ moneyboxes } : MoneyboxListProps): React.ReactElement =>
 					sliderWidth={width - 32|| 300}
 					itemWidth={width - 32 || 300}
 					onSnapToItem={(index) => setIndex(index)}
-				/>
+				/>{moneyboxes.length > 1 &&
 				<View style={styles.pagContainer}>
 					<Pagination
 						dotsLength={moneyboxes.length}
@@ -53,7 +53,7 @@ const MoneyboxList = ({ moneyboxes } : MoneyboxListProps): React.ReactElement =>
 						inactiveDotOpacity={0.4}
 						inactiveDotScale={0.6}
 					/>
-				</View>
+				</View>}
 			</View>
 		</View>
 	)
@@ -63,8 +63,8 @@ export default MoneyboxList
 
 const styles = StyleSheet.create({
 	container: {
-		height: 232,
-		margin: 16,
+		// height: 232,
+		marginHorizontal: 16,
 	},
 	svgBG: {
 		height: 32,
@@ -89,11 +89,11 @@ const styles = StyleSheet.create({
 		fontSize: 28,
 	},
 	carouselContainer: {
-		height: 208
+		// height: 208
 	},
 	pagContainer: {
-		height: 8,
-		flex: 1,
+		// height: 32,
+		// flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
 	},
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
 		backgroundColor: "#00000000",
 	},
 	dotStyle: {
-		width: 32,
 		height: 8,
+		width: 32,
 		borderRadius: 5,
 		marginHorizontal: 4,
 	},
