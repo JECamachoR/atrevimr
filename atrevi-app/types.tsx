@@ -45,6 +45,7 @@ export type AuthParamList = {
         phoneNumberWithoutCode?: string,
         pass?: string
     } | undefined;
+    ForgotPass: undefined;
 };
 
 export type InitialFormParamList = {

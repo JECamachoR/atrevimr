@@ -220,25 +220,25 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 								</View>
 								<View style={[styles.estimateCard, {borderColor: line}]}>
 
-									<Text style={styles.estimateLabel}>{t("For this goal you will need to save")}:</Text>
+									<Text>{t("For this goal you will need to save")}:</Text>
 									<Text style={[
 										styles.estimateValue,
 										{color: link}
 									]}>{f(values.recurringAmmount - (goalFund?.recurringAmmount || 0))} {t(frequency)}</Text>
-									<Text style={styles.estimateLabel}>{"\n"}{t("Adding up your other goals, you will save")}:</Text>
+									<Text>{"\n"}{t("Adding up your other goals, you will save")}:</Text>
 									<Text style={[
 										styles.estimateValue,
 										{color: link}
 									]}>{f(values.recurringAmmount)} {t(frequency)}</Text>
 
-									<View style={{marginVertical: 24,}}>
-										<Button
-											title={t("Delete")+" "+ t("Goal")}
-											onPress={() => setDeleteVisible(true)}
-											lightVariant="error"
-											darkModeVariant="error"
-										/>
-									</View>
+								</View>
+								<View style={styles.deleteContainer}>
+									<Button
+										title={t("Delete")+" "+ t("Goal")}
+										onPress={() => setDeleteVisible(true)}
+										lightVariant="error"
+										darkModeVariant="error"
+									/>
 								</View>
 							</FormView>
 						}
@@ -281,16 +281,14 @@ const styles = StyleSheet.create({
 		lineHeight: 28,
 	},
 	estimateCard: {
-		height: 132,
-		flex: 1,
 		marginTop: 16,
-		marginBottom: 128,
 		borderRadius: 15,
 		borderWidth: 1,
 		padding: 16,
 	},
-	estimateLabel: {
-
+	deleteContainer: {
+		marginTop: 16,
+		marginBottom: 128,
 	},
 	estimateValue: {
 		fontSize: 16,

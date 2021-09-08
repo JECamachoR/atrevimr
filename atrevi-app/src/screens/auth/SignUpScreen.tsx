@@ -52,7 +52,7 @@ const SignUpScreen = ({navigation} : Props): React.ReactElement => {
 					<FormView>
 						<View style={styles.titleContainer}>
 							<Text style={{...styles.title, color: colorScheme === "dark" ? primary.default : secondary.default}}>
-                            {t("Sign Up")}
+								{t("Sign Up")}
 							</Text>
 						</View>
 						<PhoneNumberInput 
@@ -98,13 +98,13 @@ const SignUpScreen = ({navigation} : Props): React.ReactElement => {
 							<Text 
 								style={{
 									color: colorScheme === "dark" ? 
-									grayscale.offWhite : grayscale.label
+										grayscale.offWhite : grayscale.label
 								}}
 							>{t("Already signed up?")}</Text>
 							<Text 
 								style={{
 									color: colorScheme === "dark" ? 
-									primary.default : secondary.default
+										primary.default : secondary.default
 								}}
 							> {t("Sign In")}</Text>
 						</TouchableOpacity>
@@ -118,13 +118,13 @@ const SignUpScreen = ({navigation} : Props): React.ReactElement => {
 							<Text 
 								style={{
 									color: colorScheme === "dark" ? 
-									grayscale.offWhite : grayscale.label
+										grayscale.offWhite : grayscale.label
 								}}
 							>{t("Or")}</Text>						
 							<Text 
 								style={{
 									color: colorScheme === "dark" ? 
-									primary.default : secondary.default
+										primary.default : secondary.default
 								}}
 							> {t("Enter your code")}</Text>
 						</TouchableOpacity>

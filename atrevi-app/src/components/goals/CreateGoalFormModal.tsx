@@ -211,9 +211,8 @@ const styles = StyleSheet.create({
 		lineHeight: 28,
 	},
 	estimateCard: {
-		height: 132,
 		flex: 1,
-		marginTop: 16,
+		marginVertical: 16,
 		marginBottom: 128,
 		borderRadius: 15,
 		borderWidth: 1,

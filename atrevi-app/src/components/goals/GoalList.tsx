@@ -90,10 +90,10 @@ const styles = StyleSheet.create({
 		fontSize: 28,
 	},
 	carouselContainer: {
-		height: 208
+		height: 208,
 	},
 	pagContainer: {
-		height: 8,
+		height: 32,
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
