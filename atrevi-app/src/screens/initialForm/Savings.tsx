@@ -47,11 +47,32 @@ export default function Savings({ navigation }: Props): React.ReactElement {
 						<Text style={{ fontSize: rf(14), color: "#fff" }}>2/3</Text>
 					</View>
 					{/* Heading */}
+
+					{/* Discription */}
+					<View style={styles.Discriptions}>
+						<Text style={styles.DiscriptionsFont}>
+							{t("How much do you save in a year?")}
+						</Text>
+					</View>
+					{/* Discription */}
+					{/* IncomeCard */}
+					<View>
+						<IncomeCard
+							value={formik.values.yearlySavings}
+							handleChange={(v) => formik.setFieldValue("yearlySavings", v)}
+							autoFocus
+						/>
+					</View>
+					{/* IncomeCard */}
+
+
 					{/* Detail */}
 					<View style={styles.IncomeDetail}>
 						<Text style={styles.DetailsFont}>{t("How often do you save money?")}</Text>
 					</View>
 					{/* Detail */}
+
+
 
 					{/* SavingCards */}
 					<SavingCard
@@ -85,21 +106,7 @@ export default function Savings({ navigation }: Props): React.ReactElement {
 						selected={formik.values.frequency}
 					/>
 					{/* SavingCards */}
-					{/* Discription */}
-					<View style={styles.Discriptions}>
-						<Text style={styles.DiscriptionsFont}>
-							{t("How much do you save in a year?")}
-						</Text>
-					</View>
-					{/* Discription */}
-					{/* IncomeCard */}
-					<View>
-						<IncomeCard
-							value={formik.values.yearlySavings}
-							handleChange={(v) => formik.setFieldValue("yearlySavings", v)}
-						/>
-					</View>
-					{/* IncomeCard */}
+
 					{/* Discription */}
 					<View style={styles.Discriptions}>
 						<Text style={styles.DiscriptionsFont}>

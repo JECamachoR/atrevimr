@@ -41,6 +41,7 @@ export default function Spending({ navigation }: Props): React.ReactElement {
 					handleChange={(v) => {
 						formik.setFieldValue("monthlyIncome", v)
 					}}
+					autoFocus
 				/>
 			</View>
 			{/* Cards */}

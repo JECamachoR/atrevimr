@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity } from "react-native"
-import { Screen, View, useThemeColor } from "../../components/Themed"
+import { Screen, View, useThemeColor, ScrollView } from "../../components/Themed"
 import * as React from "react"
 import useColorScheme from "../../hooks/useColorScheme"
 import HomeLogoDark from "../../assets/icons/HomeLogoDark"
@@ -37,33 +37,33 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 				goToCreateGoal={()=> navigation.navigate("CreateGoal")}
 				goToCreateMoneybox={()=> navigation.navigate("CreateMoneybox")}
 			/>
-
-			<View style={[styles.titleRow, goals.length || moneyboxes.length ? {paddingBottom: 0} : {}]} >
-				<View style={styles.logo} >
-					{colorScheme === "dark" ? <HomeLogoDark /> : <HomeLogoLight height={30} width={127} /> }
+			<ScrollView style={{flex: 1, backgroundColor: "#00000000"}}>
+				<View style={[styles.titleRow, goals.length || moneyboxes.length ? {paddingBottom: 0} : {}]} >
+					<View style={styles.logo} >
+						{colorScheme === "dark" ? <HomeLogoDark /> : <HomeLogoLight height={30} width={127} /> }
+					</View>
+					<View style={styles.rightHalfTitle} >
+						<TouchableOpacity
+							onPress={() => alert("notifications :)")}
+						>
+							<MaterialIcons name="notifications" size={36} color={iconColor} />
+						</TouchableOpacity>
+					</View>
 				</View>
-				<View style={styles.rightHalfTitle} >
-					<TouchableOpacity
-						onPress={() => alert("notifications :)")}
-					>
-						<MaterialIcons name="notifications" size={36} color={iconColor} />
-					</TouchableOpacity>
-				</View>
-			</View>
 
-			{ goals.length || moneyboxes.length ? 
-				<>
-					{ Boolean(goals.length) && <GoalList goals={goals} />}
-					<View style={{height: 16}}/>
-					{ Boolean(moneyboxes.length) && <MoneyboxList moneyboxes={moneyboxes} /> }
-				</>
-				:
-				<>
-					<CreateGoalCard goToCreateGoal={() => navigation.navigate("CreateGoal")} />
-					<CreateMoneyboxCard goToCreateMoneybox={() => navigation.navigate("CreateMoneybox")} />
-				</>
-			}
-
+				{ goals.length || moneyboxes.length ? 
+					<>
+						{ Boolean(goals.length) && <GoalList goals={goals} />}
+						<View style={{height: 16}}/>
+						{ Boolean(moneyboxes.length) && <MoneyboxList moneyboxes={moneyboxes} /> }
+					</>
+					:
+					<>
+						<CreateGoalCard goToCreateGoal={() => navigation.navigate("CreateGoal")} />
+						<CreateMoneyboxCard goToCreateMoneybox={() => navigation.navigate("CreateMoneybox")} />
+					</>
+				}
+			</ScrollView>
 			<RoundButton variant="plus" onPress={() => setPlusButtonModalOpen(true)} style={styles.roundButtonPosition}/>
 
 			{/* 

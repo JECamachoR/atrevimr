@@ -7,10 +7,11 @@ import { grayscale } from "../../constants/Colors"
 
 type Props = {
     value: number | undefined,
-    handleChange: (v: number | null) => void
+    handleChange: (v: number | null) => void,
+	autoFocus?: boolean
 }
 
-export default function IncomeCard({ value, handleChange }: Props): React.ReactElement {
+export default function IncomeCard({ value, handleChange, autoFocus }: Props): React.ReactElement {
 
 	return (
 		<View style={styles.container}>
@@ -25,6 +26,7 @@ export default function IncomeCard({ value, handleChange }: Props): React.ReactE
 				prefix="$"
 				suffix=" MXN"
 				precision={2}
+				autoFocus={autoFocus}
 			/>
 		</View>
 	)
