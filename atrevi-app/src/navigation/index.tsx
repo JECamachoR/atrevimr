@@ -60,10 +60,11 @@ function RootStackNavigator() {
 					)) as GraphQLResult<GetQuestionsQuery>
 					if (q.data?.getQuestions?.id) {
 						setInitialForm(true)
+						setLoading(false)
 					}
-					setLoading(false)
 				} catch (err) {
 					console.error(err)
+					setLoading(false)
 				}
 			}
 		})()

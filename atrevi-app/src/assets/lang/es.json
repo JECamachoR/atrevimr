@@ -187,5 +187,7 @@
 	"and new password": "y nueva contraseña",
 	"Forgot password": "Contraseña olvidada",
 	"Ok what's your phone number?": "Ok, ¿cuál es tu número de cel?",
-	"We sent a code to your phone": "Enviamos un código a tu celular"
+	"We sent a code to your phone": "Enviamos un código a tu celular",
+	"Notifications": "Notificaciones",
+	"You don't have any notifications": "No tienes ninguna notificación"
 }

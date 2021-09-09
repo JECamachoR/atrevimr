@@ -15,12 +15,14 @@ import GoalsContext from "../../contexts/GoalsContext"
 import MoneyboxesContext from "../../contexts/MoneyboxesContext"
 import GoalList from "../../components/goals/GoalList"
 import MoneyboxList from "../../components/moneyboxes/MoneyboxList"
+import NotificationsModal from "../../components/notifications/NotificationsModal"
 
 type Props = StackScreenProps<NavParamList, "Home">
 
 const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 
 	const [plusButtonModalOpen, setPlusButtonModalOpen] = React.useState(false)
+	const [notificationsOpen, setNotificationsOpen] = React.useState(false)
 
 	const colorScheme = useColorScheme()
 	const iconColor = useThemeColor({colorName: "iconColor"})
@@ -30,6 +32,8 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 
 	return (
 		<Screen>
+
+			<NotificationsModal visible={notificationsOpen} hideModal={() => setNotificationsOpen(false)} />
 
 			<PlusButtonModal 
 				visible={plusButtonModalOpen} 
@@ -44,7 +48,7 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 					</View>
 					<View style={styles.rightHalfTitle} >
 						<TouchableOpacity
-							onPress={() => alert("notifications :)")}
+							onPress={() => setNotificationsOpen(true)}
 						>
 							<MaterialIcons name="notifications" size={36} color={iconColor} />
 						</TouchableOpacity>
