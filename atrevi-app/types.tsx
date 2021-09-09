@@ -46,6 +46,7 @@ export type AuthParamList = {
         pass?: string
     } | undefined;
     ForgotPass: undefined;
+    NewPass: undefined;
 };
 
 export type InitialFormParamList = {

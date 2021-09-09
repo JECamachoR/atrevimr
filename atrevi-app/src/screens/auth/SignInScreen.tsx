@@ -59,14 +59,14 @@ const SignInScreen = ({ navigation } : Props): React.ReactElement => {
 										darkColor={primary.default}
 										lightColor={secondary.default}
 									>
-                                    {t("welcome")},
+										{t("welcome")},
 									</Text>
 									<Text
 										style={styles.title}
 										darkColor={primary.default}
 										lightColor={secondary.default}
 									>
-                                    {t("we've missed you")}
+										{t("we've missed you")}
 									</Text>
 								</View>
 								<PhoneNumberInput
@@ -106,7 +106,7 @@ const SignInScreen = ({ navigation } : Props): React.ReactElement => {
 
 								<TouchableOpacity
 									style={styles.forgotPass}
-									onPress={() => alert("Jajaja pos nimodo")}
+									onPress={() => navigation.navigate("ForgotPass")}
 								>
 									<Text 
 										style={{textDecorationLine: "underline"}}

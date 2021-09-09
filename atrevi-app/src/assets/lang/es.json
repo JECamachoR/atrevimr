@@ -182,6 +182,10 @@
 	"Events": "Eventos",
 	"Gadgets": "Dispositivos",
 	"General": "General",
-	"Category Home": "Hogar"
-
+	"Category Home": "Hogar",
+	"Write your code": "Ingresa tu código",
+	"and new password": "y nueva contraseña",
+	"Forgot password": "Contraseña olvidada",
+	"Ok what's your phone number?": "Ok, ¿cuál es tu número de cel?",
+	"We sent a code to your phone": "Enviamos un código a tu celular"
 }
