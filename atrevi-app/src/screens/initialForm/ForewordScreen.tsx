@@ -15,7 +15,7 @@ export default function ForewordScreen({ navigation }: Props): React.ReactElemen
 			<StatusBar style="dark" />
 			{/* Header */}
 			<View style={styles.Header}>
-				<Text style={{ fontSize: rf(20), fontWeight: "600" }}>You are special.</Text>
+				<Text style={{ fontSize: rf(20), fontWeight: "600" }}>{t("You are special")}.</Text>
 			</View>
 			{/* Header */}
 			{/* Discription */}

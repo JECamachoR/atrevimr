@@ -34,7 +34,7 @@ const PhoneVerificationScreen = ({ route : {params}, navigation}: Props): React.
 					if (params?.pass && params.phoneNumber) {
 						await Auth.signIn({username: params.phoneNumber, password: params.pass})
 					} else {
-						navigation.popToTop()
+						navigation.navigate("SignInScreen")
 					}
 				} catch (err) {
 					console.error("Error while confirming SignUp:", err)
@@ -75,8 +75,15 @@ const PhoneVerificationScreen = ({ route : {params}, navigation}: Props): React.
 						/>
 
 						<Button
+							title={t("Resend code")}
+							onPress={async () => {
+								Auth.resendSignUp(values.phoneNumber)
+							}}
+						/>
+
+						<Button
 							onPress={handleSubmit}
-							title="Enviar"
+							title={t("Submit")}
 						/>
 					</Screen>
 				)
