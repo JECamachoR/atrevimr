@@ -1,5 +1,5 @@
 import * as React from "react"
-import { StyleSheet } from "react-native"
+import { Linking, StyleSheet } from "react-native"
 import { Screen, View, Text } from "../../components/Themed"
 import { S3Image } from "aws-amplify-react-native"
 import Button from "../../components/Button"
@@ -33,7 +33,7 @@ const SettingsScreen = ({ navigation }: Props): React.ReactElement => {
 
 			<View style={styles.buttonsContainer}>
 				<Tab onPress={() => navigation.navigate("About")} title={t("About Atrevi")} top />
-				<Tab onPress={() => navigation.navigate("Support")} title={t("Support")} />
+				<Tab onPress={() => Linking.openURL("https://wa.me/message/BFVTMRGDZYIAC1")} title={t("Support")} />
 				<Tab onPress={() => navigation.navigate("ReportIssue")} title={t("Report an issue")} />
 				<Tab onPress={() => null} title={t("Feedback")} bottom />
 			</View>
