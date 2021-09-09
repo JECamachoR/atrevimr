@@ -22,6 +22,7 @@ import TransactionsContext from "../../contexts/TransactionsContext"
 import getSavingDate from "../../../functions/getSavingDate"
 import UserContext from "../../contexts/UserContext"
 import { daysOfTheWeek, frequencies } from "../../../types"
+import GoalsContext from "../../contexts/GoalsContext"
 
 type Props = {
     openCreateTransactionModal: () => void,
@@ -36,6 +37,7 @@ const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig, getHelp }
 	const moneyboxes = React.useContext(MoneyboxesContext)
 	const goalFund = React.useContext(GoalFundContext)
 	const user = React.useContext(UserContext)
+	const goalList = React.useContext(GoalsContext)
 
 	const [totalBalance, setTotalBalance] = React.useState<number>(0)
 	const [goalsProgress, setGoalsProgress] = React.useState<number>(0)
@@ -135,7 +137,9 @@ const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig, getHelp }
 				</View>
 				<TouchableOpacity
 					onPress={() => {
-						if (goals.length || moneybox.length) openCreateTransactionModal()
+						if (goalList.length || moneyboxes.length) {
+							openCreateTransactionModal()
+						}
 					}}
 				>
 					<View 
