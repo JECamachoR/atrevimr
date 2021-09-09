@@ -5,7 +5,7 @@ import { useThemeColor } from "./Themed"
 
 interface ButtonProps {
     title: string;
-    lightVariant?: "primary" | "secondary" | "error" | "success" | "successDark" //| "info" | "default";
+    lightVariant?: "primary" | "secondary" | "secondaryDark" | "error" | "success" | "successDark" //| "info" | "default";
     darkModeVariant?: ButtonProps["lightVariant"]
     onPress: () => void;
 	inactive?: boolean,
@@ -87,6 +87,10 @@ const styles = StyleSheet.create({
 	successDark: {
 		backgroundColor: success.dark,
 		color: grayscale.offWhite
+	},
+	secondaryDark: {
+		backgroundColor: secondary.dark,
+		color: grayscale.offWhite,
 	},
 	common: {
 		fontFamily: "Poppins_600SemiBold",

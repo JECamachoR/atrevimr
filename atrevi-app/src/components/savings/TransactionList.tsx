@@ -7,6 +7,7 @@ import TransactionsContext from "../../contexts/TransactionsContext"
 import { useThemeColor, View } from "../Themed"
 import TransactionListHeader from "./TransactionListHeader"
 import TransactionListItem from "./TransactionListItem"
+import WhatIsSavings from "./WhatIsSavings"
 
 const Separator = () => {
 	const separatorColor = useThemeColor({colorName: "line"})
@@ -21,6 +22,14 @@ const TransactionList = (): React.ReactElement => {
 	const mbs = React.useContext(MoneyboxesContext)
 	const goalFund = React.useContext(GoalFundContext)
 
+	if (!transactions.length){
+		console.log("Here")
+		return (
+			<View style={[styles.container, {paddingTop: 16}]}>
+				<WhatIsSavings />
+			</View>
+		)
+	}
 	return (
 		<View style={styles.container}>
 			<FlatList
@@ -31,7 +40,7 @@ const TransactionList = (): React.ReactElement => {
 							return {fund: mbs.find((m) => m.id === v.fundID), ...v}
 						})
 						.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)
-					}
+				}
 				renderItem={({item}) => <TransactionListItem transaction={item} />}
 				keyExtractor={(_, index) => "" + index}
 				ListHeaderComponent={TransactionListHeader}

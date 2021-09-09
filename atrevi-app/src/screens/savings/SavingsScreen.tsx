@@ -27,7 +27,9 @@ const SavingsScreen = ({ navigation }: Props): React.ReactElement => {
 				openConfig={() => navigation.navigate("UpdateSavings")}
 				getHelp={() => navigation.navigate("Web", {url: "https://google.com"})}
 			/>
+			
 			<TransactionList />
+			
 		</Screen>
 	)
 }
