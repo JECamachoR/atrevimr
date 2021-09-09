@@ -134,7 +134,9 @@ const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig, getHelp }
 					</Text>
 				</View>
 				<TouchableOpacity
-					onPress={openCreateTransactionModal}
+					onPress={() => {
+						if (goals.length || moneybox.length) openCreateTransactionModal()
+					}}
 				>
 					<View 
 						style={styles.nrContainer}
