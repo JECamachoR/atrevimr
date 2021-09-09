@@ -21,6 +21,7 @@ import { GetQuestionsQuery, OnCreateQuestionsSubscription } from "../API"
 import InitialFormStackNavigator from "./InitialFormStackNavigator"
 import { onCreateQuestions } from "../graphql/subscriptions"
 import { Observable } from "zen-observable-ts"
+import WebScreen from "../screens/WebScreen"
 
 i18n.translations = {
 	en,
@@ -116,6 +117,7 @@ function RootStackNavigator() {
 						<Stack.Screen name="Auth" component={AuthStackNavigator} />
 				}
 				<Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
+				<Stack.Screen name="Web" component={WebScreen} options={{ headerShown: true }}/>
 			</Stack.Navigator>
 		</AuthContext.Provider>
 	)

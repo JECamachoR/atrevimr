@@ -8,6 +8,9 @@ export type RootStackParamList = {
     Auth: undefined
     InitialForm: undefined;
     NotFound: undefined;
+    Web: {
+        url: string
+    }
 };
  
 export type BottomTabBarParamList = {
@@ -25,7 +28,7 @@ export type HomeStackParamList = {
 export type SavingsStackParamList = {
     Savings: undefined,
     UpdateSavings: undefined
-}
+} & NavParamList
 
 export type SettingsStackParamList = {
     Settings: undefined,
@@ -47,7 +50,7 @@ export type AuthParamList = {
     } | undefined;
     ForgotPass: undefined;
     NewPass: undefined;
-};
+}
 
 export type InitialFormParamList = {
     ForewordScreen: undefined;

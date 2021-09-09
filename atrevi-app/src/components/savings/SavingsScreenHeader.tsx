@@ -25,10 +25,11 @@ import { daysOfTheWeek, frequencies } from "../../../types"
 
 type Props = {
     openCreateTransactionModal: () => void,
-	openConfig: () => void
+	openConfig: () => void,
+	getHelp: () => void
 }
 
-const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig }: Props): React.ReactElement => {
+const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig, getHelp }: Props): React.ReactElement => {
 
 	const auth = React.useContext(AuthContext)
 	const transactions = React.useContext(TransactionsContext)
@@ -116,11 +117,14 @@ const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig }: Props):
 				<View style={styles.left}>
 					<Text style={styles.title}>{i18n.t("Savings")}</Text>
 				</View>
-				<View style={styles.right}>
-					<TouchableOpacity onPress={openConfig}>
+				<Row style={styles.right}>
+					<TouchableOpacity style={{marginLeft: 8}} onPress={getHelp}>
+						<MaterialIcons name="help" size={30} color={grayscale.offWhite} />
+					</TouchableOpacity>
+					<TouchableOpacity style={{marginLeft: 8}} onPress={openConfig}>
 						<MaterialIcons name="settings" size={30} color={grayscale.offWhite} />
 					</TouchableOpacity>
-				</View>
+				</Row>
 			</Row>
 			<Row style={[styles.balanceRow, {borderColor: divColor}]}>
 				<View style={styles.left}>
@@ -220,8 +224,8 @@ const styles = StyleSheet.create({
 	},
 	right: {
 		flex: 1,
-		alignItems: "flex-end",
-		justifyContent: "center",
+		alignItems: "center",
+		justifyContent: "flex-end",
 		backgroundColor: "#00000000",
 	},
 	left: {

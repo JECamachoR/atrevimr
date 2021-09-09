@@ -25,6 +25,7 @@ const SavingsScreen = ({ navigation }: Props): React.ReactElement => {
 			<SavingsScreenHeader 
 				openCreateTransactionModal={() => setCreateTransactionModalShown(true)}
 				openConfig={() => navigation.navigate("UpdateSavings")}
+				getHelp={() => navigation.navigate("Web", {url: "https://google.com"})}
 			/>
 			<TransactionList />
 		</Screen>
