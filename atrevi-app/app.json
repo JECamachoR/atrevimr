@@ -20,7 +20,8 @@
 		],
 		"ios": {
 			"supportsTablet": true,
-			"bundleIdentifier": "mx.atrevi.app"
+			"bundleIdentifier": "mx.atrevi.app",
+			"buildNumber": "3"
 		},
 		"android": {
 			"adaptiveIcon": {
@@ -28,7 +29,7 @@
 				"backgroundColor": "#FFCC00"
 			},
 			"package": "mx.atrevi.app",
-			"versionCode": 2
+			"versionCode": 4
 		},
 		"web": {
 			"favicon": "./src/assets/images/icon.png"
