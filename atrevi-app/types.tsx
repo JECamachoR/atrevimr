@@ -36,7 +36,7 @@ export type SettingsStackParamList = {
     Support: undefined,
     About: undefined,
     PrivacyNotice: undefined,
-}
+} & NavParamList
  
 export type AuthParamList = {
     WelcomeScreen: undefined;

@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Linking, StyleSheet } from "react-native"
-import { Screen, View, Text } from "../../components/Themed"
+import { Screen, View, Text, ScrollView } from "../../components/Themed"
 import { S3Image } from "aws-amplify-react-native"
 import Button from "../../components/Button"
 import Auth from "@aws-amplify/auth"
@@ -19,24 +19,38 @@ const SettingsScreen = ({ navigation }: Props): React.ReactElement => {
 
 	return (
 		<Screen style={styles.screen}>
-			<StatusBar style="dark" />
-			<View style={styles.head}>
-				<View style={styles.imgContainer}>
-					<S3Image imgKey={user.phone} style={{
-						height: "100%",
-						width: "100%",
-					}} />
+			<ScrollView>
+				<StatusBar style="dark" />
+				<View style={styles.head}>
+					<View style={styles.imgContainer}>
+						<S3Image imgKey={user.phone} style={{
+							height: "100%",
+							width: "100%",
+						}} />
+					</View>
+					<Text style={styles.name}>{user.name}</Text>
+					<Text style={styles.phone}>{user.phone}</Text>
 				</View>
-				<Text style={styles.name}>{user.name}</Text>
-				<Text style={styles.phone}>{user.phone}</Text>
-			</View>
 
-			<View style={styles.buttonsContainer}>
-				<Tab onPress={() => navigation.navigate("About")} title={t("About Atrevi")} top />
-				<Tab onPress={() => Linking.openURL("https://wa.me/message/BFVTMRGDZYIAC1")} title={t("Support")} />
-				<Tab onPress={() => navigation.navigate("ReportIssue")} title={t("Report an issue")} />
-				<Tab onPress={() => null} title={t("Feedback")} bottom />
-			</View>
+				<View style={styles.buttonsContainer}>
+					<Tab onPress={() => navigation.navigate("About")} title={t("About Atrevi")} top />
+					<Tab onPress={() => Linking.openURL("https://wa.me/message/BFVTMRGDZYIAC1")} title={t("Support")} />
+					<Tab
+						onPress={() => navigation.navigate("Web", {
+							url: "https://help-center-atrevi.webflow.io/"
+						})} 
+						title="FAQ"
+					/>
+					<Tab onPress={() => navigation.navigate("Web", {
+						url: "https://help-center-atrevi.webflow.io/comentarios-y-sugerencias"
+					})} title={t("Feedback")} />
+					<Tab 
+						onPress={() => navigation.navigate("ReportIssue")} 
+						title={t("Report an issue")} 
+						bottom
+					/>
+				</View>
+			</ScrollView>
 			<Button title="Log Out" onPress={() => Auth.signOut()}/>
 		</Screen>
 	)

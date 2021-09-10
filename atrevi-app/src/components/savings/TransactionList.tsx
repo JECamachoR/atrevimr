@@ -1,6 +1,5 @@
 import * as React from "react"
-import { StyleSheet } from "react-native"
-import { FlatList } from "react-native-gesture-handler"
+import { FlatList, ScrollView, StyleSheet } from "react-native"
 import GoalFundContext from "../../contexts/GoalFundContext"
 import MoneyboxesContext from "../../contexts/MoneyboxesContext"
 import TransactionsContext from "../../contexts/TransactionsContext"
@@ -25,13 +24,13 @@ const TransactionList = ({ getHelp }: Props): React.ReactElement => {
 	const transactions = React.useContext(TransactionsContext)
 	const mbs = React.useContext(MoneyboxesContext)
 	const goalFund = React.useContext(GoalFundContext)
-
+	const bg = useThemeColor({colorName: "background"})
 	if (!transactions.length){
 		console.log("Here")
 		return (
-			<View style={[styles.container, {paddingTop: 16}]}>
+			<ScrollView style={[styles.container, {paddingTop: 16, backgroundColor: bg}]}>
 				<WhatIsSavings getHelp={getHelp} />
-			</View>
+			</ScrollView>
 		)
 	}
 	return (
