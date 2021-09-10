@@ -65,7 +65,10 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 			console.error(err)
 		}
 	}
-
+	const iconColor = useThemeColor({colors: {
+		light: grayscale.offWhite,
+		dark: primary.default,
+	}})
 	return (
 		<Screen style={styles.screen}
 			lightColor={secondary.default}
@@ -83,10 +86,7 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 			<Row style={styles.head}>
 				<View style={styles.headLeft}>
 					<TouchableOpacity onPress={()=>navigation.goBack()}>
-						<MaterialIcons name="arrow-back" size={30} color={useThemeColor({colors: {
-							light: grayscale.offWhite,
-							dark: primary.default,
-						}})} />
+						<MaterialIcons name="arrow-back" size={30} color={iconColor} />
 					</TouchableOpacity>
 				</View>
 				<View style={styles.headCenter}>
@@ -96,7 +96,14 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 						style={styles.title}
 					>{t("Create a Goal")}</Text>
 				</View>
-				<View style={styles.headRight}></View>
+				<TouchableOpacity
+					style={styles.headRight}
+					onPress={() => navigation.navigate("Web", {
+						url: "https://help-center-atrevi.webflow.io/article/metas-y-alcancias"
+					})}
+				>
+					<MaterialIcons name="help" size={30} color={iconColor} />
+				</TouchableOpacity>
 			</Row>
 
 			<ScrollView style={{flex: 1, backgroundColor: "#00000000"}}>
