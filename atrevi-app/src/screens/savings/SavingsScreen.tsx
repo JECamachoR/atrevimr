@@ -25,10 +25,10 @@ const SavingsScreen = ({ navigation }: Props): React.ReactElement => {
 			<SavingsScreenHeader 
 				openCreateTransactionModal={() => setCreateTransactionModalShown(true)}
 				openConfig={() => navigation.navigate("UpdateSavings")}
-				getHelp={() => navigation.navigate("Web", {url: "https://google.com"})}
+				getHelp={() => navigation.navigate("Web", {url: "https://help-center-atrevi.webflow.io/article/ahorro"})}
 			/>
 			
-			<TransactionList />
+			<TransactionList getHelp={() => navigation.navigate("Web", {url: "https://help-center-atrevi.webflow.io/article/ahorro"})} />
 			
 		</Screen>
 	)

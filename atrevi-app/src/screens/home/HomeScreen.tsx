@@ -48,6 +48,13 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 					</View>
 					<View style={styles.rightHalfTitle} >
 						<TouchableOpacity
+							onPress={() => navigation.navigate("Web", {
+								url: "https://help-center-atrevi.webflow.io/"
+							})}
+						>
+							<MaterialIcons name="help" size={36} color={iconColor} />
+						</TouchableOpacity>
+						<TouchableOpacity
 							onPress={() => setNotificationsOpen(true)}
 						>
 							<MaterialIcons name="notifications" size={36} color={iconColor} />
@@ -107,8 +114,9 @@ const styles = StyleSheet.create({
 	},
 	rightHalfTitle: {
 		flex: 1,
+		flexDirection: "row",
+		alignItems: "center",
 		justifyContent: "flex-end",
-		flexDirection: "row"
 	},
 	goalList: {
 		flex: 1,

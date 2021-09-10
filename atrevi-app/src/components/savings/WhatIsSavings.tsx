@@ -6,9 +6,11 @@ import { primary, secondary } from "../../constants/Colors"
 import Button from "../Button"
 import { View, Text, useThemeColor } from "../Themed"
 
+type Props = {
+	getHelp: () => void
+}
 
-
-const WhatIsSavings = (): React.ReactElement => {
+const WhatIsSavings = ({ getHelp }: Props): React.ReactElement => {
 
 	const line = useThemeColor({colorName: "line"})
 	const ph = useThemeColor({colorName: "inputBackground"})
@@ -38,7 +40,7 @@ const WhatIsSavings = (): React.ReactElement => {
 				</View>
 				<Button
 					title={t("Read article")}
-					onPress={() => null}
+					onPress={getHelp}
 					lightVariant="secondaryDark"
 				/>
 			</View>

@@ -2,7 +2,7 @@
 	"expo": {
 		"name": "Atrevi",
 		"slug": "atrevi",
-		"version": "0.1.1",
+		"version": "0.2.0",
 		"orientation": "portrait",
 		"icon": "./src/assets/images/icon.png",
 		"scheme": "myapp",
@@ -27,7 +27,8 @@
 				"foregroundImage": "./src/assets/images/icon.png",
 				"backgroundColor": "#FFCC00"
 			},
-			"package": "mx.atrevi.app"
+			"package": "mx.atrevi.app",
+			"versionCode": 2
 		},
 		"web": {
 			"favicon": "./src/assets/images/icon.png"

@@ -16,7 +16,11 @@ const Separator = () => {
 	)
 }
 
-const TransactionList = (): React.ReactElement => {
+type Props = {
+	getHelp: () => void
+}
+
+const TransactionList = ({ getHelp }: Props): React.ReactElement => {
 
 	const transactions = React.useContext(TransactionsContext)
 	const mbs = React.useContext(MoneyboxesContext)
@@ -26,7 +30,7 @@ const TransactionList = (): React.ReactElement => {
 		console.log("Here")
 		return (
 			<View style={[styles.container, {paddingTop: 16}]}>
-				<WhatIsSavings />
+				<WhatIsSavings getHelp={getHelp} />
 			</View>
 		)
 	}
