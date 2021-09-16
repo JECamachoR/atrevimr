@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import * as React from "react"
-import { StyleSheet } from "react-native"
+import { Platform, StyleSheet } from "react-native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import HomeStackNavigator from "./HomeStackNavigator"
 import SavingsStackNavigator from "./SavingsStackNavigator"
@@ -31,6 +31,19 @@ import AuthContext from "../auth/AuthContext"
 import Loading from "../components/Loading"
 import CreateProfileForm from "../screens/settings/CreateProfileForm"
 import UserContext from "../contexts/UserContext"
+import * as Notifications from "expo-notifications"
+import getSavingDate from "../../functions/getSavingDate"
+import { daysOfTheWeek, frequencies } from "../../types"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { t } from "i18n-js"
+import { CalendarNotificationTrigger, CalendarTriggerInput, YearlyNotificationTrigger, YearlyTriggerInput } from "expo-notifications"
+
+export interface WeeklyNotificationTrigger {
+    type: "weekly";
+    weekday: number;
+    hour: number;
+    minute: number;
+}
 
 const BottomTab = createBottomTabNavigator()
 
@@ -253,6 +266,85 @@ const BottomTabNavigator = (): React.ReactElement => {
 			onTransactionCreation.unsubscribe()
 		}
 	}, [])
+
+	React.useEffect(() => {
+		const getNotifications = async () => {
+			if (
+				!loading
+                && ( !user?.DOTW
+                ||
+                !user.frequency
+                )
+			) return
+			try {
+
+				const notificationID = await AsyncStorage.getItem("atrevi-savings-notification")
+
+				const arr = await Notifications.getAllScheduledNotificationsAsync()
+
+				const sd = new Date(
+					getSavingDate(new Date(), user?.frequency as frequencies, user?.DOTW as daysOfTheWeek)
+				)
+				const day = sd.getDate()
+				const month = sd.getMonth()
+				const trigger = (Platform.OS === "ios") ? 
+                { dateComponents: { year: sd.getFullYear(), day, month, hour: 10, minute: 0 }
+                } as CalendarTriggerInput
+					:
+                { day, month, hour: 10, minute: 0, repeats: true
+                } as YearlyTriggerInput
+
+				const currN = arr.find(v => v.identifier === notificationID)
+
+				const compare = () => {
+					if (
+						!currN
+                        ||
+                        !notificationID
+					) return false
+					if (Platform.OS === "ios") {
+						const currNTrigger = currN?.trigger as CalendarNotificationTrigger
+						return currNTrigger.dateComponents?.day === day &&
+                            currNTrigger.dateComponents.month === month &&
+                            currNTrigger.dateComponents.year === sd.getFullYear()
+					} else {
+						const currNTrigger = currN?.trigger as YearlyNotificationTrigger
+						return currNTrigger.day === day && 
+                            currNTrigger.month === month
+					}
+				}
+
+                
+				if (
+					!compare()
+				) {
+					if (notificationID) {
+						await Notifications.cancelScheduledNotificationAsync(notificationID)
+					}
+					const newID = await Notifications.scheduleNotificationAsync({
+						content: {
+							title: t("notification-title"),
+							body: t("notification-body"),
+						},
+						trigger,
+					})
+					await AsyncStorage.setItem("atrevi-savings-notification", newID || "")
+				} 
+			} catch (e) {
+				console.error(e)
+			}
+		}
+		getNotifications()
+
+		const ns = Notifications.addNotificationReceivedListener(async n => {
+			const prevN = JSON.parse(await AsyncStorage.getItem("atrevi-notification-list") || "")
+			const newN = [...prevN, n]
+			AsyncStorage.setItem("atrevi-notification-list", JSON.stringify(newN))
+		})
+		return () => ns.remove()
+	}, [
+		user
+	])
 
 	const insets = useSafeAreaInsets()
 

@@ -37,7 +37,6 @@ const UpdateSavings = ({ navigation }: Props): React.ReactElement => {
 				frequency: user.frequency as frequencies,
 			}}
 			onSubmit={async (v) => {
-				console.log("submitted")
 				try {
 					await API.graphql(graphqlOperation(
 						updateUser,

@@ -1,4 +1,6 @@
-{
+import notifications from "./notifications/es.json"
+
+const es = {
 	"Home": "Inicio",
 	"Savings": "Ahorros",
 	"Settings": "Ajustes",
@@ -194,5 +196,7 @@
 	"Learn more about our": "Conoce cómo funciona la ",
 	"savings record tool": "herramienta de registro",
 	"You are special": "Eres especial",
-	"Resend code": "Reenviar código"
+	"Resend code": "Reenviar código",
+	...notifications
 }
+export default es

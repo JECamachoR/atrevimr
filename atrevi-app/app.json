@@ -2,7 +2,7 @@
 	"expo": {
 		"name": "Atrevi",
 		"slug": "atrevi",
-		"version": "0.2.0",
+		"version": "0.2.1",
 		"orientation": "portrait",
 		"icon": "./src/assets/images/icon.png",
 		"scheme": "myapp",
@@ -21,7 +21,7 @@
 		"ios": {
 			"supportsTablet": true,
 			"bundleIdentifier": "mx.atrevi.app",
-			"buildNumber": "3"
+			"buildNumber": "1"
 		},
 		"android": {
 			"adaptiveIcon": {
@@ -33,6 +33,16 @@
 		},
 		"web": {
 			"favicon": "./src/assets/images/icon.png"
-		}
+		},
+		"plugins": [
+			[
+				"expo-notifications",
+				{
+					"icon": "./src/assets/images/notification.png",
+					"color": "#ffffff",
+					"mode": "development"
+				}
+			]
+		]
 	}
 }
