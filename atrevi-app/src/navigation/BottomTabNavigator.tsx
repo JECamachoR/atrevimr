@@ -271,10 +271,10 @@ const BottomTabNavigator = (): React.ReactElement => {
 		const getNotifications = async () => {
 			if (
 				!loading
-                && ( !user?.DOTW
+                ||
+                !user?.DOTW
                 ||
                 !user.frequency
-                )
 			) return
 			try {
 
@@ -336,10 +336,16 @@ const BottomTabNavigator = (): React.ReactElement => {
 		}
 		getNotifications()
 
-		const ns = Notifications.addNotificationReceivedListener(async n => {
-			const prevN = JSON.parse(await AsyncStorage.getItem("atrevi-notification-list") || "")
-			const newN = [...prevN, n]
-			AsyncStorage.setItem("atrevi-notification-list", JSON.stringify(newN))
+		const ns = Notifications.addNotificationReceivedListener(n => {
+			(async () => {
+				try {
+					const prevN = JSON.parse(await AsyncStorage.getItem("atrevi-notification-list") || "[]")
+					const newN = [...prevN, n]
+					await AsyncStorage.setItem("atrevi-notification-list", JSON.stringify(newN))
+				} catch (e) {
+					console.error(e)
+				}
+			})()
 		})
 		return () => ns.remove()
 	}, [
