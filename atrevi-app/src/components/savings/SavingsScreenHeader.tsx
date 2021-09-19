@@ -19,9 +19,9 @@ import { onUpdateUser } from "../../graphql/subscriptions"
 import MoneyboxesContext from "../../contexts/MoneyboxesContext"
 import GoalFundContext from "../../contexts/GoalFundContext"
 import TransactionsContext from "../../contexts/TransactionsContext"
-import getSavingDate from "../../../functions/getSavingDate"
+import getSavingDate from "../../../../functions/getSavingDate"
 import UserContext from "../../contexts/UserContext"
-import { daysOfTheWeek, frequencies } from "../../../types"
+import { daysOfTheWeek, frequencies } from "../../../../types"
 import GoalsContext from "../../contexts/GoalsContext"
 
 type Props = {

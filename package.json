@@ -1,4 +1,9 @@
 {
+	"name": "atrevi-monorepo",
+	"private": true,
+	"workspaces": [
+		"admin"
+	],
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "4.30.0",
 		"@typescript-eslint/parser": "4.30.0",
