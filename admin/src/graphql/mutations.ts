@@ -170,12 +170,12 @@ export const deleteGoal = /* GraphQL */ `
     }
   }
 `;
-export const createPremadeGoal = /* GraphQL */ `
-  mutation CreatePremadeGoal(
-    $input: CreatePremadeGoalInput!
-    $condition: ModelPremadeGoalConditionInput
+export const createPrebakedGoal = /* GraphQL */ `
+  mutation CreatePrebakedGoal(
+    $input: CreatePrebakedGoalInput!
+    $condition: ModelPrebakedGoalConditionInput
   ) {
-    createPremadeGoal(input: $input, condition: $condition) {
+    createPrebakedGoal(input: $input, condition: $condition) {
       id
       name
       ammount
@@ -186,12 +186,12 @@ export const createPremadeGoal = /* GraphQL */ `
     }
   }
 `;
-export const updatePremadeGoal = /* GraphQL */ `
-  mutation UpdatePremadeGoal(
-    $input: UpdatePremadeGoalInput!
-    $condition: ModelPremadeGoalConditionInput
+export const updatePrebakedGoal = /* GraphQL */ `
+  mutation UpdatePrebakedGoal(
+    $input: UpdatePrebakedGoalInput!
+    $condition: ModelPrebakedGoalConditionInput
   ) {
-    updatePremadeGoal(input: $input, condition: $condition) {
+    updatePrebakedGoal(input: $input, condition: $condition) {
       id
       name
       ammount
@@ -202,12 +202,12 @@ export const updatePremadeGoal = /* GraphQL */ `
     }
   }
 `;
-export const deletePremadeGoal = /* GraphQL */ `
-  mutation DeletePremadeGoal(
-    $input: DeletePremadeGoalInput!
-    $condition: ModelPremadeGoalConditionInput
+export const deletePrebakedGoal = /* GraphQL */ `
+  mutation DeletePrebakedGoal(
+    $input: DeletePrebakedGoalInput!
+    $condition: ModelPrebakedGoalConditionInput
   ) {
-    deletePremadeGoal(input: $input, condition: $condition) {
+    deletePrebakedGoal(input: $input, condition: $condition) {
       id
       name
       ammount
@@ -231,6 +231,15 @@ export const createFund = /* GraphQL */ `
       recurringAmmount
       category
       unsplashIMG
+      prebakedFundID
+      prebakedFund {
+        id
+        name
+        category
+        unsplashIMG
+        createdAt
+        updatedAt
+      }
       transactions {
         nextToken
       }
@@ -252,6 +261,15 @@ export const updateFund = /* GraphQL */ `
       recurringAmmount
       category
       unsplashIMG
+      prebakedFundID
+      prebakedFund {
+        id
+        name
+        category
+        unsplashIMG
+        createdAt
+        updatedAt
+      }
       transactions {
         nextToken
       }
@@ -273,9 +291,63 @@ export const deleteFund = /* GraphQL */ `
       recurringAmmount
       category
       unsplashIMG
+      prebakedFundID
+      prebakedFund {
+        id
+        name
+        category
+        unsplashIMG
+        createdAt
+        updatedAt
+      }
       transactions {
         nextToken
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createPrebakedFund = /* GraphQL */ `
+  mutation CreatePrebakedFund(
+    $input: CreatePrebakedFundInput!
+    $condition: ModelPrebakedFundConditionInput
+  ) {
+    createPrebakedFund(input: $input, condition: $condition) {
+      id
+      name
+      category
+      unsplashIMG
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updatePrebakedFund = /* GraphQL */ `
+  mutation UpdatePrebakedFund(
+    $input: UpdatePrebakedFundInput!
+    $condition: ModelPrebakedFundConditionInput
+  ) {
+    updatePrebakedFund(input: $input, condition: $condition) {
+      id
+      name
+      category
+      unsplashIMG
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deletePrebakedFund = /* GraphQL */ `
+  mutation DeletePrebakedFund(
+    $input: DeletePrebakedFundInput!
+    $condition: ModelPrebakedFundConditionInput
+  ) {
+    deletePrebakedFund(input: $input, condition: $condition) {
+      id
+      name
+      category
+      unsplashIMG
       createdAt
       updatedAt
     }
@@ -300,6 +372,7 @@ export const createTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
+        prebakedFundID
         createdAt
         updatedAt
       }
@@ -327,6 +400,7 @@ export const updateTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
+        prebakedFundID
         createdAt
         updatedAt
       }
@@ -354,6 +428,7 @@ export const deleteTransaction = /* GraphQL */ `
         recurringAmmount
         category
         unsplashIMG
+        prebakedFundID
         createdAt
         updatedAt
       }

@@ -11,5 +11,18 @@
       "StackId": "arn:aws:cloudformation:us-east-1:963673112435:stack/amplify-atrevi-dev-205229/f1772730-0934-11ec-a9b8-0a1e17b4f729",
       "AmplifyAppId": "d21wrc494k04rr"
     }
+  },
+  "alpha": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-atrevi-alpha-185544-authRole",
+      "UnauthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-alpha-185544-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-alpha-185544-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-atrevi-alpha-185544-deployment",
+      "UnauthRoleName": "amplify-atrevi-alpha-185544-unauthRole",
+      "StackName": "amplify-atrevi-alpha-185544",
+      "StackId": "arn:aws:cloudformation:us-east-1:963673112435:stack/amplify-atrevi-alpha-185544/74066e80-11c9-11ec-84c0-1280c4347c81",
+      "AmplifyAppId": "d21wrc494k04rr"
+    }
   }
 }

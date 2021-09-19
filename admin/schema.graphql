@@ -23,12 +23,12 @@ type Goal {
   unsplashIMG: AWSJSON
   category: String!
   premadeGoalID: ID
-  PremadeGoal: PremadeGoal
+  PremadeGoal: PrebakedGoal
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
 
-type PremadeGoal {
+type PrebakedGoal {
   id: ID!
   name: String!
   ammount: Float!
@@ -46,7 +46,18 @@ type Fund {
   recurringAmmount: Float
   category: String
   unsplashIMG: AWSJSON
+  prebakedFundID: ID
+  prebakedFund: PrebakedFund
   transactions(filter: ModelTransactionFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelTransactionConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type PrebakedFund {
+  id: ID!
+  name: String!
+  category: String!
+  unsplashIMG: AWSJSON
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -194,10 +205,12 @@ type Query {
   listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection
   getGoal(id: ID!): Goal
   listGoals(filter: ModelGoalFilterInput, limit: Int, nextToken: String): ModelGoalConnection
-  getPremadeGoal(id: ID!): PremadeGoal
-  listPremadeGoals(filter: ModelPremadeGoalFilterInput, limit: Int, nextToken: String): ModelPremadeGoalConnection
+  getPrebakedGoal(id: ID!): PrebakedGoal
+  listPrebakedGoals(filter: ModelPrebakedGoalFilterInput, limit: Int, nextToken: String): ModelPrebakedGoalConnection
   getFund(id: ID!): Fund
   listFunds(filter: ModelFundFilterInput, limit: Int, nextToken: String): ModelFundConnection
+  getPrebakedFund(id: ID!): PrebakedFund
+  listPrebakedFunds(filter: ModelPrebakedFundFilterInput, limit: Int, nextToken: String): ModelPrebakedFundConnection
   getTransaction(id: ID!): Transaction
   listTransactions(filter: ModelTransactionFilterInput, limit: Int, nextToken: String): ModelTransactionConnection
   getQuestions(id: ID!): Questions
@@ -237,12 +250,15 @@ type Mutation {
   createGoal(input: CreateGoalInput!, condition: ModelGoalConditionInput): Goal
   updateGoal(input: UpdateGoalInput!, condition: ModelGoalConditionInput): Goal
   deleteGoal(input: DeleteGoalInput!, condition: ModelGoalConditionInput): Goal
-  createPremadeGoal(input: CreatePremadeGoalInput!, condition: ModelPremadeGoalConditionInput): PremadeGoal
-  updatePremadeGoal(input: UpdatePremadeGoalInput!, condition: ModelPremadeGoalConditionInput): PremadeGoal
-  deletePremadeGoal(input: DeletePremadeGoalInput!, condition: ModelPremadeGoalConditionInput): PremadeGoal
+  createPrebakedGoal(input: CreatePrebakedGoalInput!, condition: ModelPrebakedGoalConditionInput): PrebakedGoal
+  updatePrebakedGoal(input: UpdatePrebakedGoalInput!, condition: ModelPrebakedGoalConditionInput): PrebakedGoal
+  deletePrebakedGoal(input: DeletePrebakedGoalInput!, condition: ModelPrebakedGoalConditionInput): PrebakedGoal
   createFund(input: CreateFundInput!, condition: ModelFundConditionInput): Fund
   updateFund(input: UpdateFundInput!, condition: ModelFundConditionInput): Fund
   deleteFund(input: DeleteFundInput!, condition: ModelFundConditionInput): Fund
+  createPrebakedFund(input: CreatePrebakedFundInput!, condition: ModelPrebakedFundConditionInput): PrebakedFund
+  updatePrebakedFund(input: UpdatePrebakedFundInput!, condition: ModelPrebakedFundConditionInput): PrebakedFund
+  deletePrebakedFund(input: DeletePrebakedFundInput!, condition: ModelPrebakedFundConditionInput): PrebakedFund
   createTransaction(input: CreateTransactionInput!, condition: ModelTransactionConditionInput): Transaction
   updateTransaction(input: UpdateTransactionInput!, condition: ModelTransactionConditionInput): Transaction
   deleteTransaction(input: DeleteTransactionInput!, condition: ModelTransactionConditionInput): Transaction
@@ -265,21 +281,24 @@ input ModelUserConditionInput {
 }
 
 type Subscription {
-  onCreateUser(id: String!): User @aws_subscribe(mutations: ["createUser"])
-  onUpdateUser(id: String!): User @aws_subscribe(mutations: ["updateUser"])
-  onDeleteUser(id: String!): User @aws_subscribe(mutations: ["deleteUser"])
-  onCreateGoal(owner: String!): Goal @aws_subscribe(mutations: ["createGoal"])
-  onUpdateGoal(owner: String!): Goal @aws_subscribe(mutations: ["updateGoal"])
-  onDeleteGoal(owner: String!): Goal @aws_subscribe(mutations: ["deleteGoal"])
-  onCreatePremadeGoal: PremadeGoal @aws_subscribe(mutations: ["createPremadeGoal"])
-  onUpdatePremadeGoal: PremadeGoal @aws_subscribe(mutations: ["updatePremadeGoal"])
-  onDeletePremadeGoal: PremadeGoal @aws_subscribe(mutations: ["deletePremadeGoal"])
-  onCreateFund(owner: String!): Fund @aws_subscribe(mutations: ["createFund"])
-  onUpdateFund(owner: String!): Fund @aws_subscribe(mutations: ["updateFund"])
-  onDeleteFund(owner: String!): Fund @aws_subscribe(mutations: ["deleteFund"])
-  onCreateTransaction(owner: String!): Transaction @aws_subscribe(mutations: ["createTransaction"])
-  onUpdateTransaction(owner: String!): Transaction @aws_subscribe(mutations: ["updateTransaction"])
-  onDeleteTransaction(owner: String!): Transaction @aws_subscribe(mutations: ["deleteTransaction"])
+  onCreateUser(id: String): User @aws_subscribe(mutations: ["createUser"])
+  onUpdateUser(id: String): User @aws_subscribe(mutations: ["updateUser"])
+  onDeleteUser(id: String): User @aws_subscribe(mutations: ["deleteUser"])
+  onCreateGoal(owner: String): Goal @aws_subscribe(mutations: ["createGoal"])
+  onUpdateGoal(owner: String): Goal @aws_subscribe(mutations: ["updateGoal"])
+  onDeleteGoal(owner: String): Goal @aws_subscribe(mutations: ["deleteGoal"])
+  onCreatePrebakedGoal: PrebakedGoal @aws_subscribe(mutations: ["createPrebakedGoal"])
+  onUpdatePrebakedGoal: PrebakedGoal @aws_subscribe(mutations: ["updatePrebakedGoal"])
+  onDeletePrebakedGoal: PrebakedGoal @aws_subscribe(mutations: ["deletePrebakedGoal"])
+  onCreateFund(owner: String): Fund @aws_subscribe(mutations: ["createFund"])
+  onUpdateFund(owner: String): Fund @aws_subscribe(mutations: ["updateFund"])
+  onDeleteFund(owner: String): Fund @aws_subscribe(mutations: ["deleteFund"])
+  onCreatePrebakedFund: PrebakedFund @aws_subscribe(mutations: ["createPrebakedFund"])
+  onUpdatePrebakedFund: PrebakedFund @aws_subscribe(mutations: ["updatePrebakedFund"])
+  onDeletePrebakedFund: PrebakedFund @aws_subscribe(mutations: ["deletePrebakedFund"])
+  onCreateTransaction(owner: String): Transaction @aws_subscribe(mutations: ["createTransaction"])
+  onUpdateTransaction(owner: String): Transaction @aws_subscribe(mutations: ["updateTransaction"])
+  onDeleteTransaction(owner: String): Transaction @aws_subscribe(mutations: ["deleteTransaction"])
   onCreateQuestions: Questions @aws_subscribe(mutations: ["createQuestions"])
   onUpdateQuestions: Questions @aws_subscribe(mutations: ["updateQuestions"])
   onDeleteQuestions: Questions @aws_subscribe(mutations: ["deleteQuestions"])
@@ -344,23 +363,23 @@ input ModelGoalConditionInput {
   not: ModelGoalConditionInput
 }
 
-type ModelPremadeGoalConnection {
-  items: [PremadeGoal]
+type ModelPrebakedGoalConnection {
+  items: [PrebakedGoal]
   nextToken: String
 }
 
-input ModelPremadeGoalFilterInput {
+input ModelPrebakedGoalFilterInput {
   id: ModelIDInput
   name: ModelStringInput
   ammount: ModelFloatInput
   unsplashIMG: ModelStringInput
   category: ModelStringInput
-  and: [ModelPremadeGoalFilterInput]
-  or: [ModelPremadeGoalFilterInput]
-  not: ModelPremadeGoalFilterInput
+  and: [ModelPrebakedGoalFilterInput]
+  or: [ModelPrebakedGoalFilterInput]
+  not: ModelPrebakedGoalFilterInput
 }
 
-input CreatePremadeGoalInput {
+input CreatePrebakedGoalInput {
   id: ID
   name: String!
   ammount: Float!
@@ -368,7 +387,7 @@ input CreatePremadeGoalInput {
   category: String!
 }
 
-input UpdatePremadeGoalInput {
+input UpdatePrebakedGoalInput {
   id: ID!
   name: String
   ammount: Float
@@ -376,18 +395,18 @@ input UpdatePremadeGoalInput {
   category: String
 }
 
-input DeletePremadeGoalInput {
+input DeletePrebakedGoalInput {
   id: ID!
 }
 
-input ModelPremadeGoalConditionInput {
+input ModelPrebakedGoalConditionInput {
   name: ModelStringInput
   ammount: ModelFloatInput
   unsplashIMG: ModelStringInput
   category: ModelStringInput
-  and: [ModelPremadeGoalConditionInput]
-  or: [ModelPremadeGoalConditionInput]
-  not: ModelPremadeGoalConditionInput
+  and: [ModelPrebakedGoalConditionInput]
+  or: [ModelPrebakedGoalConditionInput]
+  not: ModelPrebakedGoalConditionInput
 }
 
 type ModelFundConnection {
@@ -403,6 +422,7 @@ input ModelFundFilterInput {
   recurringAmmount: ModelFloatInput
   category: ModelStringInput
   unsplashIMG: ModelStringInput
+  prebakedFundID: ModelIDInput
   and: [ModelFundFilterInput]
   or: [ModelFundFilterInput]
   not: ModelFundFilterInput
@@ -416,6 +436,8 @@ input CreateFundInput {
   recurringAmmount: Float
   category: String
   unsplashIMG: AWSJSON
+  prebakedFundID: ID
+  fundPrebakedFundId: ID
 }
 
 input UpdateFundInput {
@@ -426,6 +448,8 @@ input UpdateFundInput {
   recurringAmmount: Float
   category: String
   unsplashIMG: AWSJSON
+  prebakedFundID: ID
+  fundPrebakedFundId: ID
 }
 
 input DeleteFundInput {
@@ -438,9 +462,52 @@ input ModelFundConditionInput {
   recurringAmmount: ModelFloatInput
   category: ModelStringInput
   unsplashIMG: ModelStringInput
+  prebakedFundID: ModelIDInput
   and: [ModelFundConditionInput]
   or: [ModelFundConditionInput]
   not: ModelFundConditionInput
+}
+
+type ModelPrebakedFundConnection {
+  items: [PrebakedFund]
+  nextToken: String
+}
+
+input ModelPrebakedFundFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  category: ModelStringInput
+  unsplashIMG: ModelStringInput
+  and: [ModelPrebakedFundFilterInput]
+  or: [ModelPrebakedFundFilterInput]
+  not: ModelPrebakedFundFilterInput
+}
+
+input CreatePrebakedFundInput {
+  id: ID
+  name: String!
+  category: String!
+  unsplashIMG: AWSJSON
+}
+
+input UpdatePrebakedFundInput {
+  id: ID!
+  name: String
+  category: String
+  unsplashIMG: AWSJSON
+}
+
+input DeletePrebakedFundInput {
+  id: ID!
+}
+
+input ModelPrebakedFundConditionInput {
+  name: ModelStringInput
+  category: ModelStringInput
+  unsplashIMG: ModelStringInput
+  and: [ModelPrebakedFundConditionInput]
+  or: [ModelPrebakedFundConditionInput]
+  not: ModelPrebakedFundConditionInput
 }
 
 type ModelTransactionConnection {
