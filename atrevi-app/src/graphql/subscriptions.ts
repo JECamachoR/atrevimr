@@ -3,7 +3,7 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($id: String!) {
+  subscription OnCreateUser($id: String) {
     onCreateUser(id: $id) {
       id
       phone
@@ -28,7 +28,7 @@ export const onCreateUser = /* GraphQL */ `
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($id: String!) {
+  subscription OnUpdateUser($id: String) {
     onUpdateUser(id: $id) {
       id
       phone
@@ -53,7 +53,7 @@ export const onUpdateUser = /* GraphQL */ `
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($id: String!) {
+  subscription OnDeleteUser($id: String) {
     onDeleteUser(id: $id) {
       id
       phone
@@ -78,7 +78,7 @@ export const onDeleteUser = /* GraphQL */ `
   }
 `;
 export const onCreateGoal = /* GraphQL */ `
-  subscription OnCreateGoal($owner: String!) {
+  subscription OnCreateGoal($owner: String) {
     onCreateGoal(owner: $owner) {
       id
       owner
@@ -103,7 +103,7 @@ export const onCreateGoal = /* GraphQL */ `
   }
 `;
 export const onUpdateGoal = /* GraphQL */ `
-  subscription OnUpdateGoal($owner: String!) {
+  subscription OnUpdateGoal($owner: String) {
     onUpdateGoal(owner: $owner) {
       id
       owner
@@ -128,7 +128,7 @@ export const onUpdateGoal = /* GraphQL */ `
   }
 `;
 export const onDeleteGoal = /* GraphQL */ `
-  subscription OnDeleteGoal($owner: String!) {
+  subscription OnDeleteGoal($owner: String) {
     onDeleteGoal(owner: $owner) {
       id
       owner
@@ -192,7 +192,7 @@ export const onDeletePrebakedGoal = /* GraphQL */ `
   }
 `;
 export const onCreateFund = /* GraphQL */ `
-  subscription OnCreateFund($owner: String!) {
+  subscription OnCreateFund($owner: String) {
     onCreateFund(owner: $owner) {
       id
       owner
@@ -219,7 +219,7 @@ export const onCreateFund = /* GraphQL */ `
   }
 `;
 export const onUpdateFund = /* GraphQL */ `
-  subscription OnUpdateFund($owner: String!) {
+  subscription OnUpdateFund($owner: String) {
     onUpdateFund(owner: $owner) {
       id
       owner
@@ -246,7 +246,7 @@ export const onUpdateFund = /* GraphQL */ `
   }
 `;
 export const onDeleteFund = /* GraphQL */ `
-  subscription OnDeleteFund($owner: String!) {
+  subscription OnDeleteFund($owner: String) {
     onDeleteFund(owner: $owner) {
       id
       owner
@@ -309,7 +309,7 @@ export const onDeletePrebakedFund = /* GraphQL */ `
   }
 `;
 export const onCreateTransaction = /* GraphQL */ `
-  subscription OnCreateTransaction($owner: String!) {
+  subscription OnCreateTransaction($owner: String) {
     onCreateTransaction(owner: $owner) {
       id
       fundID
@@ -334,7 +334,7 @@ export const onCreateTransaction = /* GraphQL */ `
   }
 `;
 export const onUpdateTransaction = /* GraphQL */ `
-  subscription OnUpdateTransaction($owner: String!) {
+  subscription OnUpdateTransaction($owner: String) {
     onUpdateTransaction(owner: $owner) {
       id
       fundID
@@ -359,7 +359,7 @@ export const onUpdateTransaction = /* GraphQL */ `
   }
 `;
 export const onDeleteTransaction = /* GraphQL */ `
-  subscription OnDeleteTransaction($owner: String!) {
+  subscription OnDeleteTransaction($owner: String) {
     onDeleteTransaction(owner: $owner) {
       id
       fundID

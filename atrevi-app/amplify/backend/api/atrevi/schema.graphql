@@ -1,5 +1,8 @@
 type User @model
-@auth(rules: [{allow: owner, ownerField: "id"}])
+@auth(rules: [
+    {allow: owner, ownerField: "id"}
+    {allow: groups, groups: ["Admin"]}
+])
 @key(name: "byPhone", fields: ["phone"]) {
   id: String
   phone: AWSPhone!
@@ -15,7 +18,10 @@ type User @model
 }
 
 type Goal @model
-@auth(rules: [{allow: owner, ownerField: "owner"}])
+@auth(rules: [
+    {allow: owner},
+    {allow: groups, groups: ["Admin"]}
+])
 @key(name: "byUser", fields: ["owner", "name"]){
     id: ID!
     owner: String
@@ -28,7 +34,9 @@ type Goal @model
     PremadeGoal: PrebakedGoal @connection
 }
 
-type PrebakedGoal @model {
+type PrebakedGoal @model 
+@auth(rules: [{allow: groups, groups: ["Admin"]}])
+{
     id: ID!
     name: String!
     ammount: Float!
@@ -37,7 +45,10 @@ type PrebakedGoal @model {
 }
 
 type Fund @model
-@auth(rules: [{allow: owner, ownerField: "owner"}])
+@auth(rules: [
+    {allow: owner},
+    {allow: groups, groups: ["Admin"]}
+])
 @key(name: "byUser", fields: ["owner"]) {
     id: ID!
     owner: String
@@ -51,7 +62,9 @@ type Fund @model
     transactions: [Transaction]! @connection(keyName: "byFund", fields: ["id"])
 }
 
-type PrebakedFund @model {
+type PrebakedFund @model 
+@auth(rules: [{allow: groups, groups: ["Admin"]}])
+{
     id: ID!
     name: String!
     category: String!
@@ -59,7 +72,10 @@ type PrebakedFund @model {
 }
 
 type Transaction @model
-@auth(rules: [{allow: owner, ownerField: "owner"}])
+@auth(rules: [
+    {allow: owner},
+    {allow: groups, groups: ["Admin"]}
+])
 @key(name: "byUser", fields: ["owner"])
 @key(name: "byFund", fields: ["fundID"]) {
     id: ID!
@@ -71,7 +87,11 @@ type Transaction @model
 }
 
 type Questions @model
-@auth(rules: [{allow: owner, ownerField: "id" operations: [create]}]) {
+@auth(rules: [
+    {allow: owner, ownerField: "id" operations: [create]},
+    {allow: groups, groups: ["Admin"]}
+])
+ {
     id: String!
     birthdate: AWSDate!
     age: Int!

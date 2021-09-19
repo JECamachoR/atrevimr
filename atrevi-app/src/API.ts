@@ -1499,7 +1499,7 @@ export type ListQuestionsQuery = {
 };
 
 export type OnCreateUserSubscriptionVariables = {
-  id: string,
+  id?: string | null,
 };
 
 export type OnCreateUserSubscription = {
@@ -1531,7 +1531,7 @@ export type OnCreateUserSubscription = {
 };
 
 export type OnUpdateUserSubscriptionVariables = {
-  id: string,
+  id?: string | null,
 };
 
 export type OnUpdateUserSubscription = {
@@ -1563,7 +1563,7 @@ export type OnUpdateUserSubscription = {
 };
 
 export type OnDeleteUserSubscriptionVariables = {
-  id: string,
+  id?: string | null,
 };
 
 export type OnDeleteUserSubscription = {
@@ -1595,7 +1595,7 @@ export type OnDeleteUserSubscription = {
 };
 
 export type OnCreateGoalSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnCreateGoalSubscription = {
@@ -1625,7 +1625,7 @@ export type OnCreateGoalSubscription = {
 };
 
 export type OnUpdateGoalSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnUpdateGoalSubscription = {
@@ -1655,7 +1655,7 @@ export type OnUpdateGoalSubscription = {
 };
 
 export type OnDeleteGoalSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnDeleteGoalSubscription = {
@@ -1724,7 +1724,7 @@ export type OnDeletePrebakedGoalSubscription = {
 };
 
 export type OnCreateFundSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnCreateFundSubscription = {
@@ -1757,7 +1757,7 @@ export type OnCreateFundSubscription = {
 };
 
 export type OnUpdateFundSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnUpdateFundSubscription = {
@@ -1790,7 +1790,7 @@ export type OnUpdateFundSubscription = {
 };
 
 export type OnDeleteFundSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnDeleteFundSubscription = {
@@ -1859,7 +1859,7 @@ export type OnDeletePrebakedFundSubscription = {
 };
 
 export type OnCreateTransactionSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnCreateTransactionSubscription = {
@@ -1889,7 +1889,7 @@ export type OnCreateTransactionSubscription = {
 };
 
 export type OnUpdateTransactionSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnUpdateTransactionSubscription = {
@@ -1919,7 +1919,7 @@ export type OnUpdateTransactionSubscription = {
 };
 
 export type OnDeleteTransactionSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnDeleteTransactionSubscription = {
