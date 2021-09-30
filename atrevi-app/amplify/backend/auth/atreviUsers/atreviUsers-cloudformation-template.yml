@@ -142,7 +142,6 @@ Parameters:
   userPoolGroupList:
     Type: CommaDelimitedList
       
-            
   serviceName:
     Type: String
   
@@ -165,6 +164,14 @@ Parameters:
       
         
   dependsOn:
+    Type: CommaDelimitedList
+      
+  adminQueryGroup:
+    Type: String
+  
+            
+        
+  authProviders:
     Type: CommaDelimitedList
       
 Conditions:

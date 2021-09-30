@@ -35,14 +35,6 @@
 			"favicon": "./src/assets/images/icon.png"
 		},
 		"plugins": [
-			[
-				"expo-notifications",
-				{
-					"icon": "./src/assets/images/notification.png",
-					"color": "#ffffff",
-					"mode": "development"
-				}
-			]
 		]
 	}
 }

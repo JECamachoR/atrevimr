@@ -1,6 +1,6 @@
 {
     "identityPoolName": "atreviUsers_identitypool",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "atrevi31e72104",
     "userPoolName": "atreviUsers_userpool",
     "autoVerifiedAttributes": [
@@ -30,13 +30,42 @@
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
+        "address",
+        "birthdate",
         "email",
+        "family_name",
+        "middle_name",
+        "gender",
+        "locale",
+        "given_name",
+        "name",
+        "nickname",
+        "preferred_username",
         "picture",
+        "profile",
+        "updated_at",
+        "website",
+        "zoneinfo",
         "phone_number"
     ],
     "userpoolClientReadAttributes": [
+        "address",
+        "birthdate",
         "email",
-        "picture"
+        "family_name",
+        "middle_name",
+        "gender",
+        "locale",
+        "given_name",
+        "name",
+        "nickname",
+        "phone_number",
+        "preferred_username",
+        "picture",
+        "profile",
+        "updated_at",
+        "website",
+        "zoneinfo"
     ],
     "userpoolClientLambdaRole": "atrevi31e72104_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
@@ -58,7 +87,7 @@
     "useDefault": "manual",
     "thirdPartyAuth": false,
     "userPoolGroups": true,
-    "adminQueries": false,
+    "adminQueries": true,
     "triggers": "{}",
     "hostedUI": false,
     "userPoolGroupList": [
@@ -72,5 +101,7 @@
     },
     "breakCircularDependency": true,
     "permissions": [],
-    "dependsOn": []
+    "dependsOn": [],
+    "adminQueryGroup": "admin",
+    "authProviders": []
 }

@@ -1,0 +1,21 @@
+{
+    "appName": "atrevi",
+    "roleName": "pinpointLambdaRolebce5399d",
+    "cloudformationPolicyName": "cloudformationPolicybce5399d",
+    "cloudWatchPolicyName": "cloudWatchPolicybce5399d",
+    "pinpointPolicyName": "pinpointPolicybce5399d",
+    "authPolicyName": "pinpoint_amplify_bce5399d",
+    "unauthPolicyName": "pinpoint_amplify_bce5399d",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}

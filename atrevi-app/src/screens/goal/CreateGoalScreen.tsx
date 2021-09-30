@@ -14,7 +14,7 @@ import { createGoal, updateFund } from "../../graphql/mutations"
 import CreateCustomGoalCard from "../../components/goals/CreateCustomGoalCard"
 import { t } from "i18n-js"
 import GoalFundContext from "../../contexts/GoalFundContext"
-import getNextSavingDate from "../../../../functions/getNextSavingDate"
+import getNextSavingDate from "../../../functions/getNextSavingDate"
 import UserContext from "../../contexts/UserContext"
 import PrebakedList from "../../components/PrebakedList"
 
