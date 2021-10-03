@@ -7,7 +7,6 @@ import {
 } from "react-native-responsive-screen"
 import Button from "./Button"
 import StepIndicator from "./StepIndicator"
-import * as Notifications from "expo-notifications"
 
 type Props = {
   position: number,
@@ -23,7 +22,6 @@ export default function StepperNotification(props: Props): React.ReactElement {
 
 	const toggleSwitch = async () => {
 		setIsEnabled((previousState) => !previousState)
-		await Notifications.requestPermissionsAsync()
 	}
 
 	const [isEnabled2, setIsEnabled2] = React.useState(false)

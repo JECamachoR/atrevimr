@@ -1,0 +1,39 @@
+{
+	"project_info": {
+		"project_number": "426706685134",
+		"project_id": "atrevi-39592",
+		"storage_bucket": "atrevi-39592.appspot.com"
+	},
+	"client": [
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:426706685134:android:ff34ec3a3f6897f42ed49f",
+				"android_client_info": {
+					"package_name": "mx.atrevi.app"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "426706685134-p85ifuha5v8dv60uli1gsnli0al2qg4b.apps.googleusercontent.com",
+					"client_type": 3
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "AIzaSyBHiF1vlMkODFRuPc_Psx7_Ut6hBg6SqV4"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "426706685134-p85ifuha5v8dv60uli1gsnli0al2qg4b.apps.googleusercontent.com",
+							"client_type": 3
+						}
+					]
+				}
+			}
+		}
+	],
+	"configuration_version": "1"
+}

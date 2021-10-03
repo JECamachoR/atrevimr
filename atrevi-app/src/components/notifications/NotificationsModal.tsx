@@ -5,7 +5,6 @@ import React from "react"
 import { FlatList, StyleSheet } from "react-native"
 import Modal from "../Modal"
 import { Text, useThemeColor, View } from "../Themed"
-import * as Notifications from "expo-notifications"
 // import Button from "../Button"
 import NotificationItem from "./NotificationItem"
 
@@ -16,8 +15,6 @@ type Props = {
 
 const NotificationsModal = ({ hideModal, visible }: Props): React.ReactElement => {
 
-	const [notifications, setNotifications] = React.useState<Notifications.Notification[]>([])
-
 	const ph = useThemeColor({colorName: "placeholderTextColor"})
 	const iconColor = useThemeColor({colorName: "background"})
 	const line = useThemeColor({colorName: "line"})
@@ -27,15 +24,12 @@ const NotificationsModal = ({ hideModal, visible }: Props): React.ReactElement =
 			try {
 				const notifications = await AsyncStorage.getItem("atrevi-notification-list")
 				console.log(notifications)
-				setNotifications(JSON.parse(notifications || "[]"))
 			} catch (e) {
 				console.error(e)
 			}
 		}
 		load()
-		const s = Notifications.addNotificationReceivedListener(v => setNotifications(p => [...p, v]))
 
-		return () => s.remove()
 	}, [])
 
 	return (
@@ -45,9 +39,9 @@ const NotificationsModal = ({ hideModal, visible }: Props): React.ReactElement =
 			title={t("Notifications")}
 		>
 			<FlatList
-				data={notifications.sort((a, b) => a.date - b.date)}
+				data={[]}
 				renderItem={({item}) => <NotificationItem {...item} />}
-				keyExtractor={(v, i) => "" + i + v.date}
+				keyExtractor={(v, i) => "" + i}
 				ListEmptyComponent={() => (
 					<View style={styles.container}>
 						<View style={[styles.circle, {backgroundColor: ph}]}>

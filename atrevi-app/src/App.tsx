@@ -7,19 +7,21 @@ import useCachedResources from "./hooks/useCachedResources"
 import useColorScheme from "./hooks/useColorScheme"
 import Navigation from "./navigation"
 import { Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_800ExtraBold, useFonts } from "@expo-google-fonts/poppins"
-import * as Notifications from "expo-notifications"
+import PushNotification from "@aws-amplify/pushnotification"
+// import { PushNotificationIOS } from "@react-native-community/push-notification-ios"
+// import * as Notifications from "expo-notifications"
 
 import Amplify from "aws-amplify"
 import awsconfig from "./aws-exports"
 Amplify.configure(awsconfig)
 
-Notifications.setNotificationHandler({
-	handleNotification: async () => ({
-		shouldShowAlert: true,
-		shouldPlaySound: false,
-		shouldSetBadge: false,
-	}),
-})
+// Notifications.setNotificationHandler({
+// 	handleNotification: async () => ({
+// 		shouldShowAlert: true,
+// 		shouldPlaySound: false,
+// 		shouldSetBadge: false,
+// 	}),
+// })
 
 const App = (): React.ReactElement => {
 	// const [expoPushToken, setExpoPushToken] = React.useState<string | undefined>("")
@@ -27,22 +29,31 @@ const App = (): React.ReactElement => {
 	// const notificationListener = React.useRef<any>()
 	// const responseListener = React.useRef<any>()
   
-	// React.useEffect(() => {
+	React.useEffect(() => {
 	// 	registerForPushNotificationsAsync().then(token => setExpoPushToken(token))
   
-	// 	notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-	// 		setNotification(notification)
-	// 	})
+		// 	notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+		// 		setNotification(notification)
+		// 	})
   
-	// 	responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-	// 		console.log(response)
-	// 	})
+		// 	responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+		// 		console.log(response)
+		// 	})
   
-	// 	return () => {
-	// 		Notifications.removeNotificationSubscription(notificationListener.current)
-	// 		Notifications.removeNotificationSubscription(responseListener.current)
-	// 	}
-	// }, [])
+		// 	return () => {
+		// 		Notifications.removeNotificationSubscription(notificationListener.current)
+		// 		Notifications.removeNotificationSubscription(responseListener.current)
+		// 	}
+		PushNotification.onRegister(console.log)
+		// get the notification data when notification is received
+		PushNotification.onNotification((notification: unknown) => {
+			// Note that the notification object structure is different from Android and IOS
+			console.log("in app notification", notification)
+  
+			// required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/push-notification-ios#finish)
+			// notification.finish(PushNotificationIOS.FetchResult.NoData);
+		})
+	}, [])
 
 	const isLoadingComplete = useCachedResources()
 	const colorScheme = useColorScheme()
@@ -52,7 +63,7 @@ const App = (): React.ReactElement => {
 		Poppins_800ExtraBold,
 		Poppins_500Medium,
 	})
-  
+
 	if (!isLoadingComplete || !fontsLoaded) {
 		return <></>
 	} else {
