@@ -16,9 +16,6 @@ export const getUser = /* GraphQL */ `
       goals {
         nextToken
       }
-      funds {
-        nextToken
-      }
       transactions {
         nextToken
       }
@@ -56,8 +53,10 @@ export const getGoal = /* GraphQL */ `
       id
       owner
       name
-      ammount
+      installments
+      total
       date
+      frequency
       unsplashIMG
       category
       premadeGoalID
@@ -86,8 +85,10 @@ export const listGoals = /* GraphQL */ `
         id
         owner
         name
-        ammount
+        installments
+        total
         date
+        frequency
         unsplashIMG
         category
         premadeGoalID
@@ -131,104 +132,25 @@ export const listPrebakedGoals = /* GraphQL */ `
     }
   }
 `;
-export const getFund = /* GraphQL */ `
-  query GetFund($id: ID!) {
-    getFund(id: $id) {
-      id
-      owner
-      name
-      balance
-      recurringAmmount
-      category
-      unsplashIMG
-      prebakedFundID
-      prebakedFund {
-        id
-        name
-        category
-        unsplashIMG
-        createdAt
-        updatedAt
-      }
-      transactions {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listFunds = /* GraphQL */ `
-  query ListFunds(
-    $filter: ModelFundFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listFunds(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        owner
-        name
-        balance
-        recurringAmmount
-        category
-        unsplashIMG
-        prebakedFundID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getPrebakedFund = /* GraphQL */ `
-  query GetPrebakedFund($id: ID!) {
-    getPrebakedFund(id: $id) {
-      id
-      name
-      category
-      unsplashIMG
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listPrebakedFunds = /* GraphQL */ `
-  query ListPrebakedFunds(
-    $filter: ModelPrebakedFundFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPrebakedFunds(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        category
-        unsplashIMG
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getTransaction = /* GraphQL */ `
   query GetTransaction($id: ID!) {
     getTransaction(id: $id) {
       id
-      fundID
+      recievingGoalID
       owner
       ammount
       concept
-      fund {
+      recievingGoal {
         id
         owner
         name
-        balance
-        recurringAmmount
-        category
+        installments
+        total
+        date
+        frequency
         unsplashIMG
-        prebakedFundID
+        category
+        premadeGoalID
         createdAt
         updatedAt
       }
@@ -246,7 +168,7 @@ export const listTransactions = /* GraphQL */ `
     listTransactions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        fundID
+        recievingGoalID
         owner
         ammount
         concept

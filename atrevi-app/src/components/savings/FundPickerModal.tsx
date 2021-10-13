@@ -2,8 +2,7 @@ import { t } from "i18n-js"
 import * as React from "react"
 import { SectionList, StyleSheet, TouchableOpacity } from "react-native"
 import { darkMode, grayscale } from "../../constants/Colors"
-import GoalFundContext from "../../contexts/GoalFundContext"
-import MoneyboxesContext from "../../contexts/MoneyboxesContext"
+import GoalsContext from "../../contexts/GoalsContext"
 import Modal from "../Modal"
 import { Text, View } from "../Themed"
 
@@ -15,13 +14,9 @@ type Props = {
 
 const FundPickerModal = ({ visible, hideModal, pickFund }: Props): React.ReactElement => {
 
-	const mbs = React.useContext(MoneyboxesContext)
-	const gf = React.useContext(GoalFundContext)
+    const goals = React.useContext(GoalsContext)
 
-	const data = [
-		{title: "Goals", "data": [], item: gf },
-		{title: "Moneyboxes", data: mbs}
-	]
+	const data = goals.map(v => ({title: v.name, data: [], item: v}))
 
 	return (
 		<Modal
@@ -55,7 +50,7 @@ const FundPickerModal = ({ visible, hideModal, pickFund }: Props): React.ReactEl
 							style={styles.itemStyle}
 							lightColor={grayscale.inputBackground}
 							darkColor={darkMode.inputBackground}
-						><Text>{v.item.name}</Text></View>
+						><Text>{"hello"}</Text></View>
 					</TouchableOpacity>
 				)}
 				style={{marginTop: 8}}

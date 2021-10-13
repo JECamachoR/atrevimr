@@ -13,7 +13,6 @@ type User @model
   name: String
   profileIMG: String
   goals: [Goal]! @connection(keyName: "byUser", fields: ["id"])
-  funds: [Fund]! @connection(keyName: "byUser", fields: ["id"])
   transactions: [Transaction]! @connection(keyName: "byUser", fields: ["id"])
 }
 
@@ -26,8 +25,10 @@ type Goal @model
     id: ID!
     owner: String
     name: String!
-    ammount: Float!
+    installments: Float!
+    total: Float!
     date: AWSDate!
+    frequency: String!
     unsplashIMG: AWSJSON
     category: String!
     premadeGoalID: ID
@@ -44,46 +45,19 @@ type PrebakedGoal @model
     category: String!
 }
 
-type Fund @model
-@auth(rules: [
-    {allow: owner},
-    {allow: groups, groups: ["Admin"]}
-])
-@key(name: "byUser", fields: ["owner"]) {
-    id: ID!
-    owner: String
-    name: String!
-    balance: Float!
-    recurringAmmount: Float
-    category: String
-    unsplashIMG: AWSJSON
-    prebakedFundID: ID
-    prebakedFund: PrebakedFund @connection
-    transactions: [Transaction]! @connection(keyName: "byFund", fields: ["id"])
-}
-
-type PrebakedFund @model 
-@auth(rules: [{allow: groups, groups: ["Admin"]}])
-{
-    id: ID!
-    name: String!
-    category: String!
-    unsplashIMG: AWSJSON
-}
-
 type Transaction @model
 @auth(rules: [
     {allow: owner},
     {allow: groups, groups: ["Admin"]}
 ])
 @key(name: "byUser", fields: ["owner"])
-@key(name: "byFund", fields: ["fundID"]) {
+@key(name: "byGoal", fields: ["recievingGoalID"]) {
     id: ID!
-    fundID: ID!
+    recievingGoalID: ID!
     owner: String
     ammount: Float!
     concept: String!
-    fund: Fund @connection
+    recievingGoal: Goal @connection
 }
 
 type Questions @model

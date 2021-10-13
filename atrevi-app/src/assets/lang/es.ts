@@ -1,4 +1,6 @@
 import notifications from "./notifications/es.json"
+import period from "./period/es"
+import savings from "./savings/es"
 
 const es = {
 	"Home": "Inicio",
@@ -197,6 +199,8 @@ const es = {
 	"savings record tool": "herramienta de registro",
 	"You are special": "Eres especial",
 	"Resend code": "Reenviar código",
-	...notifications
+	...notifications,
+    savings: savings,
+    period: period
 }
 export default es

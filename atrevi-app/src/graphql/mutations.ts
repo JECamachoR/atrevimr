@@ -19,9 +19,6 @@ export const createUser = /* GraphQL */ `
       goals {
         nextToken
       }
-      funds {
-        nextToken
-      }
       transactions {
         nextToken
       }
@@ -45,9 +42,6 @@ export const updateUser = /* GraphQL */ `
       name
       profileIMG
       goals {
-        nextToken
-      }
-      funds {
         nextToken
       }
       transactions {
@@ -75,9 +69,6 @@ export const deleteUser = /* GraphQL */ `
       goals {
         nextToken
       }
-      funds {
-        nextToken
-      }
       transactions {
         nextToken
       }
@@ -95,8 +86,10 @@ export const createGoal = /* GraphQL */ `
       id
       owner
       name
-      ammount
+      installments
+      total
       date
+      frequency
       unsplashIMG
       category
       premadeGoalID
@@ -123,8 +116,10 @@ export const updateGoal = /* GraphQL */ `
       id
       owner
       name
-      ammount
+      installments
+      total
       date
+      frequency
       unsplashIMG
       category
       premadeGoalID
@@ -151,8 +146,10 @@ export const deleteGoal = /* GraphQL */ `
       id
       owner
       name
-      ammount
+      installments
+      total
       date
+      frequency
       unsplashIMG
       category
       premadeGoalID
@@ -218,141 +215,6 @@ export const deletePrebakedGoal = /* GraphQL */ `
     }
   }
 `;
-export const createFund = /* GraphQL */ `
-  mutation CreateFund(
-    $input: CreateFundInput!
-    $condition: ModelFundConditionInput
-  ) {
-    createFund(input: $input, condition: $condition) {
-      id
-      owner
-      name
-      balance
-      recurringAmmount
-      category
-      unsplashIMG
-      prebakedFundID
-      prebakedFund {
-        id
-        name
-        category
-        unsplashIMG
-        createdAt
-        updatedAt
-      }
-      transactions {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateFund = /* GraphQL */ `
-  mutation UpdateFund(
-    $input: UpdateFundInput!
-    $condition: ModelFundConditionInput
-  ) {
-    updateFund(input: $input, condition: $condition) {
-      id
-      owner
-      name
-      balance
-      recurringAmmount
-      category
-      unsplashIMG
-      prebakedFundID
-      prebakedFund {
-        id
-        name
-        category
-        unsplashIMG
-        createdAt
-        updatedAt
-      }
-      transactions {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteFund = /* GraphQL */ `
-  mutation DeleteFund(
-    $input: DeleteFundInput!
-    $condition: ModelFundConditionInput
-  ) {
-    deleteFund(input: $input, condition: $condition) {
-      id
-      owner
-      name
-      balance
-      recurringAmmount
-      category
-      unsplashIMG
-      prebakedFundID
-      prebakedFund {
-        id
-        name
-        category
-        unsplashIMG
-        createdAt
-        updatedAt
-      }
-      transactions {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createPrebakedFund = /* GraphQL */ `
-  mutation CreatePrebakedFund(
-    $input: CreatePrebakedFundInput!
-    $condition: ModelPrebakedFundConditionInput
-  ) {
-    createPrebakedFund(input: $input, condition: $condition) {
-      id
-      name
-      category
-      unsplashIMG
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updatePrebakedFund = /* GraphQL */ `
-  mutation UpdatePrebakedFund(
-    $input: UpdatePrebakedFundInput!
-    $condition: ModelPrebakedFundConditionInput
-  ) {
-    updatePrebakedFund(input: $input, condition: $condition) {
-      id
-      name
-      category
-      unsplashIMG
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deletePrebakedFund = /* GraphQL */ `
-  mutation DeletePrebakedFund(
-    $input: DeletePrebakedFundInput!
-    $condition: ModelPrebakedFundConditionInput
-  ) {
-    deletePrebakedFund(input: $input, condition: $condition) {
-      id
-      name
-      category
-      unsplashIMG
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createTransaction = /* GraphQL */ `
   mutation CreateTransaction(
     $input: CreateTransactionInput!
@@ -360,19 +222,21 @@ export const createTransaction = /* GraphQL */ `
   ) {
     createTransaction(input: $input, condition: $condition) {
       id
-      fundID
+      recievingGoalID
       owner
       ammount
       concept
-      fund {
+      recievingGoal {
         id
         owner
         name
-        balance
-        recurringAmmount
-        category
+        installments
+        total
+        date
+        frequency
         unsplashIMG
-        prebakedFundID
+        category
+        premadeGoalID
         createdAt
         updatedAt
       }
@@ -388,19 +252,21 @@ export const updateTransaction = /* GraphQL */ `
   ) {
     updateTransaction(input: $input, condition: $condition) {
       id
-      fundID
+      recievingGoalID
       owner
       ammount
       concept
-      fund {
+      recievingGoal {
         id
         owner
         name
-        balance
-        recurringAmmount
-        category
+        installments
+        total
+        date
+        frequency
         unsplashIMG
-        prebakedFundID
+        category
+        premadeGoalID
         createdAt
         updatedAt
       }
@@ -416,19 +282,21 @@ export const deleteTransaction = /* GraphQL */ `
   ) {
     deleteTransaction(input: $input, condition: $condition) {
       id
-      fundID
+      recievingGoalID
       owner
       ammount
       concept
-      fund {
+      recievingGoal {
         id
         owner
         name
-        balance
-        recurringAmmount
-        category
+        installments
+        total
+        date
+        frequency
         unsplashIMG
-        prebakedFundID
+        category
+        premadeGoalID
         createdAt
         updatedAt
       }

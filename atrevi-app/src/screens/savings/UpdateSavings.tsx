@@ -10,16 +10,12 @@ import { daysOfTheWeek, frequencies } from "../../../../types"
 import FrequencyItem from "../../components/savings/FrequencyItem"
 import { t } from "i18n-js"
 import Button from "../../components/Button"
-import MoneyboxesContext from "../../contexts/MoneyboxesContext"
-import GoalFundContext from "../../contexts/GoalFundContext"
 import timeForFrequency from "../../../functions/timeForFrequency"
 import API from "@aws-amplify/api"
 import { graphqlOperation } from "aws-amplify"
-import { updateFund, updateUser } from "../../graphql/mutations"
-import { UpdateFundInput, UpdateUserInput } from "../../API"
+import { updateUser } from "../../graphql/mutations"
+import { UpdateUserInput } from "../../API"
 import GoalsContext from "../../contexts/GoalsContext"
-import shortPlan from "../../../functions/shortPlan"
-import getSavingDate from "../../../functions/getSavingDate"
 import Submitting from "../../components/Submitting"
 import { StackScreenProps } from "@react-navigation/stack"
 
@@ -27,9 +23,7 @@ type Props = StackScreenProps<SavingsStackParamList, "UpdateSavings">
 
 const UpdateSavings = ({ navigation }: Props): React.ReactElement => {
 	const user = React.useContext(UserContext)
-	const mbs = React.useContext(MoneyboxesContext)
 	const goals = React.useContext(GoalsContext)
-	const gf = React.useContext(GoalFundContext)
 	const ptff = timeForFrequency(user.frequency as frequencies)
 
 	return (
@@ -50,34 +44,7 @@ const UpdateSavings = ({ navigation }: Props): React.ReactElement => {
 					))
 
 					const ntff = timeForFrequency(v.frequency)
-					
-					mbs.map(async (f) => {
-						await API.graphql(graphqlOperation(
-							updateFund,
-							{input: {
-								id: f.id,
-								recurringAmmount: (f.recurringAmmount || 0) * ntff / ptff
-							} as UpdateFundInput}
-						))
-					})
 
-					const [goalsRA] = shortPlan(
-						goals.map(g => ({ammount: g.ammount, date: new Date(g.date)})), 
-						v.frequency, 
-						v.DOTW, {
-							ammount: gf?.balance || 0,
-							savingDate: getSavingDate(new Date(), v.frequency, v.DOTW)
-						}
-					)
-
-					await API.graphql(graphqlOperation(
-						updateFund,
-						{input: {
-							id: gf?.id,
-							recurringAmmount: goalsRA
-						} as UpdateFundInput}
-					))
-					
 					navigation.goBack()
 				} catch (er) {
 					console.error(er)

@@ -13,19 +13,16 @@ import SavingsTabBarLabel from "../components/tabBar/SavingsTabBarLabel"
 import SettingsTabBarLabel from "../components/tabBar/SettingsTabBarLabel"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import GoalsContext from "../contexts/GoalsContext"
-import MoneyboxesContext from "../contexts/MoneyboxesContext"
 import TransactionsContext from "../contexts/TransactionsContext"
-import { Fund, GetUserQuery, Goal, ListFundsQuery, ListGoalsQuery, ListTransactionsQuery, 
-	OnCreateFundSubscription, OnCreateGoalSubscription, OnCreateTransactionSubscription, 
-	OnCreateUserSubscription, 
-	OnDeleteFundSubscription, OnDeleteGoalSubscription, OnUpdateFundSubscription, 
+import { GetUserQuery, Goal, ListGoalsQuery, ListTransactionsQuery, 
+	OnCreateGoalSubscription, OnCreateTransactionSubscription, 
+	OnCreateUserSubscription, OnDeleteGoalSubscription, 
 	OnUpdateGoalSubscription, OnUpdateUserSubscription, Transaction, User } from "../API"
-import GoalFundContext from "../contexts/GoalFundContext"
 import { API, graphqlOperation } from "aws-amplify"
-import { getUser, listFunds, listGoals, listTransactions } from "../graphql/queries"
+import { getUser, listGoals, listTransactions } from "../graphql/queries"
 import { GraphQLResult } from "@aws-amplify/api-graphql"
-import { onCreateFund, onCreateGoal, onCreateTransaction, onCreateUser, onDeleteFund, 
-	onDeleteGoal, onUpdateFund, onUpdateGoal, onUpdateUser } from "../graphql/subscriptions"
+import { onCreateGoal, onCreateTransaction, onCreateUser, 
+	onDeleteGoal, onUpdateGoal, onUpdateUser } from "../graphql/subscriptions"
 import { Observable } from "zen-observable-ts"
 import AuthContext from "../auth/AuthContext"
 import Loading from "../components/Loading"
@@ -46,9 +43,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 	const auth = React.useContext(AuthContext)
 
 	const [goals, setGoals] = React.useState<Goal[]>([])
-	const [moneyboxes, setMoneyboxes] = React.useState<Fund[]>([])
 	const [transactions, setTransactions] = React.useState<Transaction[]>([])
-	const [goalFund, setGoalFund] = React.useState<Fund | null>(null)
 	const [loading, setLoading] = React.useState(true)
 	const [user, setUser] = React.useState<User | null>(null)
 
@@ -64,23 +59,6 @@ const BottomTabNavigator = (): React.ReactElement => {
 					}) as Goal[]
 					setGoals(list)
 				}
-			} catch (e) {
-				console.error(e)
-			}
-		}
-		const loadFunds = async () => {
-			try {
-				const fundList = await API.graphql(graphqlOperation(listFunds)) as GraphQLResult<ListFundsQuery>
-				const separated = fundList.data?.listFunds?.items?.reduce(
-					(prev: {moneyboxFunds: Fund[], goalfund: Fund | null}, curr: Fund | null): {moneyboxFunds: Fund[], goalfund: Fund | null} => {
-						if (curr?.name === "goals") {
-							return {moneyboxFunds: prev.moneyboxFunds, goalfund: curr}
-						} else if (curr?.id) {
-							return {...prev, moneyboxFunds: [...prev.moneyboxFunds, curr]}
-						} else return prev
-					}, {moneyboxFunds: [], goalfund: null})
-				setMoneyboxes(separated?.moneyboxFunds || [])
-				setGoalFund(separated?.goalfund || null)
 			} catch (e) {
 				console.error(e)
 			}
@@ -115,7 +93,6 @@ const BottomTabNavigator = (): React.ReactElement => {
 
 		const load = async () => {
 			await loadGoals()
-			await loadFunds()
 			await loadTransactions()
 			await loadUser()
 		}
@@ -187,56 +164,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 			error: e => console.error(e)
 		})
 
-		const onFundCreation = (API.graphql(graphqlOperation(onCreateFund, {
-			owner: auth.username
-		})) as Observable<object>).subscribe({
-			next: ({value}:{value: GraphQLResult<OnCreateFundSubscription>}) => {
-				if (value.data?.onCreateFund?.id) {
-					if (value.data.onCreateFund.name === "goals") {
-						setGoalFund(value.data.onCreateFund as Fund)
-					} else {
-						const nf = value.data.onCreateFund as Fund
-						setMoneyboxes(g => ([...g, nf]))
-					}
-				}
-			},
-			error: e => console.error(e)
-		})
-
-		const onFundDeletion = (API.graphql(graphqlOperation(onDeleteFund, {
-			owner: auth.username
-		}))as Observable<object>).subscribe({
-			next: ({value}: {value: GraphQLResult<OnDeleteFundSubscription>}) => {
-				if (value.data?.onDeleteFund?.id) {
-					const df = value.data.onDeleteFund as Fund
-					setMoneyboxes(f => f.filter(m => {
-						if (m.id !== df.id) return m
-					}))
-				}
-			},
-			error: e => console.error(e)
-		})
-   
-		const onFundUpdate = (API.graphql(graphqlOperation(onUpdateFund, {
-			owner: auth.username
-		})) as Observable<object>).subscribe({
-			next: ({value}: {value: GraphQLResult<OnUpdateFundSubscription>}) => {
-				if (value.data?.onUpdateFund){
-					const uf = value.data.onUpdateFund as Fund
-					if (uf.name === "goals") {
-						setGoalFund(uf)
-					} else {
-						setMoneyboxes(goals => goals.map(m => {
-							if (m.id === uf.id) return uf
-							return m
-						}))
-					}
-				}
-			},
-			error: e => console.error(e)
-		})
-
-		const onTransactionCreation = (API.graphql(graphqlOperation(onCreateTransaction, {
+        const onTransactionCreation = (API.graphql(graphqlOperation(onCreateTransaction, {
 			owner: auth.username
 		})) as Observable<object>).subscribe({
 			next: ({value}: {value: GraphQLResult<OnCreateTransactionSubscription>}) => {
@@ -254,9 +182,6 @@ const BottomTabNavigator = (): React.ReactElement => {
 			onGoalUpdate.unsubscribe()
 			onUserCreation.unsubscribe()
 			onUserUpdate.unsubscribe()
-			onFundCreation.unsubscribe()
-			onFundDeletion.unsubscribe()
-			onFundUpdate.unsubscribe()
 			onTransactionCreation.unsubscribe()
 		}
 	}, [])
@@ -271,9 +196,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 
 	return (
 		<GoalsContext.Provider value={goals}>
-			<MoneyboxesContext.Provider value={moneyboxes}>
 				<TransactionsContext.Provider value={transactions}>
-					<GoalFundContext.Provider value={goalFund}>
 						<UserContext.Provider value={user} >
 							<BottomTab.Navigator
 								screenOptions={{
@@ -312,9 +235,7 @@ const BottomTabNavigator = (): React.ReactElement => {
 								/>
 							</BottomTab.Navigator>
 						</UserContext.Provider>
-					</GoalFundContext.Provider>
 				</TransactionsContext.Provider>
-			</MoneyboxesContext.Provider>
 		</GoalsContext.Provider>
 	)
 }

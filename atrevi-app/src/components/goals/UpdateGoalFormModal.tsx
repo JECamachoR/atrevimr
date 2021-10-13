@@ -15,7 +15,6 @@ import { GoalCreationSchema } from "../../schemas"
 import ErrorText from "../formComponents/ErrorText"
 import shortPlan from "../../../functions/shortPlan"
 import getSavingDate from "../../../functions/getSavingDate"
-import GoalFundContext from "../../contexts/GoalFundContext"
 import GoalsContext from "../../contexts/GoalsContext"
 import { formatNumber } from "react-native-currency-input"
 import UserContext from "../../contexts/UserContext"
@@ -27,7 +26,7 @@ import { UnsplashPhoto } from "react-native-unsplash"
 import Button from "../Button"
 import DeleteGoalModal from "./DeleteGoalModal"
 import API from "@aws-amplify/api"
-import { updateFund, updateGoal } from "../../graphql/mutations"
+import { updateGoal } from "../../graphql/mutations"
 import { graphqlOperation } from "aws-amplify"
 
 type ProcessedGoal = {
@@ -54,14 +53,12 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 		id: goal.id,
 		owner: goal.owner,
 		name: goal.name,
-		ammount: goal.ammount,
 		unsplashIMG: JSON.parse(goal.unsplashIMG as string),
 		category: goal.category,
 		recurringAmmount: 0,
 	}
 
 	const goalList = React.useContext(GoalsContext)
-	const goalFund = React.useContext(GoalFundContext)
 	const user = React.useContext(UserContext)
 
 	const line = useThemeColor({colorName: "line"})
@@ -93,9 +90,7 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 						}}
 					))
 					await API.graphql(graphqlOperation(
-						updateFund,
 						{input: {
-							id: goalFund?.id,
 							recurringAmmount
 						}}
 					))
@@ -111,40 +106,6 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 				setFieldValue, submitForm, resetForm, errors, 
 				touched, isSubmitting, setTouched 
 			}) => {
-
-				const calculateSavings = () => {
-					if (!values.ammount || !values.date) return
-					const list = goalList
-						.map(v => {
-							if (v.id === values.id) {
-								return values
-							} else return {
-								ammount: v.ammount, 
-								date: new Date(v.date)
-							} as {ammount: number, date: Date}
-						})
-					
-					const r = shortPlan(
-						list,
-						frequency, 
-						DOTW, 
-						{ 
-							ammount: goalFund?.balance || 0, 
-							savingDate
-						}
-					)
-					setFieldValue("recurringAmmount", r[0])
-				}
-
-				React.useEffect(() => calculateSavings(), 
-					[values.ammount, values.date]
-				)
-				const f = (n: number) => formatNumber(n, {
-					delimiter: ",",
-					precision: 2,
-					prefix: "$",
-					separator: ".",
-				})
 
 				const [deleteVisible, setDeleteVisible] = React.useState(false)
 
@@ -220,7 +181,7 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 								</View>
 								<View style={[styles.estimateCard, {borderColor: line}]}>
 
-									<Text>{t("For this goal you will need to save")}:</Text>
+									{/* <Text>{t("For this goal you will need to save")}:</Text>
 									<Text style={[
 										styles.estimateValue,
 										{color: link}
@@ -229,7 +190,7 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 									<Text style={[
 										styles.estimateValue,
 										{color: link}
-									]}>{f(values.recurringAmmount)} {t(frequency)}</Text>
+									]}>{f(values.recurringAmmount)} {t(frequency)}</Text> */}
 
 								</View>
 								<View style={styles.deleteContainer}>

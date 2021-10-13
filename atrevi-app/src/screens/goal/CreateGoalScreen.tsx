@@ -10,10 +10,9 @@ import { daysOfTheWeek, frequencies } from "../../../../types"
 import CreateGoalFormModal from "../../components/goals/CreateGoalFormModal"
 import { UnsplashPhoto } from "react-native-unsplash"
 import { API, graphqlOperation } from "aws-amplify"
-import { createGoal, updateFund } from "../../graphql/mutations"
+import { createGoal } from "../../graphql/mutations"
 import CreateCustomGoalCard from "../../components/goals/CreateCustomGoalCard"
 import { t } from "i18n-js"
-import GoalFundContext from "../../contexts/GoalFundContext"
 import getNextSavingDate from "../../../functions/getNextSavingDate"
 import UserContext from "../../contexts/UserContext"
 import PrebakedList from "../../components/PrebakedList"
@@ -44,7 +43,6 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 		recurringAmmount: 0,
 		ammount: 0,
 	})
-	const goalFund = React.useContext(GoalFundContext)
 	const handleSubmit = async ({recurringAmmount, ...g}: CreateGoalType) => {
 		try {
 			await API.graphql(graphqlOperation(createGoal, {input: {
@@ -52,14 +50,6 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 				date: g.date?.toISOString().split("T")[0],
 				unsplashIMG: JSON.stringify(g.unsplashIMG)
 			}}))
-			if (goalFund) {
-				await API.graphql(graphqlOperation(updateFund, {
-					input: {
-						id: goalFund.id,
-						recurringAmmount
-					}
-				}))
-			}
 			setGoalFormModalOpen(false)
 			navigation.popToTop()
 		} catch (err) {

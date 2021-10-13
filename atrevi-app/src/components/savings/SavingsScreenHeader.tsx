@@ -16,8 +16,6 @@ import { GraphQLResult } from "@aws-amplify/api-graphql"
 import { GetUserQuery, OnUpdateUserSubscription } from "../../API"
 import { Observable } from "zen-observable-ts"
 import { onUpdateUser } from "../../graphql/subscriptions"
-import MoneyboxesContext from "../../contexts/MoneyboxesContext"
-import GoalFundContext from "../../contexts/GoalFundContext"
 import TransactionsContext from "../../contexts/TransactionsContext"
 import getSavingDate from "../../../functions/getSavingDate"
 import UserContext from "../../contexts/UserContext"
@@ -34,8 +32,6 @@ const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig, getHelp }
 
 	const auth = React.useContext(AuthContext)
 	const transactions = React.useContext(TransactionsContext)
-	const moneyboxes = React.useContext(MoneyboxesContext)
-	const goalFund = React.useContext(GoalFundContext)
 	const user = React.useContext(UserContext)
 	const goalList = React.useContext(GoalsContext)
 
@@ -62,36 +58,6 @@ const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig, getHelp }
 		})
 		return () => sus.unsubscribe()
 	}, [])
-
-	React.useEffect(() => {
-		const sd = getSavingDate(
-			new Date(),
-			user.frequency as frequencies,
-			user.DOTW as daysOfTheWeek
-		)
-		const {gp, tp} = transactions
-			.filter(v => v.createdAt >= sd)
-			.reduce((prev, curr) => {
-				if (curr.fundID === goalFund?.id) {
-					return {...prev, gp: prev.gp + curr.ammount}
-				} else return {...prev, tp: prev.tp + curr.ammount}
-			}, {gp: 0, tp: 0})
-		setGoalsProgress(gp)
-		setMoneyboxesBalance(tp)
-	}, [transactions])
-	
-	React.useEffect(() => {
-		setGoalsExpected(goalFund?.recurringAmmount || 0)
-	}, [goalFund])
-
-	React.useEffect(() => {
-		setMoneyboxesExpected(moneyboxes.reduce((prev, curr) => {
-			if (curr.id !== goalFund?.id) {
-				return (curr.recurringAmmount || 0) + prev
-			}
-			else return prev
-		}, 0))
-	}, [moneyboxes])
 
 	const divColor = useThemeColor({colors: {light: "#5B6BC0", dark: "#3E3E3F"}})
 	const unfilledColor = useThemeColor({colors: {
@@ -137,7 +103,7 @@ const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig, getHelp }
 				</View>
 				<TouchableOpacity
 					onPress={() => {
-						if (goalList.length || moneyboxes.length) {
+						if (goalList.length) {
 							openCreateTransactionModal()
 						}
 					}}
@@ -159,7 +125,7 @@ const SavingsScreenHeader = ({ openCreateTransactionModal, openConfig, getHelp }
 				</TouchableOpacity>
 			</Row>
 			<View style={styles.transparent}>
-				<Text style={styles.plannedLabel}>This month planned savings</Text>
+				<Text style={styles.plannedLabel}>{i18n.t("savings.savingsLabel", {period: i18n.t("period.28day")})}</Text>
 				<Row style={styles.transparent}>
 					{ Boolean(goalsExpected) && 
 					<View

@@ -16,9 +16,6 @@ export const onCreateUser = /* GraphQL */ `
       goals {
         nextToken
       }
-      funds {
-        nextToken
-      }
       transactions {
         nextToken
       }
@@ -39,9 +36,6 @@ export const onUpdateUser = /* GraphQL */ `
       name
       profileIMG
       goals {
-        nextToken
-      }
-      funds {
         nextToken
       }
       transactions {
@@ -66,9 +60,6 @@ export const onDeleteUser = /* GraphQL */ `
       goals {
         nextToken
       }
-      funds {
-        nextToken
-      }
       transactions {
         nextToken
       }
@@ -83,8 +74,10 @@ export const onCreateGoal = /* GraphQL */ `
       id
       owner
       name
-      ammount
+      installments
+      total
       date
+      frequency
       unsplashIMG
       category
       premadeGoalID
@@ -108,8 +101,10 @@ export const onUpdateGoal = /* GraphQL */ `
       id
       owner
       name
-      ammount
+      installments
+      total
       date
+      frequency
       unsplashIMG
       category
       premadeGoalID
@@ -133,8 +128,10 @@ export const onDeleteGoal = /* GraphQL */ `
       id
       owner
       name
-      ammount
+      installments
+      total
       date
+      frequency
       unsplashIMG
       category
       premadeGoalID
@@ -191,140 +188,25 @@ export const onDeletePrebakedGoal = /* GraphQL */ `
     }
   }
 `;
-export const onCreateFund = /* GraphQL */ `
-  subscription OnCreateFund($owner: String) {
-    onCreateFund(owner: $owner) {
-      id
-      owner
-      name
-      balance
-      recurringAmmount
-      category
-      unsplashIMG
-      prebakedFundID
-      prebakedFund {
-        id
-        name
-        category
-        unsplashIMG
-        createdAt
-        updatedAt
-      }
-      transactions {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateFund = /* GraphQL */ `
-  subscription OnUpdateFund($owner: String) {
-    onUpdateFund(owner: $owner) {
-      id
-      owner
-      name
-      balance
-      recurringAmmount
-      category
-      unsplashIMG
-      prebakedFundID
-      prebakedFund {
-        id
-        name
-        category
-        unsplashIMG
-        createdAt
-        updatedAt
-      }
-      transactions {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteFund = /* GraphQL */ `
-  subscription OnDeleteFund($owner: String) {
-    onDeleteFund(owner: $owner) {
-      id
-      owner
-      name
-      balance
-      recurringAmmount
-      category
-      unsplashIMG
-      prebakedFundID
-      prebakedFund {
-        id
-        name
-        category
-        unsplashIMG
-        createdAt
-        updatedAt
-      }
-      transactions {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreatePrebakedFund = /* GraphQL */ `
-  subscription OnCreatePrebakedFund {
-    onCreatePrebakedFund {
-      id
-      name
-      category
-      unsplashIMG
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdatePrebakedFund = /* GraphQL */ `
-  subscription OnUpdatePrebakedFund {
-    onUpdatePrebakedFund {
-      id
-      name
-      category
-      unsplashIMG
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeletePrebakedFund = /* GraphQL */ `
-  subscription OnDeletePrebakedFund {
-    onDeletePrebakedFund {
-      id
-      name
-      category
-      unsplashIMG
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateTransaction = /* GraphQL */ `
   subscription OnCreateTransaction($owner: String) {
     onCreateTransaction(owner: $owner) {
       id
-      fundID
+      recievingGoalID
       owner
       ammount
       concept
-      fund {
+      recievingGoal {
         id
         owner
         name
-        balance
-        recurringAmmount
-        category
+        installments
+        total
+        date
+        frequency
         unsplashIMG
-        prebakedFundID
+        category
+        premadeGoalID
         createdAt
         updatedAt
       }
@@ -337,19 +219,21 @@ export const onUpdateTransaction = /* GraphQL */ `
   subscription OnUpdateTransaction($owner: String) {
     onUpdateTransaction(owner: $owner) {
       id
-      fundID
+      recievingGoalID
       owner
       ammount
       concept
-      fund {
+      recievingGoal {
         id
         owner
         name
-        balance
-        recurringAmmount
-        category
+        installments
+        total
+        date
+        frequency
         unsplashIMG
-        prebakedFundID
+        category
+        premadeGoalID
         createdAt
         updatedAt
       }
@@ -362,19 +246,21 @@ export const onDeleteTransaction = /* GraphQL */ `
   subscription OnDeleteTransaction($owner: String) {
     onDeleteTransaction(owner: $owner) {
       id
-      fundID
+      recievingGoalID
       owner
       ammount
       concept
-      fund {
+      recievingGoal {
         id
         owner
         name
-        balance
-        recurringAmmount
-        category
+        installments
+        total
+        date
+        frequency
         unsplashIMG
-        prebakedFundID
+        category
+        premadeGoalID
         createdAt
         updatedAt
       }
@@ -384,8 +270,8 @@ export const onDeleteTransaction = /* GraphQL */ `
   }
 `;
 export const onCreateQuestions = /* GraphQL */ `
-  subscription OnCreateQuestions {
-    onCreateQuestions {
+  subscription OnCreateQuestions($id: String) {
+    onCreateQuestions(id: $id) {
       id
       birthdate
       age
@@ -404,8 +290,8 @@ export const onCreateQuestions = /* GraphQL */ `
   }
 `;
 export const onUpdateQuestions = /* GraphQL */ `
-  subscription OnUpdateQuestions {
-    onUpdateQuestions {
+  subscription OnUpdateQuestions($id: String) {
+    onUpdateQuestions(id: $id) {
       id
       birthdate
       age
@@ -424,8 +310,8 @@ export const onUpdateQuestions = /* GraphQL */ `
   }
 `;
 export const onDeleteQuestions = /* GraphQL */ `
-  subscription OnDeleteQuestions {
-    onDeleteQuestions {
+  subscription OnDeleteQuestions($id: String) {
+    onDeleteQuestions(id: $id) {
       id
       birthdate
       age

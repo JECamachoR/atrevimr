@@ -12,7 +12,6 @@ import PlusButtonModal from "../../components/home/PlusButtonModal"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavParamList } from "../../../types"
 import GoalsContext from "../../contexts/GoalsContext"
-import MoneyboxesContext from "../../contexts/MoneyboxesContext"
 import GoalList from "../../components/goals/GoalList"
 import MoneyboxList from "../../components/moneyboxes/MoneyboxList"
 import NotificationsModal from "../../components/notifications/NotificationsModal"
@@ -28,7 +27,6 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 	const iconColor = useThemeColor({colorName: "iconColor"})
 
 	const goals = React.useContext(GoalsContext)
-	const moneyboxes = React.useContext(MoneyboxesContext)
 
 	return (
 		<Screen>
@@ -42,7 +40,7 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 				goToCreateMoneybox={()=> navigation.navigate("CreateMoneybox")}
 			/>
 			<ScrollView style={{flex: 1, backgroundColor: "#00000000"}}>
-				<View style={[styles.titleRow, goals.length || moneyboxes.length ? {paddingBottom: 0} : {}]} >
+				<View style={[styles.titleRow, goals.length ? {paddingBottom: 0} : {}]} >
 					<View style={styles.logo} >
 						{colorScheme === "dark" ? <HomeLogoDark /> : <HomeLogoLight height={30} width={127} /> }
 					</View>
@@ -62,17 +60,10 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 					</View>
 				</View>
 
-				{ goals.length || moneyboxes.length ? 
-					<>
-						{ Boolean(goals.length) && <GoalList goals={goals} />}
-						<View style={{height: 16}}/>
-						{ Boolean(moneyboxes.length) && <MoneyboxList moneyboxes={moneyboxes} /> }
-					</>
+				{ goals.length ? 
+                    <GoalList goals={goals} />
 					:
-					<>
-						<CreateGoalCard goToCreateGoal={() => navigation.navigate("CreateGoal")} />
-						<CreateMoneyboxCard goToCreateMoneybox={() => navigation.navigate("CreateMoneybox")} />
-					</>
+                    <CreateGoalCard goToCreateGoal={() => navigation.navigate("CreateGoal")} />
 				}
 			</ScrollView>
 			<RoundButton variant="plus" onPress={() => setPlusButtonModalOpen(true)} style={styles.roundButtonPosition}/>

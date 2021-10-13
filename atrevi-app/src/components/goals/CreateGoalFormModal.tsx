@@ -16,7 +16,6 @@ import { GoalCreationSchema } from "../../schemas"
 import ErrorText from "../formComponents/ErrorText"
 import shortPlan from "../../../functions/shortPlan"
 import getSavingDate from "../../../functions/getSavingDate"
-import GoalFundContext from "../../contexts/GoalFundContext"
 import GoalsContext from "../../contexts/GoalsContext"
 import { formatNumber } from "react-native-currency-input"
 import UserContext from "../../contexts/UserContext"
@@ -35,7 +34,6 @@ type Props = {
 const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props): React.ReactElement => {
 
 	const goalList = React.useContext(GoalsContext)
-	const goalFund = React.useContext(GoalFundContext)
 	const user = React.useContext(UserContext)
 	const line = useThemeColor({colorName: "line"})
 	const link = useThemeColor({colorName: "link"})

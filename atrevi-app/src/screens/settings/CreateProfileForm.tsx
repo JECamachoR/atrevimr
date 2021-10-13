@@ -62,17 +62,6 @@ export default function CreateProfileForm(): React.ReactElement {
 						}
 					}
 				))
-				await API.graphql(graphqlOperation(
-					createFund,
-					{
-						input: {
-							name: "goals",
-							recurringAmmount: 0,
-							balance: 0,
-							category: "goals"
-						} as CreateFundInput
-					}
-				))
 			}}
 		>
 			{({values, setFieldValue, submitForm}) => {

@@ -4,9 +4,8 @@ import { Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "r
 import getSavingDate from "../../../functions/getSavingDate"
 import shortPlan from "../../../functions/shortPlan"
 import { DeleteGoalInput, Goal } from "../../API"
-import { deleteGoal, updateFund } from "../../graphql/mutations"
+import { deleteGoal } from "../../graphql/mutations"
 import Button from "../Button"
-import GoalFundContext from "../../contexts/GoalFundContext"
 import GoalsContext from "../../contexts/GoalsContext"
 import { Text, View } from "../Themed"
 import { grayscale } from "../../constants/Colors"
@@ -22,7 +21,6 @@ type Props = {
 const DeleteGoalModal = ({ visible, goal, hideModal }: Props): React.ReactElement => {
 
 	const goals = React.useContext(GoalsContext)
-	const goalFund = React.useContext(GoalFundContext)
 	const today = new Date()
 
 	return (			
@@ -56,28 +54,6 @@ const DeleteGoalModal = ({ visible, goal, hideModal }: Props): React.ReactElemen
 									onPress={async () => {
 										try {
 											await API.graphql(graphqlOperation(deleteGoal, {input: {id: goal.id} as DeleteGoalInput}))
-											if (goalFund) {
-												const list = goals
-													.filter((v) => {
-														if (v.id !== goal.id) return v
-													})
-													.map(v => ({
-														ammount: v.ammount, 
-														date: new Date(v.date)
-													}))
-												await API.graphql(graphqlOperation(updateFund, {input: {
-													id: goalFund.id,
-													recurringAmmount: shortPlan(
-														list,
-														"7day",
-														"monday",
-														{
-															ammount: goalFund.balance,
-															savingDate: getSavingDate(today, "7day", "monday")
-														}
-													)[0]
-												}}))
-											}
 											hideModal()
 										} catch (err) {
 											console.error(err)

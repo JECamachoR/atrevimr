@@ -1,4 +1,6 @@
 import notifications from "./notifications/en.json"
+import period from "./period/en"
+import savings from "./savings/en"
 
 const en = {
 	"Home": "Home",
@@ -196,6 +198,8 @@ const en = {
 	"savings record tool": "savings record tool",
 	"You are special": "You are special",
 	"Resend code": "Resend code",
-	...notifications
+	...notifications,
+    savings: savings,
+    period: period
 }
 export default en 
