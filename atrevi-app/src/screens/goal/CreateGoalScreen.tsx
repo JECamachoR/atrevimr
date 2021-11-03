@@ -50,7 +50,8 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 				date: g.date?.toISOString().split("T")[0],
 				unsplashIMG: JSON.stringify(g.unsplashIMG),
                 type: "1",
-                frequency: user.frequency
+                frequency: user.frequency,
+                balance: 0
 			}}))
 			setGoalFormModalOpen(false)
 			navigation.popToTop()

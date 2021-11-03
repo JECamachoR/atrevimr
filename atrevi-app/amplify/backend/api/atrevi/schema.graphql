@@ -28,6 +28,7 @@ type Goal @model
     type: String!
     installments: Float!
     total: Float!
+    balance: Float!
     date: AWSDate!
     frequency: String!
     unsplashIMG: AWSJSON

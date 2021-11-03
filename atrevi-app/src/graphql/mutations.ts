@@ -89,6 +89,7 @@ export const createGoal = /* GraphQL */ `
       type
       installments
       total
+      balance
       date
       frequency
       unsplashIMG
@@ -120,6 +121,7 @@ export const updateGoal = /* GraphQL */ `
       type
       installments
       total
+      balance
       date
       frequency
       unsplashIMG
@@ -151,6 +153,7 @@ export const deleteGoal = /* GraphQL */ `
       type
       installments
       total
+      balance
       date
       frequency
       unsplashIMG
@@ -236,6 +239,7 @@ export const createTransaction = /* GraphQL */ `
         type
         installments
         total
+        balance
         date
         frequency
         unsplashIMG
@@ -267,6 +271,7 @@ export const updateTransaction = /* GraphQL */ `
         type
         installments
         total
+        balance
         date
         frequency
         unsplashIMG
@@ -298,6 +303,7 @@ export const deleteTransaction = /* GraphQL */ `
         type
         installments
         total
+        balance
         date
         frequency
         unsplashIMG

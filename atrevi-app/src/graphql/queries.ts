@@ -56,6 +56,7 @@ export const getGoal = /* GraphQL */ `
       type
       installments
       total
+      balance
       date
       frequency
       unsplashIMG
@@ -89,6 +90,7 @@ export const listGoals = /* GraphQL */ `
         type
         installments
         total
+        balance
         date
         frequency
         unsplashIMG
@@ -149,6 +151,7 @@ export const getTransaction = /* GraphQL */ `
         type
         installments
         total
+        balance
         date
         frequency
         unsplashIMG

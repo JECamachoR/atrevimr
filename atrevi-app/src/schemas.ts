@@ -58,7 +58,7 @@ export const GoalCreationSchema = yup.object().shape({
 })
 
 export const TransactionSchema = yup.object().shape({
-    fund: yup.object()
+    goal: yup.object()
 		.typeError("Required")
 		.required("Required"),
     ammount: yup.number()

@@ -9,11 +9,11 @@ import { darkMode, error, grayscale, success } from "../../constants/Colors"
 import { Row } from "../Layout"
 import { MaterialIcons } from "@expo/vector-icons"
 import { t } from "i18n-js"
-import FundPickerModal from "./FundPickerModal"
-import { CreateTransactionInput, CreateTransactionMutation, Fund, GetUserQuery, UpdateFundInput, UpdateUserInput } from "../../API"
+import GoalPickerModal from "./FundPickerModal"
+import { CreateTransactionInput, CreateTransactionMutation, GetUserQuery, Goal, UpdateGoalInput, UpdateUserInput } from "../../API"
 import { TransactionSchema } from "../../schemas"
 import API, { GraphQLResult } from "@aws-amplify/api"
-import { createTransaction, updateFund, updateUser } from "../../graphql/mutations"
+import { createTransaction, updateGoal, updateUser } from "../../graphql/mutations"
 import { graphqlOperation } from "aws-amplify"
 import AuthContext from "../../auth/AuthContext"
 import { getUser } from "../../graphql/queries"
@@ -34,23 +34,23 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 			initialValues={{
 				ammount: 0,
 				concept: "",
-				fund: null as Fund | null
+				goal: null as Goal | null
 			}}
 			onSubmit={async v => {
 				try {
-					const {fund, ...trans} = v
+					const {goal, ...trans} = v
 					const c = await API.graphql(
 						graphqlOperation(createTransaction, {input: {
 							...trans,
-							fundID: fund?.id
+                            recievingGoalID: goal?.id
 						} as CreateTransactionInput})
 					) as GraphQLResult<CreateTransactionMutation>
 					if (c.data?.createTransaction?.ammount) {
 						await API.graphql(
-							graphqlOperation(updateFund, {input: {
-								id: fund?.id,
-								balance: (fund?.balance || 0) + c.data.createTransaction.ammount
-							} as UpdateFundInput})
+							graphqlOperation(updateGoal, {input: {
+								id: goal?.id,
+								balance: (goal?.balance || 0) + c.data.createTransaction.ammount
+							} as UpdateGoalInput})
 						)
 					}
 					if (c.data?.createTransaction?.ammount) {
@@ -77,7 +77,7 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 		>
 			{({values, errors, touched, handleBlur, setFieldValue, handleChange, submitForm, resetForm, isSubmitting }) => {
 				
-				const [pickingFund, setPickingFund] = React.useState(false)
+				const [pickingGoal, setPickingGoal] = React.useState(false)
 				
 				const color = useThemeColor({colors: {
 					light: grayscale.body,
@@ -109,10 +109,10 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 					>
 						{ isSubmitting ? <Submitting /> :
 							<>
-								<FundPickerModal
-									visible={pickingFund}
-									hideModal={() => setPickingFund(false)}
-									pickFund={v => setFieldValue("fund", v)}
+								<GoalPickerModal
+									visible={pickingGoal}
+									hideModal={() => setPickingGoal(false)}
+									pickGoal={v => setFieldValue("goal", v)}
 								/>
 
 								<SegmentedControl
@@ -143,7 +143,7 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 
 								<TouchableOpacity
 									style={styles.funds}
-									onPress={() => setPickingFund(true)}
+									onPress={() => setPickingGoal(true)}
 								>
 									<Row
 										style={styles.fundRow}
@@ -152,14 +152,14 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 									>
 										<Row style={styles.fundLeftSide}>
 											<MaterialIcons name="account-balance" size={24} color={color} />
-											<Text style={[styles.fundLabel, {color}]}> Fund</Text>
+											<Text style={[styles.fundLabel, {color}]}> {t("Goal")}</Text>
 										</Row>
 										<Row style={styles.fundRightSide}>
 											<Text style={[styles.fundLabel, {color: placeholder}]}>{
-												values.fund ? 
-													((values.fund.name === "goals" ? t("Goals"): values.fund.name) + " ")
+												values.goal ? 
+													((values.goal.name === "goals" ? t("Goals"): values.goal.name) + " ")
 													:
-													"Pick a fund"
+													"Pick a goal"
 											}</Text>
 											<MaterialIcons name="keyboard-arrow-right" size={30} color={color} />
 										</Row>
@@ -167,8 +167,8 @@ const CreateTransactionModal = ({hideModal, visible}: Props): React.ReactElement
 								</TouchableOpacity>
 								<ErrorText 
 									error={
-										errors.fund && touched.fund ?
-											errors.fund : undefined
+										errors.goal && touched.goal ?
+											errors.goal : undefined
 									}
 									style={{paddingHorizontal: 16, marginTop: 8}}
 								/>

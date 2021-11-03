@@ -25,7 +25,10 @@ const GoalTitle = ({goal, containerStyle}: GoalTitleProps): React.ReactElement =
 			<Row>
 				<View style={[styles.transparent, styles.left]}>
 					<Text style={[styles.date, {color: linkColor}]}>
-						${formatNumber(goal.total, {
+						${formatNumber(goal.balance, {
+							separator: ".",
+							delimiter: ",",
+						})}/{formatNumber(goal.total, {
 							separator: ".",
 							delimiter: ","
 						})}

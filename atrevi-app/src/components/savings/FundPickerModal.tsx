@@ -9,10 +9,10 @@ import { Text, View } from "../Themed"
 type Props = {
     visible: boolean,
     hideModal: () => void,
-    pickFund: (fund: {name: string, id: string}) => void,
+    pickGoal: (goal: {name: string, id: string}) => void,
 }
 
-const FundPickerModal = ({ visible, hideModal, pickFund }: Props): React.ReactElement => {
+const GoalPickerModal = ({ visible, hideModal, pickGoal }: Props): React.ReactElement => {
 
     const goals = React.useContext(GoalsContext)
 
@@ -29,7 +29,7 @@ const FundPickerModal = ({ visible, hideModal, pickFund }: Props): React.ReactEl
 				renderSectionHeader={(v) => (
 					<TouchableOpacity onPress={() => {
 						if (v.section.item) {
-							pickFund(v.section.item)
+							pickGoal(v.section.item)
 							hideModal()
 						}
 					}}
@@ -42,7 +42,7 @@ const FundPickerModal = ({ visible, hideModal, pickFund }: Props): React.ReactEl
 				)}
 				renderItem={(v) => (
 					<TouchableOpacity onPress={() => {
-						pickFund(v.item)
+						pickGoal(v.item)
 						hideModal()
 					}}
 					>
@@ -62,7 +62,7 @@ const FundPickerModal = ({ visible, hideModal, pickFund }: Props): React.ReactEl
 	)
 }
 
-export default FundPickerModal
+export default GoalPickerModal
 
 const styles = StyleSheet.create({
 	head: {
