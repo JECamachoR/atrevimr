@@ -25,6 +25,7 @@ type Goal @model
     id: ID!
     owner: String
     name: String!
+    type: String!
     installments: Float!
     total: Float!
     date: AWSDate!

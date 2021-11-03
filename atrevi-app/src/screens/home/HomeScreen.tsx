@@ -7,7 +7,6 @@ import HomeLogoLight from "../../assets/icons/HomeLogoLight"
 import { MaterialIcons } from "@expo/vector-icons"
 import CreateGoalCard from "../../components/goals/CreateGoalCard"
 import RoundButton from "../../components/home/RoundButton"
-import PlusButtonModal from "../../components/home/PlusButtonModal"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavParamList } from "../../../types"
 import GoalsContext from "../../contexts/GoalsContext"
@@ -31,12 +30,6 @@ const HomeScreen = ({ navigation }: Props) : React.ReactElement =>  {
 
 			<NotificationsModal visible={notificationsOpen} hideModal={() => setNotificationsOpen(false)} />
 
-			<PlusButtonModal 
-				visible={plusButtonModalOpen} 
-				hideModal={() => setPlusButtonModalOpen(false)} 
-				goToCreateGoal={()=> navigation.navigate("CreateGoal")}
-				goToCreateMoneybox={()=> navigation.navigate("CreateMoneybox")}
-			/>
 			<ScrollView style={{flex: 1, backgroundColor: "#00000000"}}>
 				<View style={[styles.titleRow, goals.length ? {paddingBottom: 0} : {}]} >
 					<View style={styles.logo} >

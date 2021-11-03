@@ -1,9 +1,13 @@
+import API from "@aws-amplify/api"
+import { graphqlOperation } from "@aws-amplify/api-graphql"
 import * as React from "react"
 import { GestureResponderEvent, ImageBackground, StyleSheet, TouchableOpacity, View } from "react-native"
 import { UnsplashPhoto } from "react-native-unsplash"
+import createValidation from "yup/lib/util/createValidation"
 import { Goal } from "../../API"
+import { updateGoal } from "../../graphql/mutations"
+import GoalForm from "./GoalForm"
 import GoalTitle from "./GoalTitle"
-import UpdateGoalFormModal from "./UpdateGoalFormModal"
 
 interface GoalCardProps {
     goal: Goal;
@@ -17,7 +21,7 @@ const GoalCard = ({ goal , onPress }: GoalCardProps): React.ReactElement => {
 
 	const photo: UnsplashPhoto["urls"] = JSON.parse(goal.unsplashIMG || "")
 
-	return (
+    return (
 		<TouchableOpacity
 			onPress={(e) => {
 				setVisible(true)
@@ -26,10 +30,27 @@ const GoalCard = ({ goal , onPress }: GoalCardProps): React.ReactElement => {
 			style={styles.container}
 		>
 
-			<UpdateGoalFormModal
-				goal={goal} 
+			<GoalForm
+				goal={{...goal, date: new Date(goal.date), unsplashIMG: JSON.parse(goal.unsplashIMG || "{}")}} 
 				visible={visible}
 				hideModal={() => setVisible(false)} 
+                handleSubmit={async ({createdAt, updatedAt, PremadeGoal, premadeGoalID, ...goal}: Goal) => {
+                    const date = typeof goal.date !== "string" ? goal.date : new Date(goal.date)
+                    try {
+                        await API.graphql(graphqlOperation(
+                            updateGoal,
+                            {input: {
+                                ...goal,
+                                date: date?.toISOString().split("T")[0],
+                                unsplashIMG: JSON.stringify(goal.unsplashIMG)
+                            }}
+                        ))
+                        setVisible(false)
+                    } catch( er ) {
+                        console.error(er)
+                    }
+                }}
+                type="update"
 			/>
 
 			<View style={styles.card}>

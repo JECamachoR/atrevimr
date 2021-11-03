@@ -48,11 +48,13 @@ export const GoalCreationSchema = yup.object().shape({
 	unsplashIMG: yup.object().required("Required"),
 	category: yup.string().required("Required"),
 	balance: yup.number().max(0).min(0),
-	ammount: yup.number()
+	total: yup.number()
 		.min(0.0001, "Must be a positive ammount")
 		.typeError("Please input a number")
 		.required("Required"),
-	date: yup.date()
+	date: yup.date(),
+	installments: yup.number().min(0.0001, "Must be a positive ammount"),
+
 })
 
 export const TransactionSchema = yup.object().shape({

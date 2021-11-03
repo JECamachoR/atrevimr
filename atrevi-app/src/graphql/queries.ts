@@ -53,6 +53,7 @@ export const getGoal = /* GraphQL */ `
       id
       owner
       name
+      type
       installments
       total
       date
@@ -85,6 +86,7 @@ export const listGoals = /* GraphQL */ `
         id
         owner
         name
+        type
         installments
         total
         date
@@ -144,6 +146,7 @@ export const getTransaction = /* GraphQL */ `
         id
         owner
         name
+        type
         installments
         total
         date

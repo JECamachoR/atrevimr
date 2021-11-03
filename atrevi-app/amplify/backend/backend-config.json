@@ -114,6 +114,7 @@
         "atrevi": {
             "service": "Pinpoint",
             "channels": [
+                "APNS",
                 "FCM"
             ]
         }

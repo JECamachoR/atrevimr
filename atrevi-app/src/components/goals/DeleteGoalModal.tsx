@@ -1,8 +1,6 @@
 import { API, graphqlOperation } from "aws-amplify"
 import * as React from "react"
 import { Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native"
-import getSavingDate from "../../../functions/getSavingDate"
-import shortPlan from "../../../functions/shortPlan"
 import { DeleteGoalInput, Goal } from "../../API"
 import { deleteGoal } from "../../graphql/mutations"
 import Button from "../Button"

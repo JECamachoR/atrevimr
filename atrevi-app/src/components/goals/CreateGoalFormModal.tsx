@@ -14,8 +14,6 @@ import NameAndIMG from "../formComponents/NameAndIMG"
 import NeededAmmountInput from "../formComponents/NeededAmmountInput"
 import { GoalCreationSchema } from "../../schemas"
 import ErrorText from "../formComponents/ErrorText"
-import shortPlan from "../../../functions/shortPlan"
-import getSavingDate from "../../../functions/getSavingDate"
 import GoalsContext from "../../contexts/GoalsContext"
 import { formatNumber } from "react-native-currency-input"
 import UserContext from "../../contexts/UserContext"
@@ -40,7 +38,7 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 	const today = new Date()
 	const DOTW = (user.DOTW as daysOfTheWeek) || "thursday" as daysOfTheWeek
 	const frequency = (user.frequency as frequencies) || "7day"
-	const savingDate = getSavingDate(today, frequency, DOTW)
+    
 	const minDate = new Date(getNextSavingDate(
 		new Date(),
 		user.frequency as frequencies,
@@ -63,21 +61,9 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 					if (!values.ammount || !values.date) return
 					const list = goalList
 						.map(v => ({
-							ammount: v.ammount, 
 							date: new Date(v.date)
 						})) as {ammount: number, date: Date}[]
 					list.push({ammount: values.ammount, date: values.date})
-					
-					const r = shortPlan(
-						list,
-						frequency, 
-						DOTW, 
-						{ 
-							ammount: goalFund?.balance || 0, 
-							savingDate
-						}
-					)
-					setFieldValue("recurringAmmount", r[0])
 				}
 
 				React.useEffect(() => calculateSavings(), 
@@ -160,7 +146,7 @@ const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit }: Props):
 									<Text style={[
 										styles.estimateValue,
 										{color: link}
-									]}>{f(values.recurringAmmount - (goalFund?.recurringAmmount || 0))} {t(frequency)}</Text>
+									]}>{f(values.recurringAmmount - (0))} {t(frequency)}</Text>
 									<Text style={styles.estimateLabel}>{"\n"}{t("Adding up your other goals, you will save")}:</Text>
 									<Text style={[
 										styles.estimateValue,

@@ -7,7 +7,7 @@ import { MaterialIcons } from "@expo/vector-icons"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavParamList } from "../../../types"
 import { daysOfTheWeek, frequencies } from "../../../../types"
-import CreateGoalFormModal from "../../components/goals/CreateGoalFormModal"
+import GoalForm from "../../components/goals/GoalForm"
 import { UnsplashPhoto } from "react-native-unsplash"
 import { API, graphqlOperation } from "aws-amplify"
 import { createGoal } from "../../graphql/mutations"
@@ -19,11 +19,11 @@ import PrebakedList from "../../components/PrebakedList"
 
 export type CreateGoalType = {
     name?: string,
-    ammount?: number,
+    total?: number,
     date?: Date
     category: string,
     unsplashIMG?: UnsplashPhoto["urls"],
-	recurringAmmount: number
+	installments: number
 }
 
 type Props = StackScreenProps<NavParamList, "CreateGoal">
@@ -40,15 +40,17 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 			user.DOTW as daysOfTheWeek
 			)
 		), 
-		recurringAmmount: 0,
-		ammount: 0,
+		installments: 0,
+		total: 0,
 	})
-	const handleSubmit = async ({recurringAmmount, ...g}: CreateGoalType) => {
+	const handleSubmit = async (g: CreateGoalType) => {
 		try {
 			await API.graphql(graphqlOperation(createGoal, {input: {
 				...g, 
 				date: g.date?.toISOString().split("T")[0],
-				unsplashIMG: JSON.stringify(g.unsplashIMG)
+				unsplashIMG: JSON.stringify(g.unsplashIMG),
+                type: "1",
+                frequency: user.frequency
 			}}))
 			setGoalFormModalOpen(false)
 			navigation.popToTop()
@@ -66,11 +68,10 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 			darkColor={darkMode.background}
 		>
 
-			<CreateGoalFormModal
+			<GoalForm
 				hideModal={() => setGoalFormModalOpen(false)}
 				visible={goalFormModalOpen}
 				goal={goal}
-				setGoal={setGoal}
 				handleSubmit={handleSubmit}
 			/>
 
@@ -101,7 +102,7 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 
 				<CreateCustomGoalCard action={() => {
 					setGoalFormModalOpen(true)
-					setGoal({category: "", recurringAmmount: 0, date: new Date()})
+					setGoal({category: "", installments: 0, date: new Date()})
 				}}
 				/>
 
@@ -109,9 +110,12 @@ const CreateGoalScreen = ({navigation}: Props): React.ReactElement => {
 					variant="goals"
 					choose={async (g) => {
 						await setGoal(v => ({
-							...g, 
+                            name: g.name,
+                            category: g.category,
+                            unsplashIMG: g.unsplashIMG,
 							date: v.date,
-							recurringAmmount: 0
+							installments: 0,
+                            total: g.ammount
 						}) as CreateGoalType)
 						setGoalFormModalOpen(true)
 					}}

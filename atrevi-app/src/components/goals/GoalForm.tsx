@@ -4,6 +4,7 @@ import { StyleSheet, TouchableOpacity } from "react-native"
 import { Text, View, useThemeColor } from "../Themed"
 import i18n, { t } from "i18n-js"
 import { primary, secondary } from "../../constants/Colors"
+import { CreateGoalType } from "../../screens/goal/CreateGoalScreen"
 import FormView from "../formComponents/FormView"
 import DateInput from "../formComponents/DateInput"
 import { Formik } from "formik"
@@ -13,100 +14,74 @@ import NameAndIMG from "../formComponents/NameAndIMG"
 import NeededAmmountInput from "../formComponents/NeededAmmountInput"
 import { GoalCreationSchema } from "../../schemas"
 import ErrorText from "../formComponents/ErrorText"
-import getSavingDate from "../../../functions/getSavingDate"
 import GoalsContext from "../../contexts/GoalsContext"
 import { formatNumber } from "react-native-currency-input"
 import UserContext from "../../contexts/UserContext"
 import { daysOfTheWeek, frequencies } from "../../../../types"
 import getNextSavingDate from "../../../functions/getNextSavingDate"
 import Submitting from "../Submitting"
-import { Goal } from "../../API"
-import { UnsplashPhoto } from "react-native-unsplash"
+import timeForFrequency from "../../../functions/timeForFrequency"
+import getSavingDate from "../../../functions/getSavingDate"
 import Button from "../Button"
 import DeleteGoalModal from "./DeleteGoalModal"
-import API from "@aws-amplify/api"
-import { updateGoal } from "../../graphql/mutations"
-import { graphqlOperation } from "aws-amplify"
-
-type ProcessedGoal = {
-	date: Date;
-	id: string;
-	owner?: string | null | undefined;
-	name: string;
-	ammount: number;
-	unsplashIMG?: UnsplashPhoto["urls"];
-	category: string;
-	recurringAmmount: number;
-}
+import { Goal } from "../../API"
 
 type Props = {
     visible: boolean,
     hideModal: () => void,
-    goal: Goal,
+    goal: Goal | CreateGoalType,
+    handleSubmit: (g: any) => void,
+    type?: string
 }
 
-const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactElement => {
+const CreateGoalFormModal = ({ visible, hideModal, goal, handleSubmit, type }: Props): React.ReactElement => {
 
-	const processedGoal = {
-		date: new Date(goal.date),
-		id: goal.id,
-		owner: goal.owner,
-		name: goal.name,
-		unsplashIMG: JSON.parse(goal.unsplashIMG as string),
-		category: goal.category,
-		recurringAmmount: 0,
-	}
-
-	const goalList = React.useContext(GoalsContext)
 	const user = React.useContext(UserContext)
-
 	const line = useThemeColor({colorName: "line"})
 	const link = useThemeColor({colorName: "link"})
-
 	const today = new Date()
-
 	const DOTW = (user.DOTW as daysOfTheWeek) || "thursday" as daysOfTheWeek
 	const frequency = (user.frequency as frequencies) || "7day"
-	const savingDate = getSavingDate(today, frequency, DOTW)
+    
 	const minDate = new Date(getNextSavingDate(
 		new Date(),
 		user.frequency as frequencies,
 		user.DOTW as daysOfTheWeek
 	))
-
 	return (
 		<Formik
-			initialValues={processedGoal as ProcessedGoal}
-			onSubmit={async v => {
-				try {
-					const {recurringAmmount, ...goal} = v
-					await API.graphql(graphqlOperation(
-						updateGoal,
-						{input: {
-							...goal,
-							date: goal.date.toISOString().split("T")[0],
-							unsplashIMG: JSON.stringify(goal.unsplashIMG)
-						}}
-					))
-					await API.graphql(graphqlOperation(
-						{input: {
-							recurringAmmount
-						}}
-					))
-					hideModal()
-				} catch( er ) {
-					console.error(er)
-				}
-			}}
+			initialValues={goal}
+			onSubmit={handleSubmit}
 			validationSchema={GoalCreationSchema}
 			validateOnChange={false}
+			enableReinitialize
 		>
 			{({ values, handleChange, handleBlur, 
 				setFieldValue, submitForm, resetForm, errors, 
 				touched, isSubmitting, setTouched 
 			}) => {
-
+				
 				const [deleteVisible, setDeleteVisible] = React.useState(false)
+
+				const calculateSavings = () => {
+					if (!values.total || !values.date) return
+					const list = []
+					list.push({ammount: values.total, date: values.date})
+                    const thisSD = new Date(getSavingDate(today, frequency, DOTW))
+                    const nPeriods = Math.floor(((typeof values.date !== "string" ? values.date : new Date(values.date)).getTime() - (thisSD).getTime()) 
+                    / (timeForFrequency(frequency) * 1000 * 3600 * 24))
+                    setFieldValue("installments", values.total/nPeriods)
+				}
+
+				React.useEffect(() => calculateSavings(), 
+					[values.total, values.date]
+				)
+				const f = (n: number) => formatNumber(n, {
+					delimiter: ",",
+					precision: 2,
+					prefix: "$",
+					separator: ".",
+				})
 
 				return (
 					
@@ -131,11 +106,12 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 					>
 						{ isSubmitting ? <Submitting /> :
 							<FormView style={styles.formView}>
+                                
 
 								<DeleteGoalModal
 									visible={deleteVisible}
 									hideModal={() => setDeleteVisible(false)}
-									goal={goal}
+                                    goal={goal as Goal}
 								/>
 
 								<NameAndIMG
@@ -146,7 +122,7 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 									handleBlur={handleBlur("name")}
 									handleTextChange={handleChange("name")}
 									name={values.name}
-									unsplashIMG={values.unsplashIMG}
+									unsplashIMG={ typeof values.unsplashIMG !== "string" ? values.unsplashIMG : JSON.parse(values.unsplashIMG)}
 									variant={"goals"}
 									nameError={touched.name ? errors.name : undefined}
 									imgError={touched.unsplashIMG ? errors.unsplashIMG : undefined}
@@ -163,12 +139,12 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 									<Text style={styles.subtitle}>{i18n.t("Savings")}</Text>
 									<Text style={styles.label}>{i18n.t("How much do you need?")}</Text>
 									<NeededAmmountInput
-										handleBlur={handleBlur("ammount")}
-										handleChange={(v) => setFieldValue("ammount", v)}
-										value={values.ammount}
-										error={(touched.ammount || undefined) && errors.ammount}
+										handleBlur={handleBlur("total")}
+										handleChange={(v) => setFieldValue("total", v)}
+										value={values.total}
+										error={(touched.total || undefined) && errors.total}
 									/>
-									<ErrorText error={(touched.ammount || undefined) && errors.ammount} />
+									<ErrorText error={(touched.total || undefined) && errors.total} />
 									<Text style={styles.label}>{i18n.t("When do you need it?")}</Text>
 									<DateInput
 										date={values.date}
@@ -179,27 +155,23 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 									/>
 								</View>
 								<View style={[styles.estimateCard, {borderColor: line}]}>
-
-									{/* <Text>{t("For this goal you will need to save")}:</Text>
+									
+									<Text style={styles.estimateLabel}>{t("For this goal you will need to save")}:</Text>
 									<Text style={[
 										styles.estimateValue,
 										{color: link}
-									]}>{f(values.recurringAmmount - (goalFund?.recurringAmmount || 0))} {t(frequency)}</Text>
-									<Text>{"\n"}{t("Adding up your other goals, you will save")}:</Text>
-									<Text style={[
-										styles.estimateValue,
-										{color: link}
-									]}>{f(values.recurringAmmount)} {t(frequency)}</Text> */}
-
+									]}>{f(values.installments - (0))} {t(frequency)}</Text>
 								</View>
-								<View style={styles.deleteContainer}>
-									<Button
-										title={t("Delete")+" "+ t("Goal")}
-										onPress={() => setDeleteVisible(true)}
-										lightVariant="error"
-										darkModeVariant="error"
-									/>
-								</View>
+                                { type == "update" && 
+                                    <View style={styles.deleteContainer}>
+                                        <Button
+                                            title={t("Delete")+" "+ t("Goal")}
+                                            onPress={() => setDeleteVisible(true)}
+                                            lightVariant="error"
+                                            darkModeVariant="error"
+                                        />
+                                    </View>
+                                }
 							</FormView>
 						}
 					</Modal>
@@ -209,7 +181,7 @@ const UpdateGoalFormModal = ({ visible, hideModal, goal }: Props): React.ReactEl
 		</Formik>)
 }
 
-export default UpdateGoalFormModal
+export default CreateGoalFormModal
 
 const styles = StyleSheet.create({
 	bg: {
@@ -241,16 +213,20 @@ const styles = StyleSheet.create({
 		lineHeight: 28,
 	},
 	estimateCard: {
-		marginTop: 16,
+		flex: 1,
+		marginVertical: 16,
 		borderRadius: 15,
 		borderWidth: 1,
 		padding: 16,
 	},
-	deleteContainer: {
-		marginTop: 16,
-		marginBottom: 128,
+	estimateLabel: {
+
 	},
 	estimateValue: {
 		fontSize: 16,
+	},
+	deleteContainer: {
+		marginTop: 16,
+		marginBottom: 128,
 	},
 })

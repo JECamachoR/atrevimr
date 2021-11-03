@@ -1,34 +1,34 @@
 {
-  "devc": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-atrevi-devc-134905-authRole",
-      "UnauthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-devc-134905-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-devc-134905-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-atrevi-devc-134905-deployment",
-      "UnauthRoleName": "amplify-atrevi-devc-134905-unauthRole",
-      "StackName": "amplify-atrevi-devc-134905",
-      "StackId": "arn:aws:cloudformation:us-east-1:963673112435:stack/amplify-atrevi-devc-134905/177002b0-221f-11ec-ad2f-12f8e4b019bb",
-      "AmplifyAppId": "d21wrc494k04rr"
-    },
-    "categories": {
-      "notifications": {
-        "Pinpoint": {
-          "Name": "atrevi-devc",
-          "Id": "889d8021a35b49f5bd6f3f8c7cfaf2b2",
-          "Region": "us-east-1"
+    "devc": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-atrevi-devc-134905-authRole",
+            "UnauthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-devc-134905-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::963673112435:role/amplify-atrevi-devc-134905-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-atrevi-devc-134905-deployment",
+            "UnauthRoleName": "amplify-atrevi-devc-134905-unauthRole",
+            "StackName": "amplify-atrevi-devc-134905",
+            "StackId": "arn:aws:cloudformation:us-east-1:963673112435:stack/amplify-atrevi-devc-134905/177002b0-221f-11ec-ad2f-12f8e4b019bb",
+            "AmplifyAppId": "d21wrc494k04rr"
+        },
+        "categories": {
+            "notifications": {
+                "Pinpoint": {
+                    "Name": "atrevi-devc",
+                    "Id": "889d8021a35b49f5bd6f3f8c7cfaf2b2",
+                    "Region": "us-east-1"
+                }
+            },
+            "auth": {
+                "userPoolGroups": {},
+                "atreviUsers": {}
+            },
+            "function": {
+                "AdminQueriese1d5f25f": {
+                    "deploymentBucketName": "amplify-atrevi-devc-134905-deployment",
+                    "s3Key": "amplify-builds/AdminQueriese1d5f25f-474e735147676e64374e-build.zip"
+                }
+            }
         }
-      },
-      "auth": {
-        "userPoolGroups": {},
-        "atreviUsers": {}
-      },
-      "function": {
-        "AdminQueriese1d5f25f": {
-          "deploymentBucketName": "amplify-atrevi-devc-134905-deployment",
-          "s3Key": "amplify-builds/AdminQueriese1d5f25f-474e735147676e64374e-build.zip"
-        }
-      }
     }
-  }
 }

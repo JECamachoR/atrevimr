@@ -86,6 +86,7 @@ export const createGoal = /* GraphQL */ `
       id
       owner
       name
+      type
       installments
       total
       date
@@ -116,6 +117,7 @@ export const updateGoal = /* GraphQL */ `
       id
       owner
       name
+      type
       installments
       total
       date
@@ -146,6 +148,7 @@ export const deleteGoal = /* GraphQL */ `
       id
       owner
       name
+      type
       installments
       total
       date
@@ -230,6 +233,7 @@ export const createTransaction = /* GraphQL */ `
         id
         owner
         name
+        type
         installments
         total
         date
@@ -260,6 +264,7 @@ export const updateTransaction = /* GraphQL */ `
         id
         owner
         name
+        type
         installments
         total
         date
@@ -290,6 +295,7 @@ export const deleteTransaction = /* GraphQL */ `
         id
         owner
         name
+        type
         installments
         total
         date
